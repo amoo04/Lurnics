@@ -1,0 +1,28 @@
+node_modules
+dist
+build
+.env
+.env.local
+*.local
+
+# sqlite
+backend/data/
+*.db
+*.db-journal
+
+# drizzle
+backend/drizzle/
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# os
+.DS_Store
+Thumbs.db

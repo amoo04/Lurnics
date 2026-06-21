@@ -1,0 +1,7 @@
+packages:
+  - "backend"
+  - "client"
+  - "client-admin"
+allowBuilds:
+  better-sqlite3: true
+  esbuild: true
