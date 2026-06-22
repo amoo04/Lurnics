@@ -1,7 +1,11 @@
-import type { JWTPayload } from "jose";
+import type { Env } from "hono";
 
-export type AppEnv = {
+export interface AppEnv extends Env {
   Variables: {
-    user: JWTPayload;
+    userId: string;
+    userEmail: string;
+    userRole: string;
+    userRoles: string[];
+    userPermissions: string[];
   };
-};
+}
