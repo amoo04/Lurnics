@@ -1,142 +1,62 @@
-import {
-  Activity,
-  Heart,
-  Package,
-  TrendingUp,
-  Zap,
-  Award,
-  Users,
-  Calendar,
-  Briefcase,
-  Star,
-  Truck,
-  DollarSign,
-  CheckCircle2,
-  Clock,
-  type LucideIcon,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight, Monitor } from "lucide-react";
+import { Link } from "react-router-dom";
+import type { CaseStudy } from "../api/main.types";
+import { ICONS_BY_SLUG, DEFAULT_INDUSTRY_ICON } from "../lib/industryIcons";
 
-interface Stat {
-  icon: LucideIcon;
-  value: string;
-  label: string;
+interface CaseStudyListProps {
+  caseStudies: CaseStudy[];
+  loading: boolean;
+  error: string | null;
 }
 
-interface CaseStudy {
-  logoIcon: LucideIcon;
-  logoBg: string;
-  name: string;
-  category: string;
-  title: string;
-  description: string;
-  stats: Stat[];
-  solution: string;
-}
-
-const caseStudies: CaseStudy[] = [
-  {
-    logoIcon: Activity,
-    logoBg: "bg-green-500/20 text-green-400",
-    name: "VEKTAR",
-    category: "RETAIL · E-COMMERCE",
-    title: "Vektar – E-commerce Platform",
-    description:
-      "We built a custom e-commerce platform for Vektar that streamlined product management, order processing, and customer experience.",
-    stats: [
-      { icon: Package, value: "280+", label: "Products Managed" },
-      { icon: TrendingUp, value: "70%", label: "Increase in Operational Efficiency" },
-      { icon: Zap, value: "3x", label: "Faster Order Processing" },
-      { icon: Award, value: "98%", label: "Customer Satisfaction" },
-    ],
-    solution:
-      "Custom admin dashboard, inventory management, secure payments, real-time order tracking, and analytics.",
-  },
-  {
-    logoIcon: Heart,
-    logoBg: "bg-purple-500/20 text-purple-400",
-    name: "THERAPY PLATFORM",
-    category: "HEALTHCARE · DIGITAL PLATFORM",
-    title: "Therapy Platform – Supporting Better Mental Health",
-    description:
-      "A comprehensive digital platform connecting patients with therapists, managing sessions, assessments, and progress securely.",
-    stats: [
-      { icon: Users, value: "2,500+", label: "Active Users" },
-      { icon: Calendar, value: "40%", label: "Increase in Session Bookings" },
-      { icon: Briefcase, value: "85%", label: "Reduction in Admin Workload" },
-      { icon: Star, value: "4.9/5", label: "User Rating" },
-    ],
-    solution:
-      "Secure messaging, session scheduling, assessments, progress tracking, and analytics dashboard.",
-  },
-  {
-    logoIcon: Package,
-    logoBg: "bg-orange-500/20 text-orange-400",
-    name: "LOGIX SYSTEMS",
-    category: "LOGISTICS · OPERATIONS",
-    title: "Logix Systems – Logistics Management Platform",
-    description:
-      "We developed a logistics solution that optimized fleet operations, real-time tracking, and delivery management.",
-    stats: [
-      { icon: Truck, value: "60%", label: "Reduction in Delivery Delays" },
-      { icon: DollarSign, value: "35%", label: "Lower Operational Costs" },
-      { icon: CheckCircle2, value: "99.8%", label: "On-time Delivery Rate" },
-      { icon: Clock, value: "24/7", label: "Real-time Tracking" },
-    ],
-    solution:
-      "Fleet management, route optimization, real-time tracking, automated alerts, and reporting system.",
-  },
-];
-
-export default function CaseStudyList() {
+export default function CaseStudyList({ caseStudies, loading, error }: CaseStudyListProps) {
   return (
-    <div className="space-y-6 px-20 pb-16">
-      {caseStudies.map(({ logoIcon: LogoIcon, logoBg, name, category, title, description, stats, solution }) => (
-        <div key={name} className="grid gap-6 rounded-xl border border-white/10 bg-white/[0.03] p-6 md:grid-cols-[80px_280px_1fr]">
-          <div className="flex flex-col items-center gap-2">
-            <div className={`flex h-14 w-14 items-center justify-center rounded-xl ${logoBg}`}>
-              <LogoIcon size={24} />
-            </div>
-            <p className="text-center text-xs font-medium tracking-wide">{name}</p>
-          </div>
+    <div className="px-4 sm:px-8 md:px-20 pb-16">
+      {loading && <p className="text-center text-sm text-gray-500">Loading case studies…</p>}
+      {error && <p className="text-center text-sm text-red-400">{error}</p>}
+      {!loading && !error && caseStudies.length === 0 && (
+        <p className="text-center text-sm text-gray-500">No case studies found.</p>
+      )}
 
-          <div className="flex items-center justify-center rounded-lg border border-white/10 bg-white/[0.02] text-xs text-gray-500">
-            Screenshot placeholder
-          </div>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {caseStudies.map(({ id, slug, title, summary, industry }) => {
+          const { icon: Icon, iconBg } = industry
+            ? (ICONS_BY_SLUG[industry.slug] ?? DEFAULT_INDUSTRY_ICON)
+            : DEFAULT_INDUSTRY_ICON;
 
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
-              {category}
-            </p>
-            <h3 className="mt-1 text-lg font-semibold">{title}</h3>
-            <p className="mt-2 text-sm text-gray-400">{description}</p>
+          return (
+            <div
+              key={id}
+              className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]"
+            >
+              <div className="flex h-36 items-center justify-center bg-gradient-to-br from-indigo-900/40 to-blue-900/20 text-gray-500">
+                <Monitor size={32} className="opacity-40" />
+              </div>
 
-            <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">
-              {stats.map(({ icon: Icon, value, label }) => (
-                <div key={label} className="flex items-start gap-2">
-                  <Icon size={16} className="mt-0.5 shrink-0 text-indigo-400" />
-                  <div>
-                    <p className="font-semibold">{value}</p>
-                    <p className="text-xs text-gray-500">{label}</p>
-                  </div>
+              <div className="flex flex-1 flex-col p-6">
+                {industry && (
+                  <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+                    {industry.name}
+                  </p>
+                )}
+                <div className={`mt-3 inline-flex h-11 w-11 items-center justify-center rounded-xl ${iconBg}`}>
+                  <Icon size={20} />
                 </div>
-              ))}
-            </div>
+                <h3 className="mt-3 text-lg font-semibold">{title}</h3>
+                {summary && <p className="mt-2 flex-1 text-sm text-gray-400">{summary}</p>}
 
-            <p className="mt-4 text-xs font-semibold text-indigo-400">Our Solution</p>
-            <div className="flex items-center justify-between gap-4">
-              <p className="text-sm text-gray-400">{solution}</p>
-              <button
-                type="button"
-                className="flex shrink-0 items-center gap-1 text-sm font-medium text-indigo-400"
-              >
-                View Case Study
-                <ArrowRight size={14} />
-              </button>
+                <Link
+                  to={`/case-studies/${slug}`}
+                  className="mt-5 flex items-center gap-1 text-sm font-medium text-indigo-400"
+                >
+                  View Case Study
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
+          );
+        })}
+      </div>
     </div>
   );
 }

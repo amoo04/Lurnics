@@ -1,29 +1,32 @@
-import { Mail, Phone, MapPin, MessageCircle, ArrowRight } from "lucide-react";
+import { Mail, Phone, MessageCircle, ArrowRight } from "lucide-react";
 
 const methods = [
   {
     icon: Mail,
     title: "Email Us",
-    detail: "hello@lurnics.com",
+    detail: "Info@lurnics.com",
     note: "We typically reply within 24 hours",
+    href: "mailto:Info@lurnics.com",
   },
   {
     icon: Phone,
     title: "Call Us",
-    detail: "+234 816 024 0451",
-    note: "Mon – Fri, 9:00 AM – 6:00 PM WAT",
+    detail: "+234 701 949 1689",
+    note: "Mon – Fri, 9:00 AM – 8:00 PM WAT",
+    href: "tel:+2347019491689",
   },
-  {
-    icon: MapPin,
-    title: "Visit Us",
-    detail: "Lurnics HQ, Lagos, Nigeria",
-    note: "By appointment only",
-  },
+  // {
+  //   icon: MapPin,
+  //   title: "Visit Us",
+  //   detail: "Lurnics HQ, Lagos, Nigeria",
+  //   note: "By appointment only",
+  //   href: "https://www.google.com/maps/search/?api=1&query=Lagos%2C+Nigeria",
+  // },
   {
     icon: MessageCircle,
     title: "Live Chat",
     detail: "Chat with our team instantly",
-    note: "Available on our website",
+    href: null,
   },
 ];
 
@@ -35,24 +38,42 @@ export default function ContactMethods() {
       </p>
 
       <div className="space-y-4">
-        {methods.map(({ icon: Icon, title, detail, note }) => (
-          <div
-            key={title}
-            className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] p-5"
-          >
-            <div className="flex items-center gap-4">
-              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-300">
-                <Icon size={18} />
+        {methods.map(({ icon: Icon, title, detail, note, href }) => {
+          const content = (
+            <>
+              <div className="flex items-center gap-4">
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-300">
+                  <Icon size={18} />
+                </div>
+                <div>
+                  <p className="text-sm font-medium">{title}</p>
+                  <p className="text-sm text-gray-300">{detail}</p>
+                  <p className="text-xs text-gray-500">{note}</p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-medium">{title}</p>
-                <p className="text-sm text-gray-300">{detail}</p>
-                <p className="text-xs text-gray-500">{note}</p>
-              </div>
+              {href && <ArrowRight size={16} className="text-gray-500" />}
+            </>
+          );
+
+          const className =
+            "flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] p-5";
+
+          return href ? (
+            <a
+              key={title}
+              href={href}
+              target={href.startsWith("http") ? "_blank" : undefined}
+              rel={href.startsWith("http") ? "noreferrer" : undefined}
+              className={className}
+            >
+              {content}
+            </a>
+          ) : (
+            <div key={title} className={className}>
+              {content}
             </div>
-            <ArrowRight size={16} className="text-gray-500" />
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

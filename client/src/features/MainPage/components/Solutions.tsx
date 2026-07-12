@@ -1,4 +1,5 @@
 import { Code2, Cloud, TrendingUp, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const solutions = [
   {
@@ -49,7 +50,7 @@ const solutions = [
 
 export default function Solutions() {
   return (
-    <section className="px-20 py-16">
+    <section className="px-4 sm:px-8 md:px-20 py-16">
       <div className="mb-12 text-center">
         <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
           What We Engineer
@@ -80,12 +81,13 @@ export default function Solutions() {
                 ))}
               </ul>
             </div>
-            <button
-              type="button"
+            <Link
+              to="/solutions"
+              aria-label={`Explore ${title}`}
               className="mt-6 flex h-9 w-9 items-center justify-center self-end rounded-md border border-white/10 bg-white/5"
             >
               <ArrowRight size={16} />
-            </button>
+            </Link>
           </div>
         ))}
       </div>

@@ -2,7 +2,7 @@ import { Target, Eye } from "lucide-react";
 
 export default function MissionVision() {
   return (
-    <section className="grid gap-6 px-20 py-10 md:grid-cols-2">
+    <section id="mission" className="grid gap-6 px-4 sm:px-8 md:px-20 py-10 md:grid-cols-2">
       <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-8">
         <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500/20 text-indigo-400">
           <Target size={20} />

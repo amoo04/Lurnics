@@ -9,7 +9,7 @@ const team = [
 
 export default function TeamGrid() {
   return (
-    <section className="px-20 py-16">
+    <section className="px-4 sm:px-8 md:px-20 py-16">
       <div className="mb-10 text-center">
         <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
           Our Team
@@ -19,7 +19,7 @@ export default function TeamGrid() {
         </h2>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-4">
+      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
         {team.map(({ name, role, filled }, i) => (
           <div
             key={i}

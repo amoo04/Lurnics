@@ -1,4 +1,14 @@
-import { ArrowRight, Play, Rocket, Users, Globe, Code2, ShieldCheck } from "lucide-react";
+import { ArrowRight, Play, Rocket, Users, Globe, Code2, ShieldCheck, Cloud, Cog, TrendingUp, Building2 } from "lucide-react";
+import OrbitVisual from "./OrbitVisual";
+
+const nodes = [
+  { icon: Code2, title: "Software Engineering", subtitle: "Custom builds" },
+  { icon: Cloud, title: "Digital Infrastructure", subtitle: "Reliable • Scalable" },
+  { icon: Cog, title: "Business Automation", subtitle: "Workflows • Ops" },
+  { icon: TrendingUp, title: "Digital Transformation", subtitle: "Strategy • Growth" },
+  { icon: Users, title: "Client Partnership", subtitle: "Long-term • Trusted" },
+  { icon: Globe, title: "Global Reach", subtitle: "Local • International" },
+];
 
 const stats = [
   { icon: Rocket, value: "120+", label: "Projects Delivered", description: "Across diverse industries and business sizes" },
@@ -11,7 +21,7 @@ const stats = [
 export default function AboutHero() {
   return (
     <>
-      <section className="grid items-center gap-12 px-20 py-16 md:grid-cols-2">
+      <section className="grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
             About Lurnics
@@ -28,30 +38,30 @@ export default function AboutHero() {
             lasting impact.
           </p>
           <div className="mt-8 flex items-center gap-4">
-            <button
-              type="button"
+            <a
+              href="#story"
               className="flex items-center gap-2 rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-sm font-medium text-white"
             >
               Our Story
               <ArrowRight size={16} />
-            </button>
-            <button
-              type="button"
+            </a>
+            <a
+              href="#mission"
               className="flex items-center gap-2 rounded-md border border-white/20 px-6 py-3 text-sm font-medium text-white"
             >
               Our Mission
               <Play size={14} />
-            </button>
+            </a>
           </div>
         </div>
 
-        <div className="flex h-64 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-sm text-gray-500 md:h-72">
-          Globe visual placeholder
+        <div className="md:-ml-6">
+          <OrbitVisual centerIcon={Building2} nodes={nodes} />
         </div>
       </section>
 
-      <section className="px-20 pb-10">
-        <div className="grid gap-6 rounded-xl border border-white/10 bg-white/[0.03] p-8 md:grid-cols-5">
+      <section className="px-4 sm:px-8 md:px-20 pb-10">
+        <div className="grid gap-6 rounded-xl border border-white/10 bg-white/[0.03] p-8 sm:grid-cols-2 lg:grid-cols-5">
           {stats.map(({ icon: Icon, value, label, description }) => (
             <div key={label} className="flex gap-3">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-indigo-500/15 text-indigo-300">

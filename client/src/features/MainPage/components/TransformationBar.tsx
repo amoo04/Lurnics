@@ -9,7 +9,7 @@ const features = [
 
 export default function TransformationBar() {
   return (
-    <section className="px-20 py-10">
+    <section className="px-4 sm:px-8 md:px-20 py-10">
       <div className="flex flex-col items-center justify-between gap-8 rounded-xl border border-white/10 p-8 md:flex-row">
         <div className="max-w-xs">
           <h2 className="text-xl font-semibold">

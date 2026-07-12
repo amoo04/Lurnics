@@ -11,7 +11,7 @@ const expertise = [
 
 export default function FounderProfile() {
   return (
-    <section className="px-20 py-10">
+    <section id="story" className="px-4 sm:px-8 md:px-20 py-10">
       <div className="grid gap-8 rounded-xl border border-white/10 bg-white/[0.03] p-8 md:grid-cols-[200px_1fr_240px]">
         <div className="flex h-56 items-center justify-center rounded-lg border border-white/10 bg-white/[0.02] text-xs text-gray-500">
           Photo placeholder

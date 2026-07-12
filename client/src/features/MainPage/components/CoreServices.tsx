@@ -1,4 +1,5 @@
 import { Code2, Cloud, Cog, TrendingUp, Megaphone, Rocket, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const services = [
   {
@@ -47,7 +48,7 @@ const services = [
 
 export default function CoreServices() {
   return (
-    <section className="px-20 py-16">
+    <section className="px-4 sm:px-8 md:px-20 py-16">
       <div className="mb-12 text-center">
         <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
           What We Do
@@ -59,7 +60,7 @@ export default function CoreServices() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {services.map(({ icon: Icon, iconBg, title, description, items }) => (
           <div
             key={title}
@@ -80,12 +81,13 @@ export default function CoreServices() {
                 ))}
               </ul>
             </div>
-            <button
-              type="button"
+            <Link
+              to="/contact"
+              aria-label={`Discuss ${title}`}
               className="mt-6 flex h-9 w-9 items-center justify-center self-end rounded-full border border-white/10 bg-white/5"
             >
               <ArrowRight size={16} />
-            </button>
+            </Link>
           </div>
         ))}
       </div>
