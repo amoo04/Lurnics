@@ -1,18 +1,21 @@
-import { Cloud, BarChart3, CreditCard, Code2, Users, ArrowRight } from "lucide-react";
+import { ArrowRight, Code2, Cloud, Shield, BarChart3, Cog, Database, Wrench } from "lucide-react";
+import { Link } from "react-router-dom";
+import OrbitVisual from "./OrbitVisual";
 
-const badges = [
-  { icon: Cloud, label: "Cloud", className: "left-0 top-12" },
-  { icon: BarChart3, label: "Analytics", className: "right-10 top-32" },
-  { icon: CreditCard, label: "Payments", className: "left-10 top-44" },
-  { icon: Code2, label: "API", className: "right-32 top-56" },
-  { icon: Users, label: "Automation", className: "left-32 top-72" },
+const nodes = [
+  { icon: Cloud, title: "Cloud Infra", subtitle: "Reliable • Secure" },
+  { icon: Database, title: "Databases", subtitle: "Scalable Storage" },
+  { icon: BarChart3, title: "Analytics", subtitle: "Real-time Insights" },
+  { icon: Shield, title: "Secure Backend", subtitle: "APIs • Auth • Data" },
+  { icon: Cog, title: "Automation", subtitle: "Workflows • Ops" },
+  { icon: Code2, title: "Web Apps", subtitle: "Fast • Scalable" },
 ];
 
 export default function Hero() {
   return (
-    <section className="grid items-center gap-12 px-20 py-16 md:grid-cols-2">
+    <section className="grid items-center gap-12 px-4 py-12 sm:px-8 md:grid-cols-2 md:px-20 md:py-16">
       <div>
-        <h1 className="text-5xl font-bold leading-tight md:text-6xl">
+        <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">
           Beyond Websites.
           <br />
           We Build Digital
@@ -26,35 +29,25 @@ export default function Hero() {
           and accelerate growth through software engineering, digital
           transformation, and intelligent business solutions.
         </p>
-        <div className="mt-8 flex gap-4">
-          <button
-            type="button"
-            className="rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-sm font-medium text-white"
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+          <Link
+            to="/contact"
+            className="rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-center text-sm font-medium text-white"
           >
             Book Strategy Session
-          </button>
-          <button
-            type="button"
-            className="flex items-center gap-2 rounded-md border border-gray-600 px-6 py-3 text-sm font-medium text-white"
+          </Link>
+          <Link
+            to="/case-studies"
+            className="flex items-center justify-center gap-2 rounded-md border border-gray-600 px-6 py-3 text-sm font-medium text-white"
           >
             View Case Studies
             <ArrowRight size={16} />
-          </button>
+          </Link>
         </div>
       </div>
 
-      <div className="relative hidden h-[420px] md:block">
-        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,_rgba(99,102,241,0.25),_transparent_70%)]" />
-        <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-indigo-500/30" />
-        {badges.map(({ icon: Icon, label, className }) => (
-          <div
-            key={label}
-            className={`absolute flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm backdrop-blur ${className}`}
-          >
-            <Icon size={16} />
-            {label}
-          </div>
-        ))}
+      <div className="-ml-6">
+        <OrbitVisual centerIcon={Wrench} nodes={nodes} />
       </div>
     </section>
   );

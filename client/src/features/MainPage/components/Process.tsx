@@ -52,7 +52,7 @@ export default function Process({
   steps = defaultSteps,
 }: ProcessProps) {
   return (
-    <section className="px-20 py-16">
+    <section className="px-4 sm:px-8 md:px-20 py-16">
       <div className="mb-12 text-center">
         <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
           {eyebrow}

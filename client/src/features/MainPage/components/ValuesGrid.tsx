@@ -10,7 +10,7 @@ const values = [
 
 export default function ValuesGrid() {
   return (
-    <section className="px-20 py-16">
+    <section className="px-4 sm:px-8 md:px-20 py-16">
       <div className="mb-12 text-center">
         <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
           Our Values
@@ -20,7 +20,7 @@ export default function ValuesGrid() {
         </h2>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-5">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
         {values.map(({ icon: Icon, title, description }) => (
           <div
             key={title}

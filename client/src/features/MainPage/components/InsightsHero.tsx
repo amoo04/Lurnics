@@ -1,8 +1,18 @@
-import { Search } from "lucide-react";
+import { Search, FileText, Code2, Share2, TrendingUp, Shield, Monitor, Rocket } from "lucide-react";
+import OrbitVisual from "./OrbitVisual";
+
+const nodes = [
+  { icon: Code2, title: "Engineering", subtitle: "Clean • Scalable" },
+  { icon: Share2, title: "Automation", subtitle: "Streamlined Ops" },
+  { icon: TrendingUp, title: "Business Strategy", subtitle: "Growth • Insight" },
+  { icon: Shield, title: "Infrastructure", subtitle: "Secure • Reliable" },
+  { icon: Monitor, title: "Productivity", subtitle: "Tools • Habits" },
+  { icon: Rocket, title: "Digital Transformation", subtitle: "Modern • Agile" },
+];
 
 export default function InsightsHero() {
   return (
-    <section className="grid items-center gap-12 px-20 py-16 md:grid-cols-2">
+    <section className="grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
       <div>
         <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
           Insights
@@ -28,8 +38,8 @@ export default function InsightsHero() {
         </div>
       </div>
 
-      <div className="flex h-64 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-sm text-gray-500 md:h-72">
-        Illustration placeholder
+      <div className="md:-ml-6">
+        <OrbitVisual centerIcon={FileText} nodes={nodes} />
       </div>
     </section>
   );

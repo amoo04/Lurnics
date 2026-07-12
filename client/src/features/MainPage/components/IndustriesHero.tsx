@@ -1,4 +1,19 @@
-import { Building2, Rocket, Users, Globe, ArrowRight } from "lucide-react";
+import {
+  Building2,
+  Rocket,
+  Users,
+  Globe,
+  ArrowRight,
+  ShoppingCart,
+  Landmark,
+  GraduationCap,
+  Building,
+  Factory,
+  Megaphone,
+  HeartPulse,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import OrbitVisual from "./OrbitVisual";
 
 const stats = [
   { icon: Building2, value: "15+", label: "Industries Served", description: "Across diverse sectors and business sizes" },
@@ -7,10 +22,21 @@ const stats = [
   { icon: Globe, value: "Global", label: "Impact", description: "Serving clients locally and internationally" },
 ];
 
+const nodes = [
+  { icon: ShoppingCart, title: "E-Commerce", subtitle: "Scalable stores" },
+  { icon: Landmark, title: "Fintech", subtitle: "Secure • Compliant" },
+  { icon: GraduationCap, title: "Education", subtitle: "E-learning platforms" },
+  { icon: Building, title: "Hospitality", subtitle: "Booking systems" },
+  { icon: Factory, title: "Manufacturing", subtitle: "Streamlined operations" },
+  { icon: Users, title: "Non-Profits", subtitle: "Mission-driven tools" },
+  { icon: Megaphone, title: "Marketing & Agencies", subtitle: "Tools that scale" },
+  { icon: HeartPulse, title: "Healthcare", subtitle: "Digital health solutions" },
+];
+
 export default function IndustriesHero() {
   return (
     <>
-      <section className="grid items-center gap-12 px-20 py-16 md:grid-cols-2">
+      <section className="grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
             Industries
@@ -23,8 +49,8 @@ export default function IndustriesHero() {
             understanding with engineering excellence to build solutions
             that drive efficiency, innovation, and growth.
           </p>
-          <button
-            type="button"
+          <Link
+            to="/contact"
             className="mt-8 flex items-center gap-2 text-sm font-medium text-indigo-300"
           >
             <span className="border-b border-indigo-400 pb-0.5">
@@ -33,17 +59,16 @@ export default function IndustriesHero() {
             <span className="flex h-7 w-7 items-center justify-center rounded-full border border-indigo-400/50">
               <ArrowRight size={14} />
             </span>
-          </button>
+          </Link>
         </div>
 
-        <div className="relative hidden h-[320px] md:block">
-          <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,_rgba(99,102,241,0.25),_transparent_70%)]" />
-          <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-indigo-500/30" />
+        <div className="md:-ml-6">
+          <OrbitVisual centerIcon={Globe} nodes={nodes} size={480} />
         </div>
       </section>
 
-      <section className="px-20 pb-10">
-        <div className="grid gap-6 rounded-xl border border-white/10 bg-white/[0.03] p-8 md:grid-cols-4">
+      <section className="px-4 sm:px-8 md:px-20 pb-10">
+        <div className="grid gap-6 rounded-xl border border-white/10 bg-white/[0.03] p-8 sm:grid-cols-2 md:grid-cols-4">
           {stats.map(({ icon: Icon, value, label, description }) => (
             <div key={label} className="flex gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-500/15 text-indigo-300">
