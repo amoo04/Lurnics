@@ -1,0 +1,38 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lurnics-backend",
+  "main": "src/worker.ts",
+  "compatibility_date": "2025-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "vars": {
+    "EMAIL_FROM": "noreply@lurnics.com",
+    "LEADS_EMAIL_FROM": "pitch@lurnics.com"
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lurnics-db",
+      // Run `npx wrangler d1 create lurnics-db` and paste the returned id here.
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+    }
+  ],
+
+  "send_email": [
+    {
+      "name": "SEB",
+      // The address you verified as a destination in Cloudflare Email Routing.
+      "destination_address": "pitch@lurnics.com"
+    }
+  ],
+
+  // Uncomment once R2 is actually wired up (lib/r2.ts is currently unused).
+  // "r2_buckets": [
+  //   { "binding": "BUCKET", "bucket_name": "lurnics-uploads" }
+  // ],
+
+  "observability": {
+    "enabled": true
+  }
+}
