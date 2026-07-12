@@ -220,6 +220,8 @@ export const invoices = sqliteTable(
       .references(() => clients.id, { onDelete: "restrict" }),
     projectId: text("project_id").references(() => projects.id, { onDelete: "set null" }),
     amount: real("amount").notNull(),
+    discount: real("discount").notNull().default(0),
+    tax: real("tax").notNull().default(0),
     dueDate: text("due_date").notNull(),
     status: text("status").notNull(),
     notes: text("notes"),
@@ -231,6 +233,24 @@ export const invoices = sqliteTable(
     index("invoices_project_id_idx").on(table.projectId),
     index("invoices_status_idx").on(table.status),
   ],
+);
+
+// ============================================
+// INVOICE_LINE_ITEMS
+// ============================================
+export const invoiceLineItems = sqliteTable(
+  "invoice_line_items",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    invoiceId: text("invoice_id")
+      .notNull()
+      .references(() => invoices.id, { onDelete: "cascade" }),
+    description: text("description").notNull(),
+    amount: real("amount").notNull(),
+  },
+  (table) => [index("invoice_line_items_invoice_id_idx").on(table.invoiceId)],
 );
 
 // ============================================
@@ -298,9 +318,8 @@ export const messages = sqliteTable(
     senderId: text("sender_id")
       .notNull()
       .references(() => users.id, { onDelete: "restrict" }),
-    receiverId: text("receiver_id")
-      .notNull()
-      .references(() => users.id, { onDelete: "restrict" }),
+    receiverId: text("receiver_id").references(() => users.id, { onDelete: "restrict" }),
+    clientId: text("client_id").references(() => clients.id, { onDelete: "set null" }),
     message: text("message").notNull(),
     readStatus: integer("read_status", { mode: "boolean" }).notNull().default(false),
     createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
@@ -308,6 +327,7 @@ export const messages = sqliteTable(
   (table) => [
     index("messages_sender_id_idx").on(table.senderId),
     index("messages_receiver_id_idx").on(table.receiverId),
+    index("messages_client_id_idx").on(table.clientId),
     index("messages_created_at_idx").on(table.createdAt),
   ],
 );
@@ -534,6 +554,32 @@ export const activityLogs = sqliteTable(
 );
 
 // ============================================
+// APP_SETTINGS
+// ============================================
+export const appSettings = sqliteTable("app_settings", {
+  id: text("id").primaryKey().default("default"),
+  data: text("data", { mode: "json" }).notNull().default("{}"),
+  updatedAt: text("updated_at"),
+});
+
+// ============================================
+// INTEGRATION_CONFIGS
+// ============================================
+export const integrationConfigs = sqliteTable(
+  "integration_configs",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    key: text("key").notNull().unique(),
+    config: text("config", { mode: "json" }).notNull().default("{}"),
+    connected: integer("connected", { mode: "boolean" }).notNull().default(false),
+    updatedAt: text("updated_at"),
+  },
+  (table) => [uniqueIndex("integration_configs_key_idx").on(table.key)],
+);
+
+// ============================================
 // RELATIONS
 // ============================================
 
@@ -577,6 +623,7 @@ export const clientsRelations = relations(clients, ({ many }) => ({
   maintenanceContracts: many(maintenanceContracts),
   supportTickets: many(supportTickets),
   documents: many(documents),
+  messages: many(messages),
 }));
 
 export const projectsRelations = relations(projects, ({ one, many }) => ({
@@ -597,6 +644,11 @@ export const invoicesRelations = relations(invoices, ({ one, many }) => ({
   client: one(clients, { fields: [invoices.clientId], references: [clients.id] }),
   project: one(projects, { fields: [invoices.projectId], references: [projects.id] }),
   payments: many(payments),
+  lineItems: many(invoiceLineItems),
+}));
+
+export const invoiceLineItemsRelations = relations(invoiceLineItems, ({ one }) => ({
+  invoice: one(invoices, { fields: [invoiceLineItems.invoiceId], references: [invoices.id] }),
 }));
 
 export const paymentsRelations = relations(payments, ({ one }) => ({
@@ -619,6 +671,7 @@ export const messagesRelations = relations(messages, ({ one }) => ({
     references: [users.id],
     relationName: "receivedMessages",
   }),
+  client: one(clients, { fields: [messages.clientId], references: [clients.id] }),
 }));
 
 export const supportTicketsRelations = relations(supportTickets, ({ one }) => ({
@@ -684,6 +737,9 @@ export type NewProjectMemberRow = typeof projectMembers.$inferInsert;
 export type InvoiceRow = typeof invoices.$inferSelect;
 export type NewInvoiceRow = typeof invoices.$inferInsert;
 
+export type InvoiceLineItemRow = typeof invoiceLineItems.$inferSelect;
+export type NewInvoiceLineItemRow = typeof invoiceLineItems.$inferInsert;
+
 export type PaymentRow = typeof payments.$inferSelect;
 export type NewPaymentRow = typeof payments.$inferInsert;
 
@@ -719,3 +775,9 @@ export type NewSolutionRow = typeof solutions.$inferInsert;
 
 export type ActivityLogRow = typeof activityLogs.$inferSelect;
 export type NewActivityLogRow = typeof activityLogs.$inferInsert;
+
+export type AppSettingsRow = typeof appSettings.$inferSelect;
+export type NewAppSettingsRow = typeof appSettings.$inferInsert;
+
+export type IntegrationConfigRow = typeof integrationConfigs.$inferSelect;
+export type NewIntegrationConfigRow = typeof integrationConfigs.$inferInsert;

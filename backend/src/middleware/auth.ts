@@ -51,6 +51,7 @@ function extractToken(c: Context<AppEnv>): string | undefined {
 function applyPayload(c: Context<AppEnv>, payload: JWTPayload) {
   c.set("userId", payload.sub);
   c.set("userEmail", payload.email);
+  c.set("userName", payload.name);
   c.set("userRoles", payload.roles);
   c.set("userPermissions", payload.permissions);
   c.set("userRole", payload.roles[0] ?? "");
