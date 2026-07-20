@@ -17,6 +17,7 @@ export const listTicketsQuerySchema = z.object({
   limit: z.string().optional(),
   status: z.string().optional(),
   priority: z.string().optional(),
+  clientId: z.string().optional(),
 });
 
 export type CreateTicketInput = z.infer<typeof createTicketSchema>;

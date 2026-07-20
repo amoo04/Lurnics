@@ -426,6 +426,7 @@ export const leads = sqliteTable(
     phone: text("phone"),
     budgetRange: text("budget_range"),
     source: text("source"),
+    service: text("service"),
     status: text("status").notNull().default("new"),
     createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
   },

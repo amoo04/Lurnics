@@ -14,6 +14,7 @@ export async function listTickets(query: {
   limit?: string;
   status?: string;
   priority?: string;
+  clientId?: string;
 }) {
   const pagination = parsePagination(query);
   const { items, total } = await findTickets(
@@ -21,6 +22,7 @@ export async function listTickets(query: {
     query.priority,
     pagination.limit,
     pagination.offset,
+    query.clientId,
   );
   return paginatedResult(items, total, pagination);
 }

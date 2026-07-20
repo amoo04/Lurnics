@@ -4,6 +4,7 @@ import { z } from "zod";
 import type { AppEnv } from "../../lib/hono-env.js";
 import { ValidationError } from "../../middleware/error.js";
 import { authenticate } from "../../middleware/auth.js";
+import { getBindings } from "../../lib/env.js";
 import { login } from "./auth.service.js";
 
 const loginSchema = z.object({
@@ -25,7 +26,7 @@ authRoutes.post("/login", async (c) => {
   setCookie(c, "access_token", token, {
     httpOnly: true,
     sameSite: "Lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: getBindings().NODE_ENV === "production",
     path: "/",
     maxAge: 60 * 60 * 24,
   });

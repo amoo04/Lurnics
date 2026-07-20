@@ -19,7 +19,7 @@ export async function findActivityLogs(
       limit,
       offset,
       orderBy: desc(activityLogs.createdAt),
-      with: { user: true },
+      with: { user: { columns: { passwordHash: false } } },
     }),
     db.$count(activityLogs, where),
   ]);

@@ -21,7 +21,7 @@ export async function findDocuments(
       limit,
       offset,
       orderBy: desc(documents.uploadedAt),
-      with: { client: true, project: true, uploader: true },
+      with: { client: true, project: true, uploader: { columns: { passwordHash: false } } },
     }),
     db.$count(documents, where),
   ]);

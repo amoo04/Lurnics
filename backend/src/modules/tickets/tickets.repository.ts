@@ -7,10 +7,12 @@ export async function findTickets(
   priority: string | undefined,
   limit: number,
   offset: number,
+  clientId?: string,
 ) {
   const conditions = [];
   if (status) conditions.push(eq(supportTickets.status, status));
   if (priority) conditions.push(eq(supportTickets.priority, priority));
+  if (clientId) conditions.push(eq(supportTickets.clientId, clientId));
   const where = conditions.length ? and(...conditions) : undefined;
 
   const [items, total] = await Promise.all([
@@ -19,7 +21,7 @@ export async function findTickets(
       limit,
       offset,
       orderBy: desc(supportTickets.createdAt),
-      with: { client: true, project: true, assignee: true },
+      with: { client: true, project: true, assignee: { columns: { passwordHash: false } } },
     }),
     db.$count(supportTickets, where),
   ]);
@@ -30,7 +32,7 @@ export async function findTickets(
 export async function findTicketById(id: string) {
   return db.query.supportTickets.findFirst({
     where: eq(supportTickets.id, id),
-    with: { client: true, project: true, assignee: true },
+    with: { client: true, project: true, assignee: { columns: { passwordHash: false } } },
   });
 }
 

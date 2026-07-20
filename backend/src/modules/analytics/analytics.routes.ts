@@ -3,7 +3,7 @@ import type { AppEnv } from "../../lib/hono-env.js";
 import { ValidationError } from "../../middleware/error.js";
 import { authenticate, requirePermission } from "../../middleware/auth.js";
 import { analyticsQuerySchema } from "./analytics.schema.js";
-import { getLeadsFunnel, getLeadsOverTime } from "./analytics.service.js";
+import { getLeadsBySource, getLeadsByService, getLeadsFunnel, getLeadsOverTime } from "./analytics.service.js";
 
 export const analyticsRoutes = new Hono<AppEnv>();
 
@@ -22,4 +22,14 @@ analyticsRoutes.get("/leads-over-time", requirePermission("analytics:read"), asy
 
   const series = await getLeadsOverTime(parsed.data);
   return c.json({ success: true, data: series });
+});
+
+analyticsRoutes.get("/leads-by-source", requirePermission("analytics:read"), async (c) => {
+  const bySource = await getLeadsBySource();
+  return c.json({ success: true, data: bySource });
+});
+
+analyticsRoutes.get("/leads-by-service", requirePermission("analytics:read"), async (c) => {
+  const byService = await getLeadsByService();
+  return c.json({ success: true, data: byService });
 });

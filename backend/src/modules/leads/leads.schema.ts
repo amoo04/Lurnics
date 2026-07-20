@@ -7,6 +7,7 @@ export const createLeadSchema = z.object({
   phone: z.string().optional(),
   budgetRange: z.string().optional(),
   source: z.string().optional(),
+  service: z.string().optional(),
 });
 
 export const updateLeadSchema = z.object({
