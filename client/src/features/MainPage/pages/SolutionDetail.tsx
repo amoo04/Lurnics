@@ -13,19 +13,19 @@ export default function SolutionDetail() {
     <>
       <Navbar />
       <section className="px-4 sm:px-8 md:px-20 py-16">
-        <Link to="/solutions" className="flex items-center gap-1 text-sm text-indigo-400">
+        <Link to="/solutions" className="flex items-center gap-1 text-sm text-orange-500 hover:text-orange-600">
           <ArrowLeft size={14} />
           Back to solutions
         </Link>
 
         {loading && <p className="mt-8 text-sm text-gray-500">Loading solution…</p>}
-        {error && <p className="mt-8 text-sm text-red-400">{error}</p>}
+        {error && <p className="mt-8 text-sm text-red-500">{error}</p>}
 
         {solution && (
           <div className="mt-8 max-w-3xl">
-            <h1 className="mt-3 text-4xl font-bold leading-tight">{solution.name}</h1>
+            <h1 className="mt-3 text-4xl font-bold leading-tight text-gray-900">{solution.name}</h1>
             {solution.description && (
-              <p className="mt-4 text-lg text-gray-400">{solution.description}</p>
+              <p className="mt-4 text-lg text-gray-600">{solution.description}</p>
             )}
           </div>
         )}

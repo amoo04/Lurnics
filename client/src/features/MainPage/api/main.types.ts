@@ -50,4 +50,5 @@ export interface CreateLeadInput {
   phone?: string;
   budgetRange?: string;
   source?: string;
+  service?: string;
 }

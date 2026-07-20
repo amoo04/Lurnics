@@ -18,8 +18,8 @@ export default function CaseStudyFilters({
         onClick={() => onSelect(undefined)}
         className={`rounded-md border px-4 py-2 text-sm ${
           activeIndustryId === undefined
-            ? "border-indigo-400/40 bg-indigo-500/20 text-white"
-            : "border-white/10 text-gray-300 hover:bg-white/5"
+            ? "border-gray-900 bg-gray-900 text-white"
+            : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
         }`}
       >
         All Case Studies
@@ -31,8 +31,8 @@ export default function CaseStudyFilters({
           onClick={() => onSelect(industry.id)}
           className={`rounded-md border px-4 py-2 text-sm ${
             activeIndustryId === industry.id
-              ? "border-indigo-400/40 bg-indigo-500/20 text-white"
-              : "border-white/10 text-gray-300 hover:bg-white/5"
+              ? "border-gray-900 bg-gray-900 text-white"
+              : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
           }`}
         >
           {industry.name}

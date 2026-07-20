@@ -13,25 +13,25 @@ export default function CaseStudyDetail() {
     <>
       <Navbar />
       <section className="px-4 sm:px-8 md:px-20 py-16">
-        <Link to="/case-studies" className="flex items-center gap-1 text-sm text-indigo-400">
+        <Link to="/case-studies" className="flex items-center gap-1 text-sm text-orange-500 hover:text-orange-600">
           <ArrowLeft size={14} />
           Back to case studies
         </Link>
 
         {loading && <p className="mt-8 text-sm text-gray-500">Loading case study…</p>}
-        {error && <p className="mt-8 text-sm text-red-400">{error}</p>}
+        {error && <p className="mt-8 text-sm text-red-500">{error}</p>}
 
         {caseStudy && (
           <div className="mt-8 max-w-3xl">
             {caseStudy.industry && (
-              <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+              <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
                 {caseStudy.industry.name}
               </p>
             )}
-            <h1 className="mt-3 text-4xl font-bold leading-tight">{caseStudy.title}</h1>
-            {caseStudy.summary && <p className="mt-4 text-lg text-gray-400">{caseStudy.summary}</p>}
+            <h1 className="mt-3 text-4xl font-bold leading-tight text-gray-900">{caseStudy.title}</h1>
+            {caseStudy.summary && <p className="mt-4 text-lg text-gray-600">{caseStudy.summary}</p>}
 
-            <div className="mt-8 space-y-4 whitespace-pre-line text-sm leading-relaxed text-gray-300">
+            <div className="mt-8 space-y-4 whitespace-pre-line text-sm leading-relaxed text-gray-600">
               {caseStudy.content}
             </div>
           </div>
