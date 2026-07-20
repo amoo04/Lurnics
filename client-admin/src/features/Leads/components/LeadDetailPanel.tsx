@@ -40,27 +40,27 @@ export default function LeadDetailPanel({ lead, onChanged, onDeleted }: LeadDeta
 
   return (
     <div className="w-full lg:w-80 lg:shrink-0 space-y-4">
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-        <p className="font-semibold">{lead.contactPerson}</p>
-        <p className="text-sm text-gray-400">{lead.companyName}</p>
+      <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+        <p className="font-semibold text-gray-900">{lead.contactPerson}</p>
+        <p className="text-sm text-gray-500">{lead.companyName}</p>
 
-        <div className="mt-4 space-y-2 text-sm text-gray-300">
+        <div className="mt-4 space-y-2 text-sm text-gray-600">
           <p className="flex items-center gap-2">
-            <Mail size={14} className="text-indigo-300" />
+            <Mail size={14} className="text-orange-500" />
             {lead.email}
           </p>
           {lead.phone && (
             <p className="flex items-center gap-2">
-              <Phone size={14} className="text-indigo-300" />
+              <Phone size={14} className="text-orange-500" />
               {lead.phone}
             </p>
           )}
           <p className="flex items-center gap-2">
-            <Building2 size={14} className="text-indigo-300" />
+            <Building2 size={14} className="text-orange-500" />
             {lead.companyName}
           </p>
           <p className="flex items-center gap-2">
-            <Tag size={14} className="text-indigo-300" />
+            <Tag size={14} className="text-orange-500" />
             Source: {lead.source ?? "Unknown"}
           </p>
         </div>
@@ -71,38 +71,38 @@ export default function LeadDetailPanel({ lead, onChanged, onDeleted }: LeadDeta
             value={lead.status}
             disabled={saving}
             onChange={(e) => handleStageChange(e.target.value as LeadStatus)}
-            className="w-full rounded-md border border-white/10 bg-[#0b0f1a] px-3 py-2 text-sm text-gray-300 outline-none"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
           >
             {LEAD_STAGES.map(({ value, label }) => (
-              <option key={value} value={value} className="bg-[#0b0f1a]">
+              <option key={value} value={value}>
                 {label}
               </option>
             ))}
           </select>
-          {error && <p className="mt-1.5 text-xs text-red-400">{error}</p>}
+          {error && <p className="mt-1.5 text-xs text-red-500">{error}</p>}
         </div>
 
         {lead.budgetRange && (
           <div className="mt-4">
             <p className="text-xs text-gray-500">Potential Value</p>
-            <p className="text-lg font-bold">{lead.budgetRange}</p>
+            <p className="text-lg font-bold text-gray-900">{lead.budgetRange}</p>
           </div>
         )}
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-        <p className="mb-3 text-sm font-semibold">Outreach</p>
+      <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+        <p className="mb-3 text-sm font-semibold text-gray-900">Outreach</p>
         <div className="space-y-2">
           <Link
             to={`/leads/${lead.id}/email`}
-            className="flex w-full items-center justify-center gap-2 rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-2 text-sm font-medium text-white"
+            className="flex w-full items-center justify-center gap-2 rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-black"
           >
             <Mail size={14} />
             Draft Pitch Email
           </Link>
           <Link
             to={`/leads/${lead.id}/proposal`}
-            className="flex w-full items-center justify-center gap-2 rounded-md border border-white/10 px-3 py-2 text-sm text-gray-300"
+            className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 hover:bg-gray-50"
           >
             <FileText size={14} />
             Draft Proposal
@@ -117,7 +117,7 @@ export default function LeadDetailPanel({ lead, onChanged, onDeleted }: LeadDeta
       <button
         type="button"
         onClick={handleDelete}
-        className="flex w-full items-center justify-center gap-2 rounded-md border border-red-500/20 px-3 py-2 text-sm text-red-400 hover:bg-red-500/10"
+        className="flex w-full items-center justify-center gap-2 rounded-md border border-red-200 px-3 py-2 text-sm text-red-500 hover:bg-red-50"
       >
         <Trash2 size={14} />
         Delete Lead

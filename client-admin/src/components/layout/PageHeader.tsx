@@ -13,7 +13,7 @@ export default function PageHeader({ title, subtitle, breadcrumb, action }: Page
     <div className="flex flex-col gap-4 px-4 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
       <div>
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-xl font-semibold sm:text-2xl">{title}</h1>
+          <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl">{title}</h1>
           {breadcrumb && (
             <div className="flex items-center gap-1.5 text-sm text-gray-500">
               {breadcrumb.map((item, i) => (

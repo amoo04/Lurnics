@@ -15,8 +15,8 @@ interface InvoiceWithPayments {
 }
 
 const STATUS_COLOR: Record<string, string> = {
-  active: "bg-green-500/20 text-green-300",
-  inactive: "bg-gray-500/20 text-gray-300",
+  active: "bg-green-50 text-green-600",
+  inactive: "bg-gray-100 text-gray-600",
 };
 
 const quickActions = [
@@ -45,7 +45,7 @@ export default function ClientDetailPanel({ client }: { client: Client }) {
 
   return (
     <div className="w-full lg:w-80 lg:shrink-0 space-y-4">
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+      <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
         <div className="flex items-center gap-3">
           <span
             className={`flex h-12 w-12 items-center justify-center rounded-lg text-sm font-bold ${avatarColorFor(client.companyName)}`}
@@ -54,7 +54,7 @@ export default function ClientDetailPanel({ client }: { client: Client }) {
           </span>
           <div>
             <div className="flex items-center gap-2">
-              <p className="font-semibold">{client.companyName}</p>
+              <p className="font-semibold text-gray-900">{client.companyName}</p>
               <span className={`rounded-full px-2 py-0.5 text-xs ${STATUS_COLOR[client.status]}`}>
                 {client.status}
               </span>
@@ -63,7 +63,7 @@ export default function ClientDetailPanel({ client }: { client: Client }) {
           </div>
         </div>
 
-        <div className="mt-4 space-y-2 text-sm text-gray-400">
+        <div className="mt-4 space-y-2 text-sm text-gray-600">
           {client.email && (
             <p className="flex items-center gap-2">
               <Mail size={14} />
@@ -85,24 +85,24 @@ export default function ClientDetailPanel({ client }: { client: Client }) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-        <p className="mb-3 text-sm font-semibold">Summary</p>
+      <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+        <p className="mb-3 text-sm font-semibold text-gray-900">Summary</p>
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <p className="text-xs text-gray-500">Total Revenue</p>
-            <p className="font-semibold">{formatCurrency(totalRevenue)}</p>
+            <p className="font-semibold text-gray-900">{formatCurrency(totalRevenue)}</p>
           </div>
           <div>
             <p className="text-xs text-gray-500">Outstanding</p>
-            <p className="font-semibold text-orange-400">{formatCurrency(outstanding)}</p>
+            <p className="font-semibold text-orange-500">{formatCurrency(outstanding)}</p>
           </div>
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+      <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
         <div className="mb-3 flex items-center justify-between">
-          <p className="text-sm font-semibold">Recent Projects</p>
-          <Link to="/projects" className="text-xs text-indigo-400">
+          <p className="text-sm font-semibold text-gray-900">Recent Projects</p>
+          <Link to="/projects" className="text-xs text-orange-500">
             View All
           </Link>
         </div>
@@ -111,14 +111,14 @@ export default function ClientDetailPanel({ client }: { client: Client }) {
           {(projectsData?.items ?? []).map((p) => (
             <div key={p.id}>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-200">{p.projectName}</span>
-                <span className="rounded-full bg-indigo-500/20 px-2 py-0.5 text-xs capitalize text-indigo-300">
+                <span className="text-gray-900">{p.projectName}</span>
+                <span className="rounded-full bg-orange-50 px-2 py-0.5 text-xs capitalize text-orange-500">
                   {p.status}
                 </span>
               </div>
               <div className="mt-1.5 flex items-center gap-2">
-                <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
-                  <div className="h-full rounded-full bg-indigo-400" style={{ width: `${p.progress}%` }} />
+                <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-gray-100">
+                  <div className="h-full rounded-full bg-orange-500" style={{ width: `${p.progress}%` }} />
                 </div>
                 <span className="text-xs text-gray-500">{p.progress}%</span>
               </div>
@@ -127,16 +127,16 @@ export default function ClientDetailPanel({ client }: { client: Client }) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-        <p className="mb-3 text-sm font-semibold">Quick Actions</p>
+      <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+        <p className="mb-3 text-sm font-semibold text-gray-900">Quick Actions</p>
         <div className="grid grid-cols-2 gap-2">
           {quickActions.map(({ icon: Icon, label, to }) => (
             <Link
               key={label}
               to={to}
-              className="flex items-center gap-2 rounded-md border border-white/10 px-3 py-2 text-xs text-gray-300 hover:bg-white/5"
+              className="flex items-center gap-2 rounded-md border border-gray-200 px-3 py-2 text-xs text-gray-600 hover:bg-gray-50"
             >
-              <Icon size={14} className="text-indigo-300" />
+              <Icon size={14} className="text-orange-500" />
               {label}
             </Link>
           ))}

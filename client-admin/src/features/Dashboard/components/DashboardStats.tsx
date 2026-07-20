@@ -19,7 +19,7 @@ export default function DashboardStats() {
   const conversionRate = totalFunnelLeads > 0 ? ((won / totalFunnelLeads) * 100).toFixed(1) : null;
 
   const stats = [
-    { icon: FolderKanban, value: totalProjects, label: "Total Projects", color: "#818cf8" },
+    { icon: FolderKanban, value: totalProjects, label: "Total Projects", color: "#f97316" },
     { icon: Users, value: totalClients, label: "Total Clients", color: "#34d399" },
     {
       icon: DollarSign,
@@ -27,24 +27,24 @@ export default function DashboardStats() {
       label: "Revenue (6mo)",
       color: "#facc15",
     },
-    { icon: Target, value: totalLeads, label: "Leads", color: "#fb923c" },
+    { icon: Target, value: totalLeads, label: "Leads", color: "#60a5fa" },
     {
       icon: Target,
       value: conversionRate !== null ? `${conversionRate}%` : null,
       label: "Lead → Won Rate",
-      color: "#a78bfa",
+      color: "#f97316",
     },
   ];
 
   return (
     <div className="grid grid-cols-1 gap-4 px-4 pb-6 sm:grid-cols-2 sm:gap-6 sm:px-8 md:grid-cols-5">
       {stats.map(({ icon: Icon, value, label, color }) => (
-        <div key={label} className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: `${color}26`, color }}>
+        <div key={label} className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: `${color}1a`, color }}>
             <Icon size={18} />
           </div>
-          <p className="mt-3 text-xl font-bold">{value ?? "—"}</p>
-          <p className="text-sm text-gray-400">{label}</p>
+          <p className="mt-3 text-xl font-bold text-gray-900">{value ?? "—"}</p>
+          <p className="text-sm text-gray-500">{label}</p>
         </div>
       ))}
     </div>

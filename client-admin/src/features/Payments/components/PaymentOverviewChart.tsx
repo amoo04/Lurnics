@@ -16,9 +16,9 @@ export default function PaymentOverviewChart({ payments }: { payments: Payment[]
   const data = Array.from(byDate.values()).sort((a, b) => a.date.localeCompare(b.date));
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
+    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="font-semibold">Payment Overview</h3>
+        <h3 className="font-semibold text-gray-900">Payment Overview</h3>
       </div>
 
       {data.length === 0 ? (
@@ -27,7 +27,7 @@ export default function PaymentOverviewChart({ payments }: { payments: Payment[]
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
-              <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
+              <CartesianGrid stroke="#e5e7eb" vertical={false} />
               <XAxis dataKey="date" stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
               <YAxis
                 stroke="#6b7280"
@@ -37,12 +37,12 @@ export default function PaymentOverviewChart({ payments }: { payments: Payment[]
                 tickFormatter={(v) => `₦${(v / 1_000_000).toFixed(1)}M`}
               />
               <Tooltip
-                contentStyle={{ background: "#0f1024", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8 }}
-                labelStyle={{ color: "#e5e7eb" }}
+                contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }}
+                labelStyle={{ color: "#111827" }}
                 formatter={(value) => `₦${Number(value).toLocaleString()}`}
               />
               <Legend wrapperStyle={{ fontSize: 12 }} />
-              <Line type="monotone" dataKey="received" name="Received" stroke="#34d399" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="received" name="Received" stroke="#f97316" strokeWidth={2} dot={false} />
               <Line type="monotone" dataKey="pending" name="Pending" stroke="#facc15" strokeWidth={2} dot={false} />
               <Line type="monotone" dataKey="failed" name="Failed" stroke="#f87171" strokeWidth={2} dot={false} />
             </LineChart>

@@ -16,11 +16,11 @@ export default function Analytics() {
         <Topbar />
         <PageHeader
           title="Analytics"
-          subtitle="Track traffic, lead generation, and conversion performance."
+          subtitle="Track lead generation, sources, and conversion performance."
           action={
             <button
               type="button"
-              className="flex items-center gap-2 rounded-md border border-white/10 px-4 py-2 text-sm text-gray-300 hover:bg-white/5"
+              className="flex items-center gap-2 rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-900 hover:bg-gray-50"
             >
               <Download size={16} />
               Export Report

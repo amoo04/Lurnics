@@ -53,10 +53,10 @@ export default function ProjectCreateForm({ onCreated, onClose }: { onCreated: (
 
   return (
     <div className="w-full lg:w-80 lg:shrink-0 px-4 sm:px-0">
-      <form onSubmit={handleSubmit} className="rounded-xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+      <form onSubmit={handleSubmit} className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm space-y-3">
         <div className="flex items-center justify-between">
-          <p className="font-semibold">Add Project</p>
-          <button type="button" onClick={onClose} className="text-gray-500 hover:text-white">
+          <p className="font-semibold text-gray-900">Add Project</p>
+          <button type="button" onClick={onClose} className="text-gray-500 hover:text-gray-900">
             <X size={16} />
           </button>
         </div>
@@ -65,11 +65,11 @@ export default function ProjectCreateForm({ onCreated, onClose }: { onCreated: (
           required
           value={clientId}
           onChange={(e) => setClientId(e.target.value)}
-          className="w-full rounded-md border border-white/10 bg-[#0b0f1a] px-3 py-2 text-sm text-gray-300 outline-none"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
         >
           <option value="">Select client…</option>
           {(clientsData?.items ?? []).map((c) => (
-            <option key={c.id} value={c.id} className="bg-[#0b0f1a]">
+            <option key={c.id} value={c.id}>
               {c.companyName}
             </option>
           ))}
@@ -79,22 +79,22 @@ export default function ProjectCreateForm({ onCreated, onClose }: { onCreated: (
           placeholder="Project name"
           value={projectName}
           onChange={(e) => setProjectName(e.target.value)}
-          className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm outline-none placeholder:text-gray-500"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
         />
         <input
           required
           placeholder="Project type (e.g. Web App)"
           value={projectType}
           onChange={(e) => setProjectType(e.target.value)}
-          className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm outline-none placeholder:text-gray-500"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
         />
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="w-full rounded-md border border-white/10 bg-[#0b0f1a] px-3 py-2 text-sm text-gray-300 outline-none"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
         >
           {PROJECT_STATUSES.map((s) => (
-            <option key={s} value={s} className="bg-[#0b0f1a] capitalize">
+            <option key={s} value={s} className="capitalize">
               {s}
             </option>
           ))}
@@ -104,21 +104,21 @@ export default function ProjectCreateForm({ onCreated, onClose }: { onCreated: (
           placeholder="Budget (optional)"
           value={budget}
           onChange={(e) => setBudget(e.target.value)}
-          className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm outline-none placeholder:text-gray-500"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
         />
         <input
           type="date"
           value={dueDate}
           onChange={(e) => setDueDate(e.target.value)}
-          className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm text-gray-300 outline-none"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
         />
 
-        {error && <p className="text-xs text-red-400">{error}</p>}
+        {error && <p className="text-xs text-red-500">{error}</p>}
 
         <button
           type="submit"
           disabled={submitting}
-          className="w-full rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-2 text-sm font-medium text-white disabled:opacity-60"
+          className="w-full rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-black disabled:opacity-60"
         >
           {submitting ? "Creating…" : "Create Project"}
         </button>

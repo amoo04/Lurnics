@@ -52,10 +52,10 @@ export default function InvoiceCreateForm({ onCreated, onClose }: { onCreated: (
 
   return (
     <div className="mb-6 px-4 sm:px-8">
-      <form onSubmit={handleSubmit} className="max-w-2xl rounded-xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+      <form onSubmit={handleSubmit} className="max-w-2xl rounded-xl border border-gray-200 bg-white p-5 shadow-sm space-y-3">
         <div className="flex items-center justify-between">
-          <p className="font-semibold">Create Invoice</p>
-          <button type="button" onClick={onClose} className="text-gray-500 hover:text-white">
+          <p className="font-semibold text-gray-900">Create Invoice</p>
+          <button type="button" onClick={onClose} className="text-gray-500 hover:text-gray-900">
             <X size={16} />
           </button>
         </div>
@@ -66,17 +66,17 @@ export default function InvoiceCreateForm({ onCreated, onClose }: { onCreated: (
             placeholder="Invoice number"
             value={invoiceNumber}
             onChange={(e) => setInvoiceNumber(e.target.value)}
-            className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm outline-none placeholder:text-gray-500"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
           />
           <select
             required
             value={clientId}
             onChange={(e) => setClientId(e.target.value)}
-            className="w-full rounded-md border border-white/10 bg-[#0b0f1a] px-3 py-2 text-sm text-gray-300 outline-none"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
           >
             <option value="">Select client…</option>
             {(clientsData?.items ?? []).map((c) => (
-              <option key={c.id} value={c.id} className="bg-[#0b0f1a]">
+              <option key={c.id} value={c.id}>
                 {c.companyName}
               </option>
             ))}
@@ -86,15 +86,15 @@ export default function InvoiceCreateForm({ onCreated, onClose }: { onCreated: (
             type="date"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
-            className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm text-gray-300 outline-none"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
           />
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as InvoiceStatus)}
-            className="w-full rounded-md border border-white/10 bg-[#0b0f1a] px-3 py-2 text-sm text-gray-300 outline-none"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
           >
             {(["draft", "pending", "paid", "overdue"] as InvoiceStatus[]).map((s) => (
-              <option key={s} value={s} className="bg-[#0b0f1a] capitalize">
+              <option key={s} value={s} className="capitalize">
                 {s}
               </option>
             ))}
@@ -102,7 +102,7 @@ export default function InvoiceCreateForm({ onCreated, onClose }: { onCreated: (
         </div>
 
         <div>
-          <p className="mb-1.5 text-sm text-gray-300">Line Items</p>
+          <p className="mb-1.5 text-sm text-gray-600">Line Items</p>
           <div className="space-y-2">
             {lineItems.map((item, i) => (
               <div key={i} className="flex items-center gap-2">
@@ -110,19 +110,19 @@ export default function InvoiceCreateForm({ onCreated, onClose }: { onCreated: (
                   placeholder="Description"
                   value={item.description}
                   onChange={(e) => updateLineItem(i, { description: e.target.value })}
-                  className="flex-1 rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm outline-none placeholder:text-gray-500"
+                  className="flex-1 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
                 />
                 <input
                   type="number"
                   placeholder="Amount"
                   value={item.amount || ""}
                   onChange={(e) => updateLineItem(i, { amount: Number(e.target.value) })}
-                  className="w-28 rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm outline-none placeholder:text-gray-500"
+                  className="w-28 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
                 />
                 <button
                   type="button"
                   onClick={() => setLineItems((prev) => prev.filter((_, idx) => idx !== i))}
-                  className="text-gray-500 hover:text-red-400"
+                  className="text-gray-500 hover:text-red-500"
                 >
                   <Trash2 size={14} />
                 </button>
@@ -132,7 +132,7 @@ export default function InvoiceCreateForm({ onCreated, onClose }: { onCreated: (
           <button
             type="button"
             onClick={() => setLineItems((prev) => [...prev, { description: "", amount: 0 }])}
-            className="mt-2 flex items-center gap-1 text-xs text-indigo-400"
+            className="mt-2 flex items-center gap-1 text-xs text-orange-500"
           >
             <Plus size={12} />
             Add line item
@@ -145,14 +145,14 @@ export default function InvoiceCreateForm({ onCreated, onClose }: { onCreated: (
             placeholder="Discount"
             value={discount}
             onChange={(e) => setDiscount(e.target.value)}
-            className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm outline-none placeholder:text-gray-500"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
           />
           <input
             type="number"
             placeholder="Tax"
             value={tax}
             onChange={(e) => setTax(e.target.value)}
-            className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm outline-none placeholder:text-gray-500"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
           />
         </div>
 
@@ -161,15 +161,15 @@ export default function InvoiceCreateForm({ onCreated, onClose }: { onCreated: (
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={2}
-          className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm outline-none placeholder:text-gray-500"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
         />
 
-        {error && <p className="text-xs text-red-400">{error}</p>}
+        {error && <p className="text-xs text-red-500">{error}</p>}
 
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+          className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-black disabled:opacity-60"
         >
           {submitting ? "Creating…" : "Create Invoice"}
         </button>

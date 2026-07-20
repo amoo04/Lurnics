@@ -4,13 +4,16 @@ import Sidebar from "../../../components/layout/Sidebar";
 import Topbar from "../../../components/layout/Topbar";
 import PageHeader from "../../../components/layout/PageHeader";
 import MessagesStats from "../components/MessagesStats";
-import ConversationsList, { conversations } from "../components/ConversationsList";
+import ConversationsList from "../components/ConversationsList";
 import ChatWindow from "../components/ChatWindow";
 import ConversationDetailsPanel from "../components/ConversationDetailsPanel";
+import { useConversations } from "../hooks/useMessages";
 
 export default function Messages() {
-  const [selectedId, setSelectedId] = useState(conversations[0].id);
-  const selected = conversations.find((c) => c.id === selectedId) ?? conversations[0];
+  const { data, loading, error } = useConversations();
+  const conversations = data ?? [];
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+  const selected = conversations.find((c) => c.clientId === selectedClientId) ?? conversations[0] ?? null;
 
   return (
     <div className="flex">
@@ -24,7 +27,7 @@ export default function Messages() {
           action={
             <button
               type="button"
-              className="flex items-center gap-2 rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2 text-sm font-medium text-white"
+              className="flex items-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-black"
             >
               <Plus size={16} />
               New Message
@@ -32,12 +35,26 @@ export default function Messages() {
             </button>
           }
         />
-        <MessagesStats />
+        <MessagesStats conversations={conversations} loading={loading} />
 
         <div className="flex flex-col gap-6 px-4 pb-8 sm:px-8 lg:flex-row">
-          <ConversationsList selectedId={selectedId} onSelect={setSelectedId} />
-          <ChatWindow conversation={selected} />
-          <ConversationDetailsPanel conversation={selected} />
+          <ConversationsList
+            conversations={conversations}
+            loading={loading}
+            error={error}
+            selectedId={selected?.clientId ?? null}
+            onSelect={setSelectedClientId}
+          />
+          {selected ? (
+            <>
+              <ChatWindow conversation={selected} />
+              <ConversationDetailsPanel conversation={selected} />
+            </>
+          ) : (
+            <div className="flex flex-1 items-center justify-center rounded-xl border border-gray-200 bg-white text-sm text-gray-500 shadow-sm">
+              {loading ? "Loading conversations…" : error ? error : "No conversations yet."}
+            </div>
+          )}
         </div>
       </div>
     </div>

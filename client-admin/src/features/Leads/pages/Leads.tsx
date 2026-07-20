@@ -31,7 +31,7 @@ export default function Leads() {
                 setSelectedId(null);
                 setCreating(true);
               }}
-              className="flex items-center gap-2 rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2 text-sm font-medium text-white"
+              className="flex items-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-black"
             >
               <Plus size={16} />
               Add Lead

@@ -1,10 +1,10 @@
 const AVATAR_COLORS = [
-  "bg-indigo-500/20 text-indigo-300",
-  "bg-purple-500/20 text-purple-300",
-  "bg-blue-500/20 text-blue-300",
-  "bg-teal-500/20 text-teal-300",
-  "bg-pink-500/20 text-pink-300",
-  "bg-green-500/20 text-green-300",
+  "bg-orange-50 text-orange-600",
+  "bg-blue-50 text-blue-600",
+  "bg-teal-50 text-teal-600",
+  "bg-pink-50 text-pink-600",
+  "bg-green-50 text-green-600",
+  "bg-amber-50 text-amber-600",
 ];
 
 export function getInitial(name: string): string {
