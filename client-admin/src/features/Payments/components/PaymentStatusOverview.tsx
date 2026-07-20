@@ -14,8 +14,8 @@ export default function PaymentStatusOverview({ payments }: { payments: Payment[
   }));
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
-      <h3 className="mb-4 font-semibold">Payment Status Overview</h3>
+    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <h3 className="mb-4 font-semibold text-gray-900">Payment Status Overview</h3>
 
       {total === 0 ? (
         <p className="text-sm text-gray-500">No payments recorded yet.</p>
@@ -27,12 +27,12 @@ export default function PaymentStatusOverview({ payments }: { payments: Payment[
             return (
               <div key={status}>
                 <div className="mb-1 flex items-center justify-between text-sm">
-                  <span className="text-gray-300">{meta.label}</span>
+                  <span className="text-gray-600">{meta.label}</span>
                   <span className="text-gray-500">
                     {value} ({percent.toFixed(1)}%)
                   </span>
                 </div>
-                <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                <div className="h-1.5 overflow-hidden rounded-full bg-gray-100">
                   <div className={`h-full rounded-full ${meta.color}`} style={{ width: `${percent}%` }} />
                 </div>
               </div>

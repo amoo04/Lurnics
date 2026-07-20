@@ -1,65 +1,52 @@
-import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { useLeadsOverTime } from "../hooks/useAnalytics";
 
-const data = [
-  { month: "Jan", visitors: 4200, leads: 38 },
-  { month: "Feb", visitors: 5100, leads: 45 },
-  { month: "Mar", visitors: 6800, leads: 58 },
-  { month: "Apr", visitors: 7400, leads: 62 },
-  { month: "May", visitors: 9600, leads: 84 },
-  { month: "Jun", visitors: 12480, leads: 142 },
-];
+function formatMonth(month: string): string {
+  const [year, m] = month.split("-");
+  const date = new Date(Number(year), Number(m) - 1, 1);
+  return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+}
 
 export default function TrafficChart() {
+  const { data, loading, error } = useLeadsOverTime(6);
+  const chartData = data?.map((p) => ({ ...p, label: formatMonth(p.month) }));
+
   return (
-    <div className="flex-1 rounded-xl border border-white/10 bg-white/[0.03] p-6">
+    <div className="flex-1 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="font-semibold">Visitors &amp; Leads</h3>
-        <span className="rounded-md border border-white/10 px-3 py-1 text-xs text-gray-400">Last 6 Months</span>
+        <h3 className="font-semibold text-gray-900">Leads Over Time</h3>
+        <span className="rounded-md border border-gray-200 px-3 py-1 text-xs text-gray-500">Last 6 Months</span>
       </div>
 
-      <div className="h-64">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data}>
-            <defs>
-              <linearGradient id="visitorsFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#818cf8" stopOpacity={0.4} />
-                <stop offset="100%" stopColor="#818cf8" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="leadsFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#34d399" stopOpacity={0.4} />
-                <stop offset="100%" stopColor="#34d399" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
-            <XAxis dataKey="month" stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
-            <YAxis yAxisId="left" stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
-            <YAxis yAxisId="right" orientation="right" stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
-            <Tooltip
-              contentStyle={{ background: "#0f1024", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8 }}
-              labelStyle={{ color: "#e5e7eb" }}
-            />
-            <Legend wrapperStyle={{ fontSize: 12, color: "#9ca3af" }} />
-            <Area
-              yAxisId="left"
-              type="monotone"
-              dataKey="visitors"
-              name="Visitors"
-              stroke="#818cf8"
-              strokeWidth={2}
-              fill="url(#visitorsFill)"
-            />
-            <Area
-              yAxisId="right"
-              type="monotone"
-              dataKey="leads"
-              name="Leads"
-              stroke="#34d399"
-              strokeWidth={2}
-              fill="url(#leadsFill)"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
+      {loading && <p className="text-sm text-gray-500">Loading…</p>}
+      {error && <p className="text-sm text-red-500">{error}</p>}
+      {!loading && !error && (!chartData || chartData.length === 0) && (
+        <p className="text-sm text-gray-500">No leads recorded in this period.</p>
+      )}
+
+      {chartData && chartData.length > 0 && (
+        <div className="h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={chartData}>
+              <defs>
+                <linearGradient id="leadsFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#f97316" stopOpacity={0.35} />
+                  <stop offset="100%" stopColor="#f97316" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid stroke="#e5e7eb" vertical={false} />
+              <XAxis dataKey="label" stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
+              <YAxis stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} allowDecimals={false} />
+              <Tooltip
+                contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }}
+                labelStyle={{ color: "#111827" }}
+                formatter={(value) => [value, "Leads"]}
+              />
+              <Area type="monotone" dataKey="count" name="Leads" stroke="#f97316" strokeWidth={2} fill="url(#leadsFill)" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      )}
     </div>
   );
 }

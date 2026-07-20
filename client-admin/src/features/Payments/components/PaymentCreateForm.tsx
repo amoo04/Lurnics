@@ -42,10 +42,10 @@ export default function PaymentCreateForm({ onCreated, onClose }: { onCreated: (
 
   return (
     <div className="mb-6 px-4 sm:px-8">
-      <form onSubmit={handleSubmit} className="max-w-lg rounded-xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+      <form onSubmit={handleSubmit} className="max-w-lg rounded-xl border border-gray-200 bg-white p-5 shadow-sm space-y-3">
         <div className="flex items-center justify-between">
-          <p className="font-semibold">Record Payment</p>
-          <button type="button" onClick={onClose} className="text-gray-500 hover:text-white">
+          <p className="font-semibold text-gray-900">Record Payment</p>
+          <button type="button" onClick={onClose} className="text-gray-500 hover:text-gray-900">
             <X size={16} />
           </button>
         </div>
@@ -54,11 +54,11 @@ export default function PaymentCreateForm({ onCreated, onClose }: { onCreated: (
           required
           value={invoiceId}
           onChange={(e) => setInvoiceId(e.target.value)}
-          className="w-full rounded-md border border-white/10 bg-[#0b0f1a] px-3 py-2 text-sm text-gray-300 outline-none"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
         >
           <option value="">Select invoice…</option>
           {(invoicesData?.items ?? []).map((inv) => (
-            <option key={inv.id} value={inv.id} className="bg-[#0b0f1a]">
+            <option key={inv.id} value={inv.id}>
               {inv.invoiceNumber}
             </option>
           ))}
@@ -71,39 +71,39 @@ export default function PaymentCreateForm({ onCreated, onClose }: { onCreated: (
             placeholder="Amount"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm outline-none placeholder:text-gray-500"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
           />
           <input
             required
             placeholder="Payment method"
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
-            className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm outline-none placeholder:text-gray-500"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
           />
           <input
             required
             type="date"
             value={paymentDate}
             onChange={(e) => setPaymentDate(e.target.value)}
-            className="w-full rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-sm text-gray-300 outline-none"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
           />
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as PaymentStatus)}
-            className="w-full rounded-md border border-white/10 bg-[#0b0f1a] px-3 py-2 text-sm text-gray-300 outline-none"
+            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
           >
-            <option value="completed" className="bg-[#0b0f1a]">Completed</option>
-            <option value="pending" className="bg-[#0b0f1a]">Pending</option>
-            <option value="failed" className="bg-[#0b0f1a]">Failed</option>
+            <option value="completed">Completed</option>
+            <option value="pending">Pending</option>
+            <option value="failed">Failed</option>
           </select>
         </div>
 
-        {error && <p className="text-xs text-red-400">{error}</p>}
+        {error && <p className="text-xs text-red-500">{error}</p>}
 
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+          className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-black disabled:opacity-60"
         >
           {submitting ? "Recording…" : "Record Payment"}
         </button>

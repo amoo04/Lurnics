@@ -12,11 +12,11 @@ import {
   MessageSquare,
   UserCircle,
   BarChart2,
+  Newspaper,
   Settings,
   LifeBuoy,
   X,
 } from "lucide-react";
-import logo from "../../assets/logo/logo3.png";
 import { useSidebar } from "../../context/SidebarContext";
 
 const links = [
@@ -29,6 +29,7 @@ const links = [
   { label: "Payments", path: "/payments", icon: CreditCard },
   { label: "Maintenance", path: "/maintenance", icon: Wrench },
   { label: "Documents", path: "/documents", icon: FileText },
+  { label: "Insights", path: "/insights", icon: Newspaper },
   { label: "Messages", path: "/messages", icon: MessageSquare },
   { label: "Team", path: "/team", icon: UserCircle },
   { label: "Reports", path: "/reports", icon: BarChart2 },
@@ -49,15 +50,16 @@ export default function Sidebar() {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-60 shrink-0 flex-col border-r border-white/10 bg-[#0b0d1f] px-4 py-6 transition-transform duration-200 lg:static lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-60 shrink-0 flex-col border-r border-gray-200 bg-white px-4 py-6 transition-transform duration-200 lg:static lg:translate-x-0 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between">
-          <Link to="/" onClick={close} className="block h-8 w-[140px] overflow-hidden">
-            <img src={logo} alt="Lurnics" className="h-8 w-[140px] object-cover" />
+          <Link to="/" onClick={close} className="flex flex-col">
+            <span className="text-lg font-bold uppercase tracking-wide text-gray-900">Lurnics</span>
+            <span className="h-0.5 w-6 bg-orange-500" />
           </Link>
-          <button type="button" onClick={close} className="text-gray-400 hover:text-white lg:hidden">
+          <button type="button" onClick={close} className="text-gray-500 hover:text-gray-900 lg:hidden">
             <X size={20} />
           </button>
         </div>
@@ -72,8 +74,8 @@ export default function Sidebar() {
                 onClick={close}
                 className={`flex items-center gap-3 rounded-md px-3 py-2.5 text-sm ${
                   active
-                    ? "bg-indigo-500/20 text-white"
-                    : "text-gray-400 hover:bg-white/5 hover:text-white"
+                    ? "bg-orange-50 text-gray-900"
+                    : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
                 }`}
               >
                 <Icon size={18} />
@@ -83,17 +85,17 @@ export default function Sidebar() {
           })}
         </nav>
 
-        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-          <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-300">
+        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+          <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-orange-50 text-orange-500">
             <LifeBuoy size={16} />
           </div>
-          <p className="text-sm font-medium">Need Help?</p>
+          <p className="text-sm font-medium text-gray-900">Need Help?</p>
           <p className="mt-1 text-xs text-gray-500">
             Our support team is available 24/7 to assist you.
           </p>
           <button
             type="button"
-            className="mt-3 w-full rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-2 text-xs font-medium text-white"
+            className="mt-3 w-full rounded-md bg-gray-900 px-3 py-2 text-xs font-medium text-white hover:bg-black"
           >
             Contact Support
           </button>

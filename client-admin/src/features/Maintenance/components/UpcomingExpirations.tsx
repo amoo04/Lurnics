@@ -8,9 +8,9 @@ export default function UpcomingExpirations({ contracts }: { contracts: Maintena
     .slice(0, 5);
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
+    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="font-semibold">Upcoming Expirations</h3>
+        <h3 className="font-semibold text-gray-900">Upcoming Expirations</h3>
       </div>
 
       {upcoming.length === 0 && <p className="text-sm text-gray-500">No contracts yet.</p>}
@@ -27,12 +27,12 @@ export default function UpcomingExpirations({ contracts }: { contracts: Maintena
                   {getInitial(c.client?.companyName ?? "?")}
                 </span>
                 <div>
-                  <p className="text-sm text-gray-200">{c.client?.companyName ?? "—"}</p>
-                  <span className="rounded-full bg-indigo-500/20 px-2 py-0.5 text-xs text-indigo-300">{c.planType}</span>
+                  <p className="text-sm text-gray-900">{c.client?.companyName ?? "—"}</p>
+                  <span className="rounded-full bg-orange-50 px-2 py-0.5 text-xs text-orange-500">{c.planType}</span>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-xs text-gray-400">{formatDate(c.expiryDate)}</p>
+                <p className="text-xs text-gray-600">{formatDate(c.expiryDate)}</p>
                 <p className="text-xs text-gray-500">{days} days</p>
               </div>
             </div>

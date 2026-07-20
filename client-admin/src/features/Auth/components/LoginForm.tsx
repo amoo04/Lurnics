@@ -31,40 +31,40 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="mb-1.5 block text-sm text-gray-300">Email</label>
-        <div className="flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.03] px-4 py-2.5">
-          <Mail size={16} className="text-gray-500" />
+        <label className="mb-1.5 block text-sm text-gray-600">Email</label>
+        <div className="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2.5 focus-within:border-gray-900">
+          <Mail size={16} className="text-gray-400" />
           <input
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@lurnics.com"
-            className="w-full bg-transparent text-sm text-gray-200 outline-none placeholder:text-gray-500"
+            className="w-full bg-transparent text-sm text-gray-900 outline-none placeholder:text-gray-400"
           />
         </div>
       </div>
 
       <div>
-        <label className="mb-1.5 block text-sm text-gray-300">Password</label>
-        <div className="flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.03] px-4 py-2.5">
-          <Lock size={16} className="text-gray-500" />
+        <label className="mb-1.5 block text-sm text-gray-600">Password</label>
+        <div className="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2.5 focus-within:border-gray-900">
+          <Lock size={16} className="text-gray-400" />
           <input
             type={showPassword ? "text" : "password"}
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••"
-            className="w-full bg-transparent text-sm text-gray-200 outline-none placeholder:text-gray-500"
+            className="w-full bg-transparent text-sm text-gray-900 outline-none placeholder:text-gray-400"
           />
-          <button type="button" onClick={() => setShowPassword((v) => !v)} className="text-gray-500">
+          <button type="button" onClick={() => setShowPassword((v) => !v)} className="text-gray-400">
             {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
       </div>
 
       {error && (
-        <p className="flex items-center gap-1.5 text-sm text-red-400">
+        <p className="flex items-center gap-1.5 text-sm text-red-500">
           <AlertCircle size={14} />
           {error}
         </p>
@@ -73,7 +73,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2.5 text-sm font-medium text-white disabled:opacity-60"
+        className="w-full rounded-md bg-gray-900 px-4 py-2.5 text-sm font-medium text-white hover:bg-black disabled:opacity-60"
       >
         {submitting ? "Signing in..." : "Sign In"}
       </button>

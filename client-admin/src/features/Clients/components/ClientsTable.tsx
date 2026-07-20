@@ -21,8 +21,8 @@ interface ClientsTableProps {
 }
 
 const STATUS_COLOR: Record<string, string> = {
-  active: "bg-green-500/20 text-green-300",
-  inactive: "bg-gray-500/20 text-gray-300",
+  active: "bg-green-50 text-green-600",
+  inactive: "bg-gray-100 text-gray-600",
 };
 
 export default function ClientsTable({
@@ -46,20 +46,20 @@ export default function ClientsTable({
   return (
     <div>
       <div className="mb-4 flex flex-wrap items-center gap-3">
-        <div className="flex flex-1 items-center gap-2 rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-gray-400">
+        <div className="flex flex-1 items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-500">
           <Search size={14} />
           <input
             type="text"
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search clients..."
-            className="w-full bg-transparent outline-none placeholder:text-gray-500"
+            className="w-full bg-transparent text-gray-900 outline-none placeholder:text-gray-400"
           />
         </div>
         <select
           value={status}
           onChange={(e) => onStatusChange(e.target.value)}
-          className="rounded-md border border-white/10 bg-[#0b0f1a] px-3 py-2 text-sm text-gray-300 outline-none"
+          className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
         >
           <option value="">Status: All</option>
           <option value="active">Active</option>
@@ -67,9 +67,9 @@ export default function ClientsTable({
         </select>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
         {loading && <p className="p-4 text-sm text-gray-500">Loading clients…</p>}
-        {error && <p className="p-4 text-sm text-red-400">{error}</p>}
+        {error && <p className="p-4 text-sm text-red-500">{error}</p>}
         {!loading && !error && clients.length === 0 && (
           <p className="p-4 text-sm text-gray-500">No clients found.</p>
         )}
@@ -78,7 +78,7 @@ export default function ClientsTable({
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-left text-sm">
               <thead>
-                <tr className="border-b border-white/10 text-xs text-gray-500">
+                <tr className="border-b border-gray-200 text-xs text-gray-500">
                   <th className="py-2 font-medium">Client</th>
                   <th className="py-2 font-medium">Contact</th>
                   <th className="py-2 font-medium">Industry</th>
@@ -91,8 +91,8 @@ export default function ClientsTable({
                   <tr
                     key={client.id}
                     onClick={() => onSelect(client.id)}
-                    className={`cursor-pointer border-b border-white/5 ${
-                      selectedId === client.id ? "bg-indigo-500/10" : "hover:bg-white/5"
+                    className={`cursor-pointer border-b border-gray-100 ${
+                      selectedId === client.id ? "bg-orange-50" : "hover:bg-gray-50"
                     }`}
                   >
                     <td className="py-3">
@@ -103,16 +103,16 @@ export default function ClientsTable({
                           {getInitial(client.companyName)}
                         </span>
                         <div>
-                          <p className="text-gray-200">{client.companyName}</p>
+                          <p className="text-gray-900">{client.companyName}</p>
                           <p className="text-xs text-gray-500">{client.contactPerson}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="py-3 text-gray-400">
+                    <td className="py-3 text-gray-600">
                       <p>{client.email ?? "—"}</p>
                       <p className="text-xs text-gray-500">{client.phone ?? "—"}</p>
                     </td>
-                    <td className="py-3 text-gray-400">{client.industry ?? "—"}</td>
+                    <td className="py-3 text-gray-600">{client.industry ?? "—"}</td>
                     <td className="py-3">
                       <span className={`rounded-full px-2.5 py-1 text-xs ${STATUS_COLOR[client.status]}`}>
                         {client.status}
@@ -127,14 +127,14 @@ export default function ClientsTable({
                         ···
                       </button>
                       {menuOpenFor === client.id && (
-                        <div className="absolute right-0 top-8 z-10 w-32 rounded-md border border-white/10 bg-[#0f1024] py-1 text-xs shadow-lg">
+                        <div className="absolute right-0 top-8 z-10 w-32 rounded-md border border-gray-200 bg-white py-1 text-xs shadow-lg">
                           <button
                             type="button"
                             onClick={() => {
                               setMenuOpenFor(null);
                               onDelete(client.id);
                             }}
-                            className="block w-full px-3 py-2 text-left text-red-400 hover:bg-white/5"
+                            className="block w-full px-3 py-2 text-left text-red-500 hover:bg-gray-50"
                           >
                             Delete
                           </button>
@@ -149,7 +149,7 @@ export default function ClientsTable({
         )}
 
         {total > 0 && (
-          <div className="mt-4 flex items-center justify-between text-sm text-gray-400">
+          <div className="mt-4 flex items-center justify-between text-sm text-gray-600">
             <span>
               Showing {(page - 1) * 8 + 1} to {Math.min(page * 8, total)} of {total} clients
             </span>
@@ -160,7 +160,7 @@ export default function ClientsTable({
                   type="button"
                   onClick={() => onPageChange(p)}
                   className={`h-8 w-8 rounded-md text-sm ${
-                    p === page ? "bg-indigo-500 text-white" : "border border-white/10 text-gray-400"
+                    p === page ? "bg-gray-900 text-white" : "border border-gray-300 text-gray-600 hover:bg-gray-50"
                   }`}
                 >
                   {p}

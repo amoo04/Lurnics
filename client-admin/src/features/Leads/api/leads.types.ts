@@ -27,9 +27,9 @@ export interface Paginated<T> {
 }
 
 export const LEAD_STAGES: { value: LeadStatus; label: string; dotColor: string }[] = [
-  { value: "new", label: "New", dotColor: "bg-indigo-400" },
+  { value: "new", label: "New", dotColor: "bg-orange-500" },
   { value: "contacted", label: "Contacted", dotColor: "bg-blue-400" },
-  { value: "proposal_sent", label: "Proposal Sent", dotColor: "bg-orange-400" },
+  { value: "proposal_sent", label: "Proposal Sent", dotColor: "bg-amber-400" },
   { value: "won", label: "Won", dotColor: "bg-green-400" },
   { value: "lost", label: "Lost", dotColor: "bg-gray-400" },
 ];

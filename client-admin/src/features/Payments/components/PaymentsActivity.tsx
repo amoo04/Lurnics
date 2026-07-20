@@ -10,9 +10,9 @@ interface ActivityLogEntry {
 }
 
 const ACTION_ICON: Record<string, { icon: LucideIcon; iconBg: string }> = {
-  create: { icon: DollarSign, iconBg: "bg-green-500/20 text-green-300" },
-  update: { icon: Pencil, iconBg: "bg-orange-500/20 text-orange-300" },
-  delete: { icon: Trash2, iconBg: "bg-red-500/20 text-red-300" },
+  create: { icon: DollarSign, iconBg: "bg-green-50 text-green-600" },
+  update: { icon: Pencil, iconBg: "bg-orange-50 text-orange-500" },
+  delete: { icon: Trash2, iconBg: "bg-red-50 text-red-600" },
 };
 
 function formatWhen(iso: string) {
@@ -32,13 +32,13 @@ export default function PaymentsActivity() {
   const items = data?.items ?? [];
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
+    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="font-semibold">Recent Activity</h3>
+        <h3 className="font-semibold text-gray-900">Recent Activity</h3>
       </div>
 
       {loading && <p className="text-sm text-gray-500">Loading…</p>}
-      {error && <p className="text-sm text-red-400">{error}</p>}
+      {error && <p className="text-sm text-red-500">{error}</p>}
       {!loading && !error && items.length === 0 && <p className="text-sm text-gray-500">No payment activity yet.</p>}
 
       <ul className="space-y-4">
@@ -50,7 +50,7 @@ export default function PaymentsActivity() {
                 <Icon size={14} />
               </span>
               <div>
-                <p className="text-sm text-gray-200">
+                <p className="text-sm text-gray-900">
                   {entry.user?.name ?? "Someone"} {entry.action}d a payment
                 </p>
                 <p className="text-xs text-gray-500">{formatWhen(entry.createdAt)}</p>

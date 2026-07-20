@@ -1,25 +1,54 @@
 import { MessageSquare, Mail, Ticket, CheckCircle2 } from "lucide-react";
+import { useTicketsCountByStatus } from "../hooks/useMessages";
+import type { ClientConversation } from "../api/messages.types";
 
-const stats = [
-  { icon: MessageSquare, iconBg: "bg-indigo-500/20 text-indigo-300", value: "1,254", label: "Total Messages", change: "+18.4%", up: true },
-  { icon: Mail, iconBg: "bg-red-500/20 text-red-300", value: "24", label: "Unread Messages", change: "-12.5%", up: false },
-  { icon: Ticket, iconBg: "bg-green-500/20 text-green-300", value: "8", label: "Open Tickets", change: "-11.1%", up: false },
-  { icon: CheckCircle2, iconBg: "bg-orange-500/20 text-orange-300", value: "142", label: "Resolved Tickets", change: "+24.3%", up: true },
-];
+export default function MessagesStats({
+  conversations,
+  loading,
+}: {
+  conversations: ClientConversation[];
+  loading: boolean;
+}) {
+  const totalUnread = conversations.reduce((sum, c) => sum + c.unread, 0);
+  const { data: openTickets, loading: openLoading } = useTicketsCountByStatus("open");
+  const { data: resolvedTickets, loading: resolvedLoading } = useTicketsCountByStatus("resolved");
 
-export default function MessagesStats() {
+  const stats = [
+    {
+      icon: MessageSquare,
+      iconBg: "bg-orange-50 text-orange-500",
+      value: loading ? "—" : String(conversations.length),
+      label: "Total Conversations",
+    },
+    {
+      icon: Mail,
+      iconBg: "bg-red-50 text-red-500",
+      value: loading ? "—" : String(totalUnread),
+      label: "Unread Messages",
+    },
+    {
+      icon: Ticket,
+      iconBg: "bg-green-50 text-green-600",
+      value: openLoading ? "—" : String(openTickets?.pagination.total ?? 0),
+      label: "Open Tickets",
+    },
+    {
+      icon: CheckCircle2,
+      iconBg: "bg-blue-50 text-blue-500",
+      value: resolvedLoading ? "—" : String(resolvedTickets?.pagination.total ?? 0),
+      label: "Resolved Tickets",
+    },
+  ];
+
   return (
     <div className="grid grid-cols-1 gap-4 px-4 pb-6 sm:grid-cols-2 sm:gap-6 sm:px-8 md:grid-cols-4">
-      {stats.map(({ icon: Icon, iconBg, value, label, change, up }) => (
-        <div key={label} className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+      {stats.map(({ icon: Icon, iconBg, value, label }) => (
+        <div key={label} className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
           <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${iconBg}`}>
             <Icon size={18} />
           </div>
-          <p className="mt-3 text-xl font-bold">{value}</p>
-          <p className="text-sm text-gray-400">{label}</p>
-          <p className={`mt-1 text-xs ${up ? "text-green-400" : "text-red-400"}`}>
-            {change} from last month
-          </p>
+          <p className="mt-3 text-xl font-bold text-gray-900">{value}</p>
+          <p className="text-sm text-gray-500">{label}</p>
         </div>
       ))}
     </div>

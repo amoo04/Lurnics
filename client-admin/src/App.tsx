@@ -14,6 +14,8 @@ import Leads from "./features/Leads/pages/Leads";
 import DraftEmail from "./features/Leads/pages/DraftEmail";
 import DraftProposal from "./features/Leads/pages/DraftProposal";
 import Messages from "./features/Messages/pages/Messages";
+import Reports from "./features/Reports/pages/Reports";
+import Insights from "./features/Insights/pages/Insights";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
       <Route path="/leads/:leadId/email" element={<ProtectedRoute><DraftEmail /></ProtectedRoute>} />
       <Route path="/leads/:leadId/proposal" element={<ProtectedRoute><DraftProposal /></ProtectedRoute>} />
       <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
+      <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+      <Route path="/insights" element={<ProtectedRoute><Insights /></ProtectedRoute>} />
     </Routes>
   );
 }

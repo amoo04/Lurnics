@@ -33,7 +33,7 @@ export default function SettingsNav() {
   const [active, setActive] = useState("General");
 
   return (
-    <div className="w-full space-y-1 rounded-xl border border-white/10 bg-white/[0.03] p-3 lg:w-72 lg:shrink-0">
+    <div className="w-full space-y-1 rounded-xl border border-gray-200 bg-white p-3 shadow-sm lg:w-72 lg:shrink-0">
       {categories.map(({ icon: Icon, label, description }) => {
         const isActive = label === active;
         return (
@@ -42,7 +42,7 @@ export default function SettingsNav() {
             type="button"
             onClick={() => setActive(label)}
             className={`flex w-full items-start gap-3 rounded-md px-3 py-2.5 text-left text-sm ${
-              isActive ? "bg-indigo-500/20 text-white" : "text-gray-400 hover:bg-white/5 hover:text-white"
+              isActive ? "bg-orange-50 text-gray-900" : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
             }`}
           >
             <Icon size={16} className="mt-0.5 shrink-0" />
