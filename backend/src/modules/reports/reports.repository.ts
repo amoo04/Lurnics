@@ -1,6 +1,6 @@
-import { sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { db } from "../../db/index.js";
-import { invoices, payments, projects } from "../../db/schema.js";
+import { clients, documents, invoices, payments, projects } from "../../db/schema.js";
 
 export async function findRevenueByMonth(months: number) {
   return db
@@ -32,4 +32,39 @@ export async function findInvoicesByStatus() {
     })
     .from(invoices)
     .groupBy(invoices.status);
+}
+
+export async function findDocumentsByType() {
+  return db
+    .select({
+      fileType: documents.fileType,
+      count: sql<number>`count(*)`.mapWith(Number),
+    })
+    .from(documents)
+    .groupBy(documents.fileType);
+}
+
+export async function findDocumentsByClient() {
+  return db
+    .select({
+      clientId: documents.clientId,
+      companyName: clients.companyName,
+      count: sql<number>`count(*)`.mapWith(Number),
+    })
+    .from(documents)
+    .innerJoin(clients, eq(documents.clientId, clients.id))
+    .groupBy(documents.clientId)
+    .orderBy(sql`count(*) desc`)
+    .limit(5);
+}
+
+export async function countDocuments() {
+  return db.$count(documents);
+}
+
+export async function countRecentDocuments(days: number) {
+  return db.$count(
+    documents,
+    sql`${documents.uploadedAt} >= datetime('now', '-' || ${days} || ' days')`,
+  );
 }

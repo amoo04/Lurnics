@@ -5,7 +5,7 @@ import { projectMembers, type NewProjectMemberRow } from "../../db/schema.js";
 export async function findMembersByProject(projectId: string) {
   return db.query.projectMembers.findMany({
     where: eq(projectMembers.projectId, projectId),
-    with: { user: true },
+    with: { user: { columns: { passwordHash: false } } },
   });
 }
 

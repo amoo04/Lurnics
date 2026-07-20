@@ -6,7 +6,7 @@ export async function findClientMessages() {
   return db.query.messages.findMany({
     where: isNotNull(messages.clientId),
     orderBy: desc(messages.createdAt),
-    with: { client: true, sender: true },
+    with: { client: true, sender: { columns: { passwordHash: false } } },
   });
 }
 
@@ -14,7 +14,7 @@ export async function findMessagesForClient(clientId: string) {
   return db.query.messages.findMany({
     where: eq(messages.clientId, clientId),
     orderBy: asc(messages.createdAt),
-    with: { sender: true },
+    with: { sender: { columns: { passwordHash: false } } },
   });
 }
 
@@ -37,7 +37,10 @@ export async function findMessagesForUser(userId: string) {
   return db.query.messages.findMany({
     where: and(isNull(messages.clientId), or(eq(messages.senderId, userId), eq(messages.receiverId, userId))),
     orderBy: desc(messages.createdAt),
-    with: { sender: true, receiver: true },
+    with: {
+      sender: { columns: { passwordHash: false } },
+      receiver: { columns: { passwordHash: false } },
+    },
   });
 }
 

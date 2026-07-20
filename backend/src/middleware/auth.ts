@@ -3,6 +3,7 @@ import { getCookie } from "hono/cookie";
 import * as jose from "jose";
 import { UnauthorizedError, ForbiddenError } from "./error.js";
 import type { AppEnv } from "../lib/hono-env.js";
+import { getBindings } from "../lib/env.js";
 
 export type JWTPayload = {
   sub: string;
@@ -15,7 +16,7 @@ export type JWTPayload = {
 };
 
 function getSecret(): string {
-  const secret = process.env.JWT_SECRET;
+  const secret = getBindings().JWT_SECRET;
   if (!secret) {
     throw new Error("JWT_SECRET is not set");
   }

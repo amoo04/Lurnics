@@ -21,6 +21,14 @@ export async function findUsers(search: string | undefined, limit: number, offse
   return { items, total };
 }
 
+export async function findActiveUserIds(): Promise<string[]> {
+  const rows = await db.query.users.findMany({
+    where: isNull(users.deletedAt),
+    columns: { id: true },
+  });
+  return rows.map((row) => row.id);
+}
+
 export async function findUserById(id: string) {
   return db.query.users.findFirst({
     where: and(eq(users.id, id), isNull(users.deletedAt)),

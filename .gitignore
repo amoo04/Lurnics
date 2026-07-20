@@ -3,6 +3,7 @@ dist
 build
 .env
 .env.local
+.dev.vars
 *.local
 
 # sqlite
@@ -12,6 +13,9 @@ backend/data/
 
 # drizzle
 backend/drizzle/
+
+# wrangler local dev state
+backend/.wrangler/
 
 # logs
 *.log

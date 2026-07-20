@@ -5,19 +5,33 @@
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],
 
+  // JWT_SECRET, DATABASE_URL, and the R2_* keys below are secrets, not vars.
+  // Wrangler environments don't inherit secrets either, so each of
+  // (default/no --env), staging, and production needs its own copies:
+  //   npx wrangler secret put JWT_SECRET [--env staging|production]
+  //   npx wrangler secret put DATABASE_URL [--env staging|production]   (a Turso/libsql URL, e.g. libsql://...)
+  //   npx wrangler secret put R2_ACCOUNT_ID [--env staging|production]
+  //   npx wrangler secret put R2_ACCESS_KEY_ID [--env staging|production]
+  //   npx wrangler secret put R2_SECRET_ACCESS_KEY [--env staging|production]
+  //   npx wrangler secret put R2_BUCKET [--env staging|production]
+  //   npx wrangler secret put R2_PUBLIC_URL [--env staging|production]   (the bucket's public base URL)
   "vars": {
     "EMAIL_FROM": "noreply@lurnics.com",
     "LEADS_EMAIL_FROM": "pitch@lurnics.com"
   },
 
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "lurnics-db",
-      // Run `npx wrangler d1 create lurnics-db` and paste the returned id here.
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
-    }
-  ],
+  // The database layer (src/db/index.ts) uses @libsql/client against
+  // DATABASE_URL (Turso), not the D1 binding - this D1 block is unused and
+  // left commented out so `database_id: REPLACE_WITH_D1_DATABASE_ID` doesn't
+  // break `wrangler deploy`. Uncomment + fill in only if you migrate the
+  // drizzle setup to drizzle-orm/d1.
+  // "d1_databases": [
+  //   {
+  //     "binding": "DB",
+  //     "database_name": "lurnics-db",
+  //     "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+  //   }
+  // ],
 
   "send_email": [
     {
@@ -27,12 +41,50 @@
     }
   ],
 
-  // Uncomment once R2 is actually wired up (lib/r2.ts is currently unused).
-  // "r2_buckets": [
-  //   { "binding": "BUCKET", "bucket_name": "lurnics-uploads" }
-  // ],
+  // File uploads (src/lib/r2.ts, POST /api/uploads/image) go through R2's
+  // S3-compatible API via access keys, not the native R2 binding, so there's
+  // no r2_buckets entry needed here - the keys are set as secrets (see above).
 
   "observability": {
     "enabled": true
+  },
+
+  // `wrangler dev` / `wrangler deploy` with no --env flag use the top-level
+  // config above. `--env staging` / `--env production` deploy to their own
+  // named Workers below, each with their own bindings, vars, and secrets -
+  // nothing here is inherited from the top level.
+  "env": {
+    "staging": {
+      "name": "lurnics-backend-staging",
+      "vars": {
+        "EMAIL_FROM": "noreply@lurnics.com",
+        "LEADS_EMAIL_FROM": "pitch@lurnics.com"
+      },
+      "send_email": [
+        {
+          "name": "SEB",
+          "destination_address": "pitch@lurnics.com"
+        }
+      ],
+      "observability": {
+        "enabled": true
+      }
+    },
+    "production": {
+      "name": "lurnics-backend-production",
+      "vars": {
+        "EMAIL_FROM": "noreply@lurnics.com",
+        "LEADS_EMAIL_FROM": "pitch@lurnics.com"
+      },
+      "send_email": [
+        {
+          "name": "SEB",
+          "destination_address": "pitch@lurnics.com"
+        }
+      ],
+      "observability": {
+        "enabled": true
+      }
+    }
   }
 }

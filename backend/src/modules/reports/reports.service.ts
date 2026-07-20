@@ -1,4 +1,8 @@
 import {
+  countDocuments,
+  countRecentDocuments,
+  findDocumentsByClient,
+  findDocumentsByType,
   findInvoicesByStatus,
   findProjectsByStatus,
   findRevenueByMonth,
@@ -15,4 +19,14 @@ export async function getProjectsReport() {
 
 export async function getInvoicesReport() {
   return findInvoicesByStatus();
+}
+
+export async function getDocumentsReport() {
+  const [total, byType, byClient, recentCount] = await Promise.all([
+    countDocuments(),
+    findDocumentsByType(),
+    findDocumentsByClient(),
+    countRecentDocuments(7),
+  ]);
+  return { total, byType, byClient, recentCount };
 }
