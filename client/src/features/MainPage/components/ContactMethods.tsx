@@ -33,7 +33,7 @@ const methods = [
 export default function ContactMethods() {
   return (
     <div>
-      <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-indigo-400">
+      <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-orange-500">
         Ways to Reach Us
       </p>
 
@@ -42,12 +42,12 @@ export default function ContactMethods() {
           const content = (
             <>
               <div className="flex items-center gap-4">
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-300">
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-orange-50 text-orange-500">
                   <Icon size={18} />
                 </div>
                 <div>
-                  <p className="text-sm font-medium">{title}</p>
-                  <p className="text-sm text-gray-300">{detail}</p>
+                  <p className="text-sm font-medium text-gray-900">{title}</p>
+                  <p className="text-sm text-gray-600">{detail}</p>
                   <p className="text-xs text-gray-500">{note}</p>
                 </div>
               </div>
@@ -56,7 +56,7 @@ export default function ContactMethods() {
           );
 
           const className =
-            "flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] p-5";
+            "flex items-center justify-between rounded-xl border border-gray-200 bg-white p-5 shadow-sm";
 
           return href ? (
             <a

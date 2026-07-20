@@ -22,22 +22,22 @@ export default function Insight() {
     <>
       <Navbar />
       <section className="px-4 sm:px-8 md:px-20 py-16">
-        <Link to="/insights" className="flex items-center gap-1 text-sm text-indigo-400">
+        <Link to="/insights" className="flex items-center gap-1 text-sm text-orange-500 hover:text-orange-600">
           <ArrowLeft size={14} />
           Back to insights
         </Link>
 
         {loading && <p className="mt-8 text-sm text-gray-500">Loading article…</p>}
-        {error && <p className="mt-8 text-sm text-red-400">{error}</p>}
+        {error && <p className="mt-8 text-sm text-red-500">{error}</p>}
 
         {article && (
           <div className="mt-8 max-w-3xl">
-            <h1 className="mt-3 text-4xl font-bold leading-tight">{article.title}</h1>
+            <h1 className="mt-3 text-4xl font-bold leading-tight text-gray-900">{article.title}</h1>
             <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 text-[10px] font-bold text-white">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-900 text-[10px] font-bold text-white">
                 L
               </span>
-              <span className="text-gray-300">Lurnics Team</span>
+              <span className="text-gray-600">Lurnics Team</span>
               {article.publishedAt && (
                 <>
                   <span>·</span>
@@ -46,7 +46,7 @@ export default function Insight() {
               )}
             </div>
 
-            <div className="mt-8 space-y-4 whitespace-pre-line text-sm leading-relaxed text-gray-300">
+            <div className="mt-8 space-y-4 whitespace-pre-line text-sm leading-relaxed text-gray-600">
               {article.content}
             </div>
           </div>

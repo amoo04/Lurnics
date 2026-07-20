@@ -12,10 +12,10 @@ export default function ValuesGrid() {
   return (
     <section className="px-4 sm:px-8 md:px-20 py-16">
       <div className="mb-12 text-center">
-        <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+        <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
           Our Values
         </p>
-        <h2 className="mt-2 text-3xl font-semibold">
+        <h2 className="mt-2 text-3xl font-semibold text-gray-900">
           The principles that guide everything we do.
         </h2>
       </div>
@@ -24,13 +24,13 @@ export default function ValuesGrid() {
         {values.map(({ icon: Icon, title, description }) => (
           <div
             key={title}
-            className="rounded-xl border border-white/10 bg-white/[0.03] p-6"
+            className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm"
           >
-            <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-300">
+            <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-lg bg-orange-50 text-orange-500">
               <Icon size={18} />
             </div>
-            <h3 className="text-sm font-semibold">{title}</h3>
-            <p className="mt-2 text-xs text-gray-400">{description}</p>
+            <h3 className="text-sm font-semibold text-gray-900">{title}</h3>
+            <p className="mt-2 text-xs text-gray-600">{description}</p>
           </div>
         ))}
       </div>

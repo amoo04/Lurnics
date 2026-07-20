@@ -8,7 +8,7 @@ export default function CaseStudies() {
 
   return (
     <section className="px-4 sm:px-8 md:px-20 py-16">
-      <p className="mb-8 text-center text-xs font-semibold uppercase tracking-wider text-indigo-400">
+      <p className="mb-8 text-center text-xs font-semibold uppercase tracking-wider text-orange-500">
         Featured Case Studies
       </p>
 
@@ -20,17 +20,17 @@ export default function CaseStudies() {
 
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
         {caseStudies.map(({ id, slug, title, summary }) => (
-          <div key={id} className="rounded-xl border border-white/10 bg-white/[0.03]">
-            <div className="flex h-36 items-center justify-center rounded-t-xl bg-gray-700/40 text-sm text-gray-500">
+          <div key={id} className="rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div className="flex h-36 items-center justify-center rounded-t-xl bg-gray-100 text-sm text-gray-500">
               Image placeholder
             </div>
             <div className="p-5">
-              <h3 className="font-semibold">{title}</h3>
-              {summary && <p className="mt-1 text-sm text-gray-400">{summary}</p>}
+              <h3 className="font-semibold text-gray-900">{title}</h3>
+              {summary && <p className="mt-1 text-sm text-gray-600">{summary}</p>}
 
               <Link
                 to={`/case-studies/${slug}`}
-                className="mt-4 flex items-center gap-1 text-sm text-indigo-400"
+                className="mt-4 flex items-center gap-1 text-sm text-orange-500 hover:text-orange-600"
               >
                 View Case Study
                 <ArrowRight size={14} />

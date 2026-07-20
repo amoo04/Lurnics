@@ -27,27 +27,27 @@ export default function CaseStudyList({ caseStudies, loading, error }: CaseStudy
           return (
             <div
               key={id}
-              className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]"
+              className="flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm"
             >
-              <div className="flex h-36 items-center justify-center bg-gradient-to-br from-indigo-900/40 to-blue-900/20 text-gray-500">
+              <div className="flex h-36 items-center justify-center bg-gray-50 text-gray-500">
                 <Monitor size={32} className="opacity-40" />
               </div>
 
               <div className="flex flex-1 flex-col p-6">
                 {industry && (
-                  <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
                     {industry.name}
                   </p>
                 )}
                 <div className={`mt-3 inline-flex h-11 w-11 items-center justify-center rounded-xl ${iconBg}`}>
                   <Icon size={20} />
                 </div>
-                <h3 className="mt-3 text-lg font-semibold">{title}</h3>
-                {summary && <p className="mt-2 flex-1 text-sm text-gray-400">{summary}</p>}
+                <h3 className="mt-3 text-lg font-semibold text-gray-900">{title}</h3>
+                {summary && <p className="mt-2 flex-1 text-sm text-gray-600">{summary}</p>}
 
                 <Link
                   to={`/case-studies/${slug}`}
-                  className="mt-5 flex items-center gap-1 text-sm font-medium text-indigo-400"
+                  className="mt-5 flex items-center gap-1 text-sm font-medium text-orange-500 hover:text-orange-600"
                 >
                   View Case Study
                   <ArrowRight size={14} />

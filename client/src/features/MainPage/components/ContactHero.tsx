@@ -14,28 +14,27 @@ export default function ContactHero() {
   return (
     <section className="grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+        <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
           Get in Touch
         </p>
-        <h1 className="mt-3 text-5xl font-bold leading-tight">
+        <h1 className="mt-3 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl md:text-6xl">
           Let's build something{" "}
-          <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+          <span className="text-orange-500">
             exceptional
           </span>{" "}
           together.
         </h1>
-        <p className="mt-6 max-w-md text-gray-400">
-          Have a project in mind or need expert guidance? We're here to help you
-          turn ideas into scalable digital solutions that drive real growth.
+        <p className="mt-6 max-w-md text-gray-600">
+          Have a project in mind? Let's turn it into a scalable solution.
         </p>
 
         <div className="mt-8 flex items-center gap-8">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-500/15 text-indigo-300">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-50 text-orange-500">
               <Calendar size={18} />
             </div>
             <div>
-              <p className="text-sm font-medium">Book a Strategy Session</p>
+              <p className="text-sm font-medium text-gray-900">Book a Strategy Session</p>
               <p className="text-xs text-gray-500">
                 Schedule a free consultation
               </p>
@@ -43,19 +42,19 @@ export default function ContactHero() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-500/15 text-indigo-300">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-50 text-orange-500">
               <Headphones size={18} />
             </div>
             <div>
-              <p className="text-sm font-medium">Schedule a Call</p>
+              <p className="text-sm font-medium text-gray-900">Schedule a Call</p>
               <p className="text-xs text-gray-500">We're ready to listen</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="md:-ml-6">
-        <OrbitVisual centerIcon={Send} nodes={nodes} />
+      <div className="mx-auto">
+        <OrbitVisual centerIcon={Send} nodes={nodes} size={380} />
       </div>
     </section>
   );
