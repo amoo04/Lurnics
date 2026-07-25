@@ -11,8 +11,8 @@ backend/data/
 *.db
 *.db-journal
 
-# drizzle
-backend/drizzle/
+# backend/drizzle/ IS tracked - it's the real D1 migration history now,
+# not a disposable build artifact.
 
 # wrangler local dev state
 backend/.wrangler/

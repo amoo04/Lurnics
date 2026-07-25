@@ -1,21 +1,22 @@
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import Login from "./features/Auth/pages/Login";
-import Dashboard from "./features/Dashboard/pages/Dashboard";
-import Analytics from "./features/Analytics/pages/Analytics";
-import Settings from "./features/Settings/pages/Settings";
-import Projects from "./features/Projects/pages/Projects";
-import Clients from "./features/Clients/pages/Clients";
-import Payments from "./features/Payments/pages/Payments";
-import Maintenance from "./features/Maintenance/pages/Maintenance";
-import Documents from "./features/Documents/pages/Documents";
-import Invoices from "./features/Invoices/pages/Invoices";
-import Leads from "./features/Leads/pages/Leads";
-import DraftEmail from "./features/Leads/pages/DraftEmail";
-import DraftProposal from "./features/Leads/pages/DraftProposal";
-import Messages from "./features/Messages/pages/Messages";
-import Reports from "./features/Reports/pages/Reports";
-import Insights from "./features/Insights/pages/Insights";
+import Login from "./Auth/pages/Login";
+import Dashboard from "./Dashboard/pages/Dashboard";
+import Analytics from "./Analytics/pages/Analytics";
+import Settings from "./Settings/pages/Settings";
+import Projects from "./Projects/pages/Projects";
+import Clients from "./Clients/pages/Clients";
+import Payments from "./Payments/pages/Payments";
+import Maintenance from "./Maintenance/pages/Maintenance";
+import Documents from "./Documents/pages/Documents";
+import Invoices from "./Invoices/pages/Invoices";
+import Leads from "./Leads/pages/Leads";
+import DraftEmail from "./Leads/pages/DraftEmail";
+import DraftProposal from "./Leads/pages/DraftProposal";
+import Reports from "./Reports/pages/Reports";
+import Insights from "./Insights/pages/Insights";
+import SuccessStories from "./SuccessStories/pages/SuccessStories";
+import GrowthBlueprint from "./GrowthBlueprint/pages/GrowthBlueprint";
 
 function App() {
   return (
@@ -34,9 +35,10 @@ function App() {
       <Route path="/leads" element={<ProtectedRoute><Leads /></ProtectedRoute>} />
       <Route path="/leads/:leadId/email" element={<ProtectedRoute><DraftEmail /></ProtectedRoute>} />
       <Route path="/leads/:leadId/proposal" element={<ProtectedRoute><DraftProposal /></ProtectedRoute>} />
-      <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
       <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
       <Route path="/insights" element={<ProtectedRoute><Insights /></ProtectedRoute>} />
+      <Route path="/success-stories" element={<ProtectedRoute><SuccessStories /></ProtectedRoute>} />
+      <Route path="/growth-blueprint" element={<ProtectedRoute><GrowthBlueprint /></ProtectedRoute>} />
     </Routes>
   );
 }

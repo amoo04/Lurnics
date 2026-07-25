@@ -5,48 +5,56 @@
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],
 
-  // JWT_SECRET, DATABASE_URL, and the R2_* keys below are secrets, not vars.
-  // Wrangler environments don't inherit secrets either, so each of
-  // (default/no --env), staging, and production needs its own copies:
+  // JWT_SECRET is a secret, not a var. Wrangler environments don't inherit
+  // secrets, so each of (default/no --env), staging, and production needs
+  // its own copy:
   //   npx wrangler secret put JWT_SECRET [--env staging|production]
-  //   npx wrangler secret put DATABASE_URL [--env staging|production]   (a Turso/libsql URL, e.g. libsql://...)
-  //   npx wrangler secret put R2_ACCOUNT_ID [--env staging|production]
-  //   npx wrangler secret put R2_ACCESS_KEY_ID [--env staging|production]
-  //   npx wrangler secret put R2_SECRET_ACCESS_KEY [--env staging|production]
-  //   npx wrangler secret put R2_BUCKET [--env staging|production]
-  //   npx wrangler secret put R2_PUBLIC_URL [--env staging|production]   (the bucket's public base URL)
   "vars": {
-    "EMAIL_FROM": "noreply@lurnics.com",
-    "LEADS_EMAIL_FROM": "pitch@lurnics.com"
+    "EMAIL_FROM": "info@lurnics.com",
+    "LEADS_EMAIL_FROM": "info@lurnics.com",
   },
 
-  // The database layer (src/db/index.ts) uses @libsql/client against
-  // DATABASE_URL (Turso), not the D1 binding - this D1 block is unused and
-  // left commented out so `database_id: REPLACE_WITH_D1_DATABASE_ID` doesn't
-  // break `wrangler deploy`. Uncomment + fill in only if you migrate the
-  // drizzle setup to drizzle-orm/d1.
-  // "d1_databases": [
-  //   {
-  //     "binding": "DB",
-  //     "database_name": "lurnics-db",
-  //     "database_id": "REPLACE_WITH_D1_DATABASE_ID"
-  //   }
-  // ],
+  // The database layer (src/db/index.ts) uses this D1 binding whenever it's
+  // present (deployed Workers, or `wrangler dev` via Miniflare's local D1
+  // emulation) and only falls back to a local SQLite file (DATABASE_URL,
+  // via @libsql/client) for plain `pnpm dev` (Node), which has no D1 access
+  // at all. This default/no-env target points at the staging database so
+  // `wrangler dev` never touches production data.
+  //
+  // Schema changes: `npx drizzle-kit generate --config drizzle.d1.config.ts`
+  // writes a new file into migrations_dir, then apply it with
+  // `npx wrangler d1 migrations apply <database_name> --remote`.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lurnics-staging",
+      "database_id": "f27e02da-c284-43ad-9089-21eb4ca02511",
+      "migrations_dir": "drizzle",
+    },
+  ],
 
   "send_email": [
     {
       "name": "SEB",
       // The address you verified as a destination in Cloudflare Email Routing.
-      "destination_address": "pitch@lurnics.com"
-    }
+      "destination_address": "info@lurnics.com",
+    },
   ],
 
-  // File uploads (src/lib/r2.ts, POST /api/uploads/image) go through R2's
-  // S3-compatible API via access keys, not the native R2 binding, so there's
-  // no r2_buckets entry needed here - the keys are set as secrets (see above).
+  // File uploads (src/lib/r2.ts, POST /api/uploads/image) go straight
+  // through this native binding (bucket.put/get) - no API keys needed.
+  // `remote: true` makes `wrangler dev` read/write the real bucket instead
+  // of an empty local emulation.
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "lurnics-staging",
+      "remote": true,
+    },
+  ],
 
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
 
   // `wrangler dev` / `wrangler deploy` with no --env flag use the top-level
@@ -57,34 +65,64 @@
     "staging": {
       "name": "lurnics-backend-staging",
       "vars": {
-        "EMAIL_FROM": "noreply@lurnics.com",
-        "LEADS_EMAIL_FROM": "pitch@lurnics.com"
+        "EMAIL_FROM": "info@lurnics.com",
+        "LEADS_EMAIL_FROM": "info@lurnics.com",
       },
       "send_email": [
         {
           "name": "SEB",
-          "destination_address": "pitch@lurnics.com"
-        }
+          "destination_address": "info@lurnics.com",
+        },
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "lurnics-staging",
+          "database_id": "f27e02da-c284-43ad-9089-21eb4ca02511",
+          "migrations_dir": "drizzle",
+        },
+      ],
+      "r2_buckets": [
+        {
+          "binding": "BUCKET",
+          "bucket_name": "lurnics-staging",
+          "remote": true,
+        },
       ],
       "observability": {
-        "enabled": true
-      }
+        "enabled": true,
+      },
     },
     "production": {
       "name": "lurnics-backend-production",
       "vars": {
-        "EMAIL_FROM": "noreply@lurnics.com",
-        "LEADS_EMAIL_FROM": "pitch@lurnics.com"
+        "EMAIL_FROM": "info@lurnics.com",
+        "LEADS_EMAIL_FROM": "info@lurnics.com",
       },
       "send_email": [
         {
           "name": "SEB",
-          "destination_address": "pitch@lurnics.com"
-        }
+          "destination_address": "info@lurnics.com",
+        },
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "lurnics-db",
+          "database_id": "bab4cebc-3897-430f-9c95-48e502c1f82e",
+          "migrations_dir": "drizzle",
+        },
+      ],
+      "r2_buckets": [
+        {
+          "binding": "BUCKET",
+          "bucket_name": "lurnics-production",
+          "remote": true,
+        },
       ],
       "observability": {
-        "enabled": true
-      }
-    }
-  }
+        "enabled": true,
+      },
+    },
+  },
 }

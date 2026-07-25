@@ -14,6 +14,7 @@ export interface SendEmailInput {
   to: string;
   subject: string;
   text: string;
+  html?: string;
 }
 
 // Cloudflare's Send Email binding (`env.SEB`) only exists inside the
@@ -22,7 +23,7 @@ export interface SendEmailInput {
 // log the email instead of sending it rather than breaking lead-capture /
 // draft-email flows in local dev. Real sending only happens via
 // `wrangler dev` or a deployed Worker, where SEB is present.
-export async function sendEmail({ from, to, subject, text }: SendEmailInput): Promise<{ id: string }> {
+export async function sendEmail({ from, to, subject, text, html }: SendEmailInput): Promise<{ id: string }> {
   const { SEB } = getBindings();
 
   if (!SEB) {
@@ -41,6 +42,9 @@ export async function sendEmail({ from, to, subject, text }: SendEmailInput): Pr
   msg.setRecipient(to);
   msg.setSubject(subject);
   msg.addMessage({ contentType: "text/plain", data: text });
+  if (html) {
+    msg.addMessage({ contentType: "text/html", data: html });
+  }
 
   const message = new EmailMessage(from, to, msg.asRaw());
 
