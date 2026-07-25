@@ -1,0 +1,1 @@
+ALTER TABLE `case_studies` ADD `live_url` text;

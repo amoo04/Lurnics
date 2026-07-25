@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Search, Sun, ChevronDown, LogOut, Menu } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useSidebar } from "../../context/SidebarContext";
-import NotificationsBell from "../../features/Notifications/components/NotificationsBell";
+import NotificationsBell from "../../Notifications/components/NotificationsBell";
 
 function formatRole(role?: string): string {
   if (!role) return "";

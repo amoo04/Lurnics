@@ -6,6 +6,7 @@ export const createCaseStudySchema = z.object({
   industryId: z.string().optional(),
   summary: z.string().optional(),
   content: z.string().min(1),
+  liveUrl: z.string().optional(),
   featuredImage: z.string().optional(),
   metaTitle: z.string().optional(),
   metaDescription: z.string().optional(),

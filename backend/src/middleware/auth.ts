@@ -23,6 +23,10 @@ function getSecret(): string {
   return secret;
 }
 
+// `aud: "admin"` scopes this token to the internal admin/client-admin
+// system, and is checked on verify - it's what stops an admin token and a
+// platform token (middleware/platform-auth.ts) from being interchangeable
+// even though both are signed with the same JWT_SECRET.
 export async function signToken(
   payload: Omit<JWTPayload, "iat" | "exp">,
 ): Promise<string> {
@@ -31,13 +35,14 @@ export async function signToken(
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("1d")
+    .setAudience("admin")
     .sign(key);
 }
 
 export async function verifyToken(token: string): Promise<JWTPayload> {
   try {
     const key = new TextEncoder().encode(getSecret());
-    const { payload } = await jose.jwtVerify(token, key);
+    const { payload } = await jose.jwtVerify(token, key, { audience: "admin" });
     return payload as unknown as JWTPayload;
   } catch {
     throw new UnauthorizedError("Invalid or expired token");

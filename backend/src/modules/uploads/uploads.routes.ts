@@ -1,9 +1,8 @@
 import { Hono } from "hono";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
 import type { AppEnv } from "../../lib/hono-env.js";
 import { authenticate, requirePermission } from "../../middleware/auth.js";
-import { AppError, ValidationError } from "../../middleware/error.js";
-import { getR2, r2Bucket, r2PublicUrl } from "../../lib/r2.js";
+import { AppError, NotFoundError, ValidationError } from "../../middleware/error.js";
+import { r2Bucket } from "../../lib/r2.js";
 
 export const uploadsRoutes = new Hono<AppEnv>();
 
@@ -34,17 +33,31 @@ uploadsRoutes.post("/image", authenticate(), requirePermission("documents:write"
   const buffer = new Uint8Array(await file.arrayBuffer());
 
   try {
-    await getR2().send(
-      new PutObjectCommand({
-        Bucket: bucket,
-        Key: key,
-        Body: buffer,
-        ContentType: file.type,
-      }),
-    );
+    await bucket.put(key, buffer, { httpMetadata: { contentType: file.type } });
   } catch (err) {
     throw new AppError(err instanceof Error ? err.message : "Failed to upload file", 502, "UPLOAD_FAILED");
   }
 
-  return c.json({ success: true, data: { url: r2PublicUrl(key) } }, 201);
+  const url = new URL(`/api/uploads/${key}`, c.req.url).toString();
+  return c.json({ success: true, data: { url } }, 201);
+});
+
+// Serves whatever was uploaded above straight out of R2 - the app never
+// exposes the bucket publicly, images just get proxied through here instead.
+uploadsRoutes.get("/:key{.+}", async (c) => {
+  const bucket = r2Bucket();
+  if (!bucket) {
+    throw new AppError("File storage is not configured on the server yet", 503, "STORAGE_NOT_CONFIGURED");
+  }
+
+  const object = await bucket.get(c.req.param("key"));
+  if (!object) {
+    throw new NotFoundError("File not found");
+  }
+
+  return c.body(object.body as unknown as ReadableStream, 200, {
+    "Content-Type": object.httpMetadata?.contentType ?? "application/octet-stream",
+    "Cache-Control": "public, max-age=31536000, immutable",
+    ETag: object.httpEtag,
+  });
 });

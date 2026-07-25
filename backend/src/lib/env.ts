@@ -1,26 +1,37 @@
+import type { D1Database, R2Bucket } from "@cloudflare/workers-types";
+
 // Minimal local shape for Cloudflare's Send Email binding, rather than
 // pulling in @cloudflare/workers-types' ambient globals (which redeclare
 // Request/Response/etc. and can conflict with @types/node's versions of the
 // same globals across a codebase that runs both on Node and on Workers).
+// (D1Database above is a plain named type import, not an ambient global, so
+// it doesn't carry that risk.)
 export interface SendEmailBinding {
   send(message: unknown): Promise<void>;
 }
 
 export interface AppBindings {
-  DATABASE_URL: string;
   JWT_SECRET: string;
   EMAIL_FROM: string;
   LEADS_EMAIL_FROM: string;
   NODE_ENV?: string;
+  // This worker's own public base URL, used to build tracking-pixel /
+  // click-redirect / unsubscribe links embedded in sent campaign emails.
+  // Falls back to the local wrangler dev URL when unset.
+  API_URL?: string;
   SEB?: SendEmailBinding;
-  R2_ACCOUNT_ID?: string;
-  R2_ACCESS_KEY_ID?: string;
-  R2_SECRET_ACCESS_KEY?: string;
-  R2_BUCKET?: string;
-  // The bucket's public base URL (r2.dev subdomain or a custom domain) -
-  // separate from the R2_ACCOUNT_ID S3-API endpoint used for writes, since
-  // that endpoint isn't itself publicly readable.
-  R2_PUBLIC_URL?: string;
+  // Present only in the Workers runtime (deployed, or `wrangler dev`) - the
+  // native D1 binding. Node local dev (`pnpm dev`) has no equivalent, so
+  // db/index.ts falls back to a local SQLite file via @libsql/client when
+  // this is absent.
+  DB?: D1Database;
+  // Only meaningful for that local-Node fallback; ignored once DB is bound.
+  DATABASE_URL?: string;
+  // Native R2 binding, present only in the Workers runtime (same story as
+  // DB above). File uploads return 503 STORAGE_NOT_CONFIGURED when absent.
+  // Uploaded files are served back through GET /api/uploads/:key (see
+  // modules/uploads) rather than any public bucket URL.
+  BUCKET?: R2Bucket;
 }
 
 let bindings: AppBindings | null = null;

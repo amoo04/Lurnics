@@ -1,0 +1,142 @@
+import { useState, type FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Building2, Mail, Lock, User, Eye, EyeOff, AlertCircle } from "lucide-react";
+import { useDashboardAuth } from "../context/DashboardAuthContext";
+import { ApiError } from "../../lib/api";
+
+const inputClass =
+  "w-full bg-transparent text-sm text-gray-900 outline-none placeholder:text-gray-400";
+const fieldClass =
+  "flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2.5 focus-within:border-gray-900";
+
+export default function SignUp() {
+  const { registerBusiness } = useDashboardAuth();
+  const navigate = useNavigate();
+
+  const [businessName, setBusinessName] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setError("");
+    setSubmitting(true);
+    try {
+      await registerBusiness({ businessName, name, email, password });
+      navigate("/portal");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Failed to create your store");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-10">
+      <div className="w-full max-w-sm">
+        <Link to="/" className="mb-8 flex flex-col items-center">
+          <span className="text-xl font-bold uppercase tracking-wide text-gray-900">Lurnics</span>
+          <span className="mt-1 h-0.5 w-8 bg-orange-500" />
+          <p className="mt-2 text-sm text-gray-500">Business Portal</p>
+        </Link>
+
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h1 className="mb-1 text-lg font-semibold text-gray-900">Create your store</h1>
+          <p className="mb-6 text-sm text-gray-500">
+            Set up your business on Lurnics — free to start.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="mb-1.5 block text-sm text-gray-600">Business Name</label>
+              <div className={fieldClass}>
+                <Building2 size={16} className="text-gray-400" />
+                <input
+                  required
+                  value={businessName}
+                  onChange={(e) => setBusinessName(e.target.value)}
+                  placeholder="e.g. Shea by Tolu"
+                  className={inputClass}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-1.5 block text-sm text-gray-600">Your Name</label>
+              <div className={fieldClass}>
+                <User size={16} className="text-gray-400" />
+                <input
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your full name"
+                  className={inputClass}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-1.5 block text-sm text-gray-600">Email</label>
+              <div className={fieldClass}>
+                <Mail size={16} className="text-gray-400" />
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@business.com"
+                  className={inputClass}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-1.5 block text-sm text-gray-600">Password</label>
+              <div className={fieldClass}>
+                <Lock size={16} className="text-gray-400" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  minLength={8}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="At least 8 characters"
+                  className={inputClass}
+                />
+                <button type="button" onClick={() => setShowPassword((v) => !v)} className="text-gray-400">
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+            </div>
+
+            {error && (
+              <p className="flex items-center gap-1.5 text-sm text-red-500">
+                <AlertCircle size={14} />
+                {error}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full rounded-md bg-orange-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-orange-600 disabled:opacity-60"
+            >
+              {submitting ? "Creating your store…" : "Create Store"}
+            </button>
+          </form>
+
+          <p className="mt-5 text-center text-sm text-gray-500">
+            Already have a store?{" "}
+            <Link to="/signin" className="font-medium text-gray-900 hover:text-orange-500">
+              Sign in
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
