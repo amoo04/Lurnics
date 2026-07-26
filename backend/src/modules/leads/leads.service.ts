@@ -1,4 +1,5 @@
 import { sendEmail, leadsEmailFrom } from "../../lib/email.js";
+import { leadConfirmationEmail, leadReplyEmail } from "../../lib/email-templates.js";
 import { NotFoundError } from "../../middleware/error.js";
 import { parsePagination, paginatedResult } from "../../lib/pagination.js";
 import { logActivity } from "../activity-logs/activity-logs.service.js";
@@ -34,6 +35,19 @@ export async function submitLead(input: CreateLeadInput) {
     ),
   );
 
+  const confirmation = leadConfirmationEmail({
+    contactPerson: lead.contactPerson,
+    companyName: lead.companyName,
+    service: lead.service,
+  });
+  await sendEmail({
+    from: leadsEmailFrom(),
+    to: lead.email,
+    subject: confirmation.subject,
+    text: confirmation.text,
+    html: confirmation.html,
+  });
+
   return lead;
 }
 
@@ -63,5 +77,6 @@ export async function removeLead(userId: string, id: string) {
 }
 
 export async function sendLeadEmail({ to, subject, body }: SendLeadEmailInput) {
-  return sendEmail({ from: leadsEmailFrom(), to, subject, text: body });
+  const { html } = leadReplyEmail({ body });
+  return sendEmail({ from: leadsEmailFrom(), to, subject, text: body, html });
 }

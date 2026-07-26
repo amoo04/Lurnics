@@ -877,6 +877,7 @@ export const maintenanceContracts = sqliteTable(
     autoReminder: integer("auto_reminder", { mode: "boolean" })
       .notNull()
       .default(true),
+    lastReminderSentAt: text("last_reminder_sent_at"),
   },
   (table) => [
     index("maintenance_contracts_client_id_idx").on(table.clientId),

@@ -1,4 +1,4 @@
-import { and, asc, eq, like } from "drizzle-orm";
+import { and, asc, eq, like, ne } from "drizzle-orm";
 import { db } from "../../db/index.js";
 import { maintenanceContracts, type NewMaintenanceContractRow } from "../../db/schema.js";
 
@@ -50,4 +50,11 @@ export async function updateMaintenance(id: string, input: Partial<NewMaintenanc
 
 export async function deleteMaintenance(id: string) {
   await db.delete(maintenanceContracts).where(eq(maintenanceContracts.id, id));
+}
+
+export async function findContractsForReminderCheck() {
+  return db.query.maintenanceContracts.findMany({
+    where: and(eq(maintenanceContracts.autoReminder, true), ne(maintenanceContracts.status, "cancelled")),
+    with: { client: true },
+  });
 }

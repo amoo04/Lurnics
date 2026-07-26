@@ -26,7 +26,7 @@ const quickActions = [
   { icon: FileText, label: "View Documents", to: "/documents" },
 ];
 
-export default function ClientDetailPanel({ client }: { client: Client }) {
+export default function ClientDetailPanel({ client, onEmail }: { client: Client; onEmail: () => void }) {
   const { data: projectsData } = useApiGet<{ items: Project[] }>(`/api/projects?clientId=${client.id}&limit=3`);
   const { data: invoicesData } = useApiGet<{ items: InvoiceWithPayments[] }>(
     `/api/invoices?clientId=${client.id}&limit=100`,
@@ -130,6 +130,14 @@ export default function ClientDetailPanel({ client }: { client: Client }) {
       <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
         <p className="mb-3 text-sm font-semibold text-gray-900">Quick Actions</p>
         <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={onEmail}
+            className="flex items-center gap-2 rounded-md border border-gray-200 px-3 py-2 text-xs text-gray-600 hover:bg-gray-50"
+          >
+            <Mail size={14} className="text-orange-500" />
+            Send Email
+          </button>
           {quickActions.map(({ icon: Icon, label, to }) => (
             <Link
               key={label}

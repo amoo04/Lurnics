@@ -9,7 +9,6 @@ import {
   CreditCard,
   Wrench,
   FileText,
-  UserCircle,
   BarChart2,
   Newspaper,
   Settings,
@@ -33,7 +32,6 @@ const links = [
   { label: "Insights", path: "/insights", icon: Newspaper },
   { label: "Success Stories", path: "/success-stories", icon: Briefcase },
   { label: "Growth Blueprint", path: "/growth-blueprint", icon: Compass },
-  { label: "Team", path: "/team", icon: UserCircle },
   { label: "Reports", path: "/reports", icon: BarChart2 },
   { label: "Settings", path: "/settings", icon: Settings },
 ];

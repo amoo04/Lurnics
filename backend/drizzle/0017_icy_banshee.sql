@@ -1,0 +1,1 @@
+ALTER TABLE `maintenance_contracts` ADD `last_reminder_sent_at` text;
