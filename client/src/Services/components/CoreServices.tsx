@@ -6,7 +6,7 @@ const services = [
     icon: Code2,
     iconBg: "bg-orange-50 text-orange-500",
     title: "Software Engineering",
-    description: "Custom software tailored to your operations—from internal platforms to customer-facing applications.",
+    description: "Custom software tailored to your operations, from internal platforms to customer-facing applications.",
     items: ["Web Application Development", "Internal Business Systems", "Mobile Application Development", "API Development & Integration", "Legacy System Modernization"],
   },
   {

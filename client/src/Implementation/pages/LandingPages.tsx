@@ -8,55 +8,47 @@ import { ApiError } from "../../lib/api";
 interface Plan {
   id: string;
   label: string;
-  cadence: string;
-  monthlyUsd: number;
-  monthlyNgn: number;
-  billedNote: string;
+  durationLabel: string;
+  priceNgn: number;
   highlight?: boolean;
   features: string[];
 }
 
 const PLANS: Plan[] = [
   {
-    id: "quarterly",
-    label: "Quarterly",
-    cadence: "billed every 3 months",
-    monthlyUsd: 20,
-    monthlyNgn: 28_000,
-    billedNote: "$60 / ₦84,000 billed per quarter",
+    id: "3-month",
+    label: "3-Month Plan",
+    durationLabel: "Your page stays live for 3 months",
+    priceNgn: 28_000,
     features: [
       "1 custom-designed landing page",
       "Mobile-optimized & fast-loading",
       "Lead capture form built in",
       "Basic analytics & tracking",
-      "Email support",
     ],
   },
   {
-    id: "biannual",
-    label: "Biannual",
-    cadence: "billed every 6 months",
-    monthlyUsd: 35,
-    monthlyNgn: 49_000,
-    billedNote: "$210 / ₦294,000 billed twice a year",
+    id: "6-month",
+    label: "6-Month Plan",
+    durationLabel: "Your page stays live for 6 months",
+    priceNgn: 50_000,
     highlight: true,
     features: [
-      "Everything in Quarterly, plus:",
+      "Everything in the 3-Month plan, plus:",
+      "Email support",
       "2 rounds of design revisions",
       "A/B-ready headline & copy variants",
-      "Up to 2 content updates per quarter",
+      "Up to 2 content updates",
       "Priority email support",
     ],
   },
   {
-    id: "yearly",
-    label: "Yearly",
-    cadence: "billed every 12 months",
-    monthlyUsd: 50,
-    monthlyNgn: 70_000,
-    billedNote: "$600 / ₦840,000 billed once a year",
+    id: "12-month",
+    label: "12-Month Plan",
+    durationLabel: "Your page stays live for 12 months",
+    priceNgn: 75_000,
     features: [
-      "Everything in Biannual, plus:",
+      "Everything in the 6-Month plan, plus:",
       "Unlimited minor content updates",
       "Quarterly performance check-in",
       "48-hour priority turnaround",
@@ -74,7 +66,9 @@ export default function LandingPages() {
   const [contactPerson, setContactPerson] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function handleSubmit(e: FormEvent) {
@@ -87,15 +81,19 @@ export default function LandingPages() {
         companyName,
         contactPerson,
         email,
-        phone: phone || undefined,
-        budgetRange: `Landing Page — ${selectedPlan.label} ($${selectedPlan.monthlyUsd}/mo, ${selectedPlan.cadence})`,
+        phone,
+        budgetRange: `Landing Page, ${selectedPlan.label} (₦${selectedPlan.priceNgn.toLocaleString()}, one-time)`,
         service: "Landing Pages",
         source: "landing-pages-page",
       });
       setStatus("success");
     } catch (err) {
       setStatus("error");
-      setErrorMessage(err instanceof ApiError ? err.message : "Something went wrong. Please try again.");
+      setErrorMessage(
+        err instanceof ApiError
+          ? err.message
+          : "Something went wrong. Please try again.",
+      );
     }
   }
 
@@ -105,13 +103,15 @@ export default function LandingPages() {
 
       <section className="px-4 py-12 sm:px-8 md:px-20 md:py-16">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">Landing Pages</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
+            Landing Pages
+          </p>
           <h1 className="mt-3 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
             Just need a landing page? Here's a plan built for that.
           </h1>
           <p className="mt-4 text-gray-600">
-            A focused, high-converting landing page for a single offer — no big custom-software
-            engagement, just a simple subscription plan.
+            A focused, high-converting landing page for a single offer, pay
+            once, no recurring charges, no big custom-software engagement.
           </p>
         </div>
 
@@ -134,18 +134,30 @@ export default function LandingPages() {
                     Most Popular
                   </span>
                 )}
-                <p className="text-sm font-semibold text-gray-900">{plan.label}</p>
-                <p className="mt-3 text-2xl font-bold text-gray-900">
-                  ${plan.monthlyUsd}
-                  <span className="text-sm font-medium text-gray-500">/mo</span>
+                <p className="text-sm font-semibold text-gray-900">
+                  {plan.label}
                 </p>
-                <p className="text-sm text-gray-500">₦{plan.monthlyNgn.toLocaleString()}/mo</p>
-                <p className="mt-3 text-xs text-gray-500">{plan.billedNote}</p>
+                <p className="mt-3 text-2xl font-bold text-gray-900">
+                  ₦{plan.priceNgn.toLocaleString()}
+                  <span className="text-sm font-medium text-gray-500">
+                    {" "}
+                    one-time
+                  </span>
+                </p>
+                <p className="mt-3 text-xs text-gray-500">
+                  {plan.durationLabel}
+                </p>
 
                 <ul className="mt-5 space-y-2 border-t border-gray-200 pt-4">
                   {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 text-xs text-gray-600">
-                      <Check size={13} className="mt-0.5 shrink-0 text-orange-500" />
+                    <li
+                      key={feature}
+                      className="flex items-start gap-2 text-xs text-gray-600"
+                    >
+                      <Check
+                        size={13}
+                        className="mt-0.5 shrink-0 text-orange-500"
+                      />
                       {feature}
                     </li>
                   ))}
@@ -158,7 +170,9 @@ export default function LandingPages() {
                 >
                   <span
                     className={`flex h-4 w-4 items-center justify-center rounded-full border ${
-                      selected ? "border-orange-500 bg-orange-500 text-white" : "border-gray-300"
+                      selected
+                        ? "border-orange-500 bg-orange-500 text-white"
+                        : "border-gray-300"
                     }`}
                   >
                     {selected && <Check size={11} />}
@@ -173,12 +187,18 @@ export default function LandingPages() {
         <div className="mx-auto mt-14 grid max-w-4xl items-start gap-10 md:grid-cols-2">
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
             <p className="text-sm font-semibold text-gray-900">
-              What's included — {selectedPlan.label} plan
+              What's included, {selectedPlan.label}
             </p>
             <ul className="mt-4 space-y-3">
               {selectedPlan.features.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-sm text-gray-600">
-                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-orange-500" />
+                <li
+                  key={item}
+                  className="flex items-start gap-2.5 text-sm text-gray-600"
+                >
+                  <CheckCircle2
+                    size={16}
+                    className="mt-0.5 shrink-0 text-orange-500"
+                  />
                   {item}
                 </li>
               ))}
@@ -189,23 +209,29 @@ export default function LandingPages() {
             {status === "success" ? (
               <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-10 text-center shadow-sm">
                 <CheckCircle2 size={40} className="text-orange-500" />
-                <h2 className="mt-4 text-xl font-semibold text-gray-900">Request received.</h2>
+                <h2 className="mt-4 text-xl font-semibold text-gray-900">
+                  Request received.
+                </h2>
                 <p className="mt-2 max-w-sm text-sm text-gray-600">
-                  Thanks — our team will confirm your {selectedPlan.label.toLowerCase()} plan and get
-                  back to you at <span className="font-medium text-gray-900">{email}</span> within
-                  1–2 business days.
+                  Thanks, our team will confirm your{" "}
+                  {selectedPlan.label.toLowerCase()} and get back to you at{" "}
+                  <span className="font-medium text-gray-900">{email}</span>{" "}
+                  within 1–2 business days.
                 </p>
               </div>
             ) : (
               <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
                 <p className="mb-5 text-xs font-semibold uppercase tracking-wider text-orange-500">
-                  Get started — {selectedPlan.label} plan (${selectedPlan.monthlyUsd}/mo)
+                  Get started, {selectedPlan.label} (₦
+                  {selectedPlan.priceNgn.toLocaleString()}, one-time)
                 </p>
 
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="mb-1.5 block text-sm text-gray-600">Full Name</label>
+                      <label className="mb-1.5 block text-sm text-gray-600">
+                        Full Name
+                      </label>
                       <input
                         type="text"
                         required
@@ -216,7 +242,9 @@ export default function LandingPages() {
                       />
                     </div>
                     <div>
-                      <label className="mb-1.5 block text-sm text-gray-600">Work Email</label>
+                      <label className="mb-1.5 block text-sm text-gray-600">
+                        Work Email
+                      </label>
                       <input
                         type="email"
                         required
@@ -229,7 +257,9 @@ export default function LandingPages() {
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block text-sm text-gray-600">Business Name</label>
+                    <label className="mb-1.5 block text-sm text-gray-600">
+                      Business Name
+                    </label>
                     <input
                       type="text"
                       required
@@ -241,24 +271,31 @@ export default function LandingPages() {
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block text-sm text-gray-600">Phone (Optional)</label>
+                    <label className="mb-1.5 block text-sm text-gray-600">
+                      Phone
+                    </label>
                     <input
                       type="tel"
+                      required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="+1 (555) 000-0000"
+                      placeholder="+234 800 000 0000"
                       className={inputClass}
                     />
                   </div>
 
-                  {status === "error" && errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
+                  {status === "error" && errorMessage && (
+                    <p className="text-sm text-red-500">{errorMessage}</p>
+                  )}
 
                   <button
                     type="submit"
                     disabled={status === "submitting"}
                     className="flex w-full items-center justify-center gap-2 rounded-md bg-orange-500 px-6 py-3 text-sm font-medium text-white transition hover:bg-orange-600 disabled:opacity-60"
                   >
-                    {status === "submitting" ? "Submitting…" : `Get Started — ${selectedPlan.label}`}
+                    {status === "submitting"
+                      ? "Submitting…"
+                      : `Get Started, ${selectedPlan.label}`}
                     {status !== "submitting" && <Send size={16} />}
                   </button>
 

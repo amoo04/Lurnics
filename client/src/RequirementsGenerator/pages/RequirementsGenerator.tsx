@@ -30,7 +30,12 @@ const FEATURE_OPTIONS = [
 
 const TIMELINES = ["ASAP / Rush", "1–3 months", "3–6 months", "Flexible"];
 
-const BUDGET_RANGES = ["Under $1,000", "$1,000 – $5,000", "$5,000 – $15,000", "$15,000+"];
+const BUDGET_RANGES = [
+  "Under ₦1,400,000",
+  "₦1,400,000 – ₦7,000,000",
+  "₦7,000,000 – ₦21,000,000",
+  "₦21,000,000+",
+];
 
 const inputClass =
   "w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900";
@@ -94,7 +99,7 @@ export default function RequirementsGenerator() {
             </h1>
             <p className="mt-4 text-gray-600">
               Answer a few questions and we'll assemble a structured brief you can share with
-              anyone — us or another team — to get accurate quotes.
+              anyone, us or another team, to get accurate quotes.
             </p>
           </div>
         )}
@@ -105,14 +110,14 @@ export default function RequirementsGenerator() {
               <div className="mb-6 flex items-center gap-2 text-green-600 print:hidden">
                 <CheckCircle2 size={20} />
                 <p className="text-sm font-medium">
-                  Sent to our team — we'll follow up at {form.email} within 1–2 business days.
+                  Sent to our team, we'll follow up at {form.email} within 1–2 business days.
                 </p>
               </div>
 
               <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">Requirements Brief</p>
               <h2 className="mt-2 text-2xl font-bold text-gray-900">
                 {form.companyName || form.contactName}
-                {form.companyName ? ` — ${form.projectType}` : ` (${form.projectType})`}
+                {form.companyName ? `, ${form.projectType}` : ` (${form.projectType})`}
               </h2>
 
               <div className="mt-6 space-y-5 text-sm">

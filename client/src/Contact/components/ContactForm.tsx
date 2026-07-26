@@ -4,7 +4,12 @@ import { submitLead } from "../hooks/useLeads";
 import { useSolutions } from "../../Solutions/hooks/useSolutions";
 import { ApiError } from "../../lib/api";
 
-const BUDGET_RANGES = ["Under $1,000", "$1,000 – $5,000", "$5,000 – $15,000", "$15,000+"];
+const BUDGET_RANGES = [
+  "Under ₦1,400,000",
+  "₦1,400,000 – ₦7,000,000",
+  "₦7,000,000 – ₦21,000,000",
+  "₦21,000,000+",
+];
 
 export default function ContactForm() {
   const { data: solutions } = useSolutions();
@@ -27,7 +32,7 @@ export default function ContactForm() {
         companyName,
         contactPerson,
         email,
-        phone: phone || undefined,
+        phone,
         budgetRange,
         service: service || undefined,
         source: "website",
@@ -108,12 +113,13 @@ export default function ContactForm() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className="mb-1.5 block text-sm text-gray-600">Phone (Optional)</label>
+            <label className="mb-1.5 block text-sm text-gray-600">Phone</label>
             <input
               type="tel"
+              required
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="+1 (555) 000-0000"
+              placeholder="+234 800 000 0000"
               className="w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900 focus:outline-none"
             />
           </div>
@@ -144,15 +150,16 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label className="mb-1.5 block text-sm text-gray-600">Service Interested In (Optional)</label>
+          <label className="mb-1.5 block text-sm text-gray-600">Service Interested In</label>
           <div className="relative">
             <select
+              required
               value={service}
               onChange={(e) => setService(e.target.value)}
               className="w-full appearance-none rounded-md border border-gray-300 bg-white px-4 py-2.5 pr-9 text-sm text-gray-900 outline-none focus:border-gray-900 focus:outline-none"
             >
-              <option value="">
-                Not sure yet
+              <option value="" disabled hidden>
+                Select a service
               </option>
               {solutions?.items.map((solution) => (
                 <option key={solution.id} value={solution.name}>

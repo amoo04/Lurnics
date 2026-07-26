@@ -24,14 +24,10 @@ const links = [
   { label: "Solutions", path: "/solutions" },
   { label: "Services", path: "/services" },
   { label: "Industries", path: "/industries" },
-  { label: "Cost Calculator", path: "/leak-calculator" },
-  { label: "Growth Blueprint", path: "/growth-blueprint" },
-  { label: "Software Cost Estimator", path: "/software-cost-estimator" },
-  { label: "Requirements Generator", path: "/requirements-generator" },
   { label: "Success Stories", path: "/case-studies" },
   { label: "About", path: "/about" },
   { label: "Insights", path: "/insights" },
-  { label: "Pricing", path: "/pricing" },
+  // { label: "Pricing", path: "/pricing" }, // hidden until the store builder is finished
   { label: "Contact", path: "/contact" },
 ];
 
@@ -83,7 +79,7 @@ const RESOURCES: MenuItem[] = [
   { label: "Templates", to: null, icon: LayoutGrid },
 ];
 
-function MenuLink({ item }: { item: MenuItem }) {
+function MenuLink({ item, onClick }: { item: MenuItem; onClick?: () => void }) {
   const Icon = item.icon;
 
   if (!item.to) {
@@ -105,6 +101,7 @@ function MenuLink({ item }: { item: MenuItem }) {
     <li>
       <Link
         to={item.to}
+        onClick={onClick}
         className="flex items-start gap-2.5 rounded-lg px-2.5 py-2 hover:bg-orange-50"
       >
         <Icon size={15} className="mt-0.5 shrink-0 text-orange-500" />
@@ -120,10 +117,16 @@ function MenuLink({ item }: { item: MenuItem }) {
 export default function Navbar() {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
+
+  function closeMenu() {
+    setOpen(false);
+    setMobileSolutionsOpen(false);
+  }
 
   return (
     <nav className="relative flex items-center justify-between px-4 py-5 sm:px-8 lg:px-20">
-      <Link to="/" onClick={() => setOpen(false)} className="flex flex-col">
+      <Link to="/" onClick={closeMenu} className="flex flex-col">
         <span className="text-lg font-bold uppercase tracking-wide text-gray-900">Lurnics</span>
         <span className="h-0.5 w-6 bg-orange-500" />
       </Link>
@@ -210,11 +213,7 @@ export default function Navbar() {
           </Link>
         </li>
 
-        {links.slice(8).map(({ label, path }) => (
-          // Cost Calculator, Growth Blueprint, Software Cost Estimator, and
-          // Requirements Generator (indices 4-7) are intentionally skipped
-          // here — shown inside the Solutions dropdown instead of as their
-          // own tabs.
+        {links.slice(4).map(({ label, path }) => (
           <li key={label}>
             <Link
               to={path}
@@ -230,17 +229,12 @@ export default function Navbar() {
         ))}
       </ul>
 
-      <div className="hidden items-center gap-4 md:flex">
-        <Link to="/signin" className="text-sm text-gray-600 transition hover:text-gray-900">
-          Sign In
-        </Link>
-        <Link
-          to="/signup"
-          className="rounded-md bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-black"
-        >
-          Create Your Store
-        </Link>
-      </div>
+      <Link
+        to="/contact"
+        className="hidden rounded-md bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-black md:block"
+      >
+        Book a Strategy Session
+      </Link>
 
       <button
         type="button"
@@ -252,13 +246,73 @@ export default function Navbar() {
       </button>
 
       {open && (
-        <div className="absolute inset-x-0 top-full z-50 border-t border-gray-200 bg-white px-4 py-4 md:hidden">
+        <div className="absolute inset-x-0 top-full z-50 max-h-[calc(100vh-80px)] overflow-y-auto border-t border-gray-200 bg-white px-4 py-4 md:hidden">
           <ul className="space-y-1 text-sm text-gray-600">
-            {links.map(({ label, path }) => (
+            <li>
+              <Link
+                to="/"
+                onClick={closeMenu}
+                className={`block rounded-md px-3 py-2.5 ${
+                  pathname === "/" ? "bg-orange-50 text-gray-900" : "hover:bg-gray-50 hover:text-gray-900"
+                }`}
+              >
+                Home
+              </Link>
+            </li>
+
+            <li>
+              <button
+                type="button"
+                onClick={() => setMobileSolutionsOpen((v) => !v)}
+                className={`flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left ${
+                  pathname.startsWith("/solutions") ? "bg-orange-50 text-gray-900" : "hover:bg-gray-50 hover:text-gray-900"
+                }`}
+              >
+                Solutions
+                <ChevronDown size={15} className={`transition-transform ${mobileSolutionsOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {mobileSolutionsOpen && (
+                <div className="mt-1 space-y-4 rounded-lg bg-gray-50 p-3">
+                  <div>
+                    <p className="mb-1.5 px-1 text-xs font-semibold uppercase tracking-wider text-orange-500">
+                      Free Business Tools
+                    </p>
+                    <ul>
+                      {FREE_TOOLS.map((item) => (
+                        <MenuLink key={item.label} item={item} onClick={closeMenu} />
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-1.5 px-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                      Implementation
+                    </p>
+                    <ul>
+                      {IMPLEMENTATION.map((item) => (
+                        <MenuLink key={item.label} item={item} onClick={closeMenu} />
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-1.5 px-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                      Resources
+                    </p>
+                    <ul>
+                      {RESOURCES.map((item) => (
+                        <MenuLink key={item.label} item={item} onClick={closeMenu} />
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </li>
+
+            {links.slice(2).map(({ label, path }) => (
               <li key={label}>
                 <Link
                   to={path}
-                  onClick={() => setOpen(false)}
+                  onClick={closeMenu}
                   className={`block rounded-md px-3 py-2.5 ${
                     path === pathname ? "bg-orange-50 text-gray-900" : "hover:bg-gray-50 hover:text-gray-900"
                   }`}
@@ -268,19 +322,13 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
+
           <Link
-            to="/signin"
-            onClick={() => setOpen(false)}
-            className="mt-3 block w-full rounded-md border border-gray-300 px-5 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-50"
+            to="/contact"
+            onClick={closeMenu}
+            className="mt-3 block w-full rounded-md bg-gray-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-black"
           >
-            Sign In
-          </Link>
-          <Link
-            to="/signup"
-            onClick={() => setOpen(false)}
-            className="mt-2 block w-full rounded-md bg-gray-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-black"
-          >
-            Create Your Store
+            Book a Strategy Session
           </Link>
         </div>
       )}
