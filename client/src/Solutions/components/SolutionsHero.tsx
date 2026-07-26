@@ -1,6 +1,7 @@
 import { Cloud, Database, BarChart3, Brain, Lock, Code2, Sparkles, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import OrbitVisual from "../../components/shared/OrbitVisual";
+import HeroBackground from "../../components/shared/HeroBackground";
 
 const nodes = [
   { icon: Cloud, title: "Cloud Infrastructure", subtitle: "Scalable • Secure" },
@@ -13,38 +14,42 @@ const nodes = [
 
 export default function SolutionsHero() {
   return (
-    <section className="grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
-          Solutions
-        </p>
-        <h1 className="mt-3 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl md:text-6xl">
-          Intelligent solutions.
-          <br />
-          Built for real business.
-        </h1>
-        <p className="mt-6 max-w-md text-gray-600">
-          End-to-end digital solutions built to solve real business problems.
-        </p>
-        <div className="mt-8 flex items-center gap-4">
-          <Link
-            to="/contact"
-            className="flex items-center gap-2 rounded-md bg-gray-900 px-6 py-3 text-sm font-medium text-white hover:bg-black"
-          >
-            Book a Strategy Session
-            <ArrowRight size={16} />
-          </Link>
-          <Link to="/contact" className="flex items-center gap-2 text-sm text-gray-600">
-            Talk to our experts
-            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300">
-              <ArrowRight size={14} />
-            </span>
-          </Link>
+    <section className="relative overflow-hidden">
+      <HeroBackground />
+      <div className="relative grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
+        <div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-xs font-medium text-orange-600">
+            <Sparkles size={13} />
+            Solutions
+          </div>
+          <h1 className="mt-5 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl md:text-6xl">
+            Intelligent solutions.
+            <br />
+            Built for real business.
+          </h1>
+          <p className="mt-6 max-w-md text-gray-600">
+            End-to-end digital solutions built to solve real business problems.
+          </p>
+          <div className="mt-8 flex items-center gap-4">
+            <Link
+              to="/contact"
+              className="flex items-center gap-2 rounded-md bg-gray-900 px-6 py-3 text-sm font-medium text-white shadow-lg shadow-gray-900/10 transition hover:-translate-y-0.5 hover:bg-black hover:shadow-xl"
+            >
+              Book a Strategy Session
+              <ArrowRight size={16} />
+            </Link>
+            <Link to="/contact" className="flex items-center gap-2 text-sm text-gray-600">
+              Talk to our experts
+              <span className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300">
+                <ArrowRight size={14} />
+              </span>
+            </Link>
+          </div>
         </div>
-      </div>
 
-      <div className="mx-auto">
-        <OrbitVisual centerIcon={Sparkles} nodes={nodes} size={380} />
+        <div className="mx-auto">
+          <OrbitVisual centerIcon={Sparkles} nodes={nodes} size={380} />
+        </div>
       </div>
     </section>
   );
