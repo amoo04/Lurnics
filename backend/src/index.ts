@@ -60,12 +60,6 @@ const ALLOWED_ORIGINS = new Set([
   "https://lurnics.com",
   "https://www.lurnics.com",
   "https://admin.lurnics.com",
-  // The zone doesn't force an HTTP -> HTTPS redirect (should be enabled in
-  // the Cloudflare dashboard - Always Use HTTPS), so anyone who lands on
-  // the plain-http URL still needs to work rather than see every API call
-  // silently fail CORS.
-  "http://lurnics.com",
-  "http://www.lurnics.com",
 ]);
 
 app.use(
