@@ -27,3 +27,13 @@ export interface Paginated<T> {
   items: T[];
   pagination: { page: number; limit: number; total: number; totalPages: number };
 }
+
+export type ClientEmailType = "newsletter" | "pitch" | "update" | "custom";
+
+export interface SendClientEmailInput {
+  type: ClientEmailType;
+  subject: string;
+  body: string;
+  ctaLabel?: string;
+  ctaUrl?: string;
+}

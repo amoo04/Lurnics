@@ -19,5 +19,14 @@ export const listClientsQuerySchema = z.object({
   search: z.string().optional(),
 });
 
+export const sendClientEmailSchema = z.object({
+  type: z.enum(["newsletter", "pitch", "update", "custom"]),
+  subject: z.string().min(1),
+  body: z.string().min(1),
+  ctaLabel: z.string().optional(),
+  ctaUrl: z.string().url().optional(),
+});
+
 export type CreateClientInput = z.infer<typeof createClientSchema>;
 export type UpdateClientInput = z.infer<typeof updateClientSchema>;
+export type SendClientEmailInput = z.infer<typeof sendClientEmailSchema>;

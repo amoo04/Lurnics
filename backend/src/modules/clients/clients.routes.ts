@@ -5,9 +5,17 @@ import { authenticate, requirePermission } from "../../middleware/auth.js";
 import {
   createClientSchema,
   listClientsQuerySchema,
+  sendClientEmailSchema,
   updateClientSchema,
 } from "./clients.schema.js";
-import { addClient, editClient, getClient, listClients, removeClient } from "./clients.service.js";
+import {
+  addClient,
+  editClient,
+  getClient,
+  listClients,
+  removeClient,
+  sendClientEmail,
+} from "./clients.service.js";
 
 export const clientsRoutes = new Hono<AppEnv>();
 
@@ -51,4 +59,14 @@ clientsRoutes.patch("/:id", requirePermission("clients:write"), async (c) => {
 clientsRoutes.delete("/:id", requirePermission("clients:delete"), async (c) => {
   await removeClient(c.get("userId"), c.req.param("id"));
   return c.json({ success: true, data: null });
+});
+
+clientsRoutes.post("/:id/send-email", requirePermission("clients:write"), async (c) => {
+  const parsed = sendClientEmailSchema.safeParse(await c.req.json());
+  if (!parsed.success) {
+    throw new ValidationError("Invalid email payload", parsed.error.flatten().fieldErrors);
+  }
+
+  const result = await sendClientEmail(c.get("userId"), c.req.param("id"), parsed.data);
+  return c.json({ success: true, data: result });
 });

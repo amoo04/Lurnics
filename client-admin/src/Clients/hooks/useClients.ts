@@ -1,6 +1,6 @@
 import { apiDelete, apiPatch, apiPost } from "../../lib/api";
 import { buildQuery, useApiGet } from "../../lib/useApi";
-import type { Client, CreateClientInput, Paginated } from "../api/clients.types";
+import type { Client, CreateClientInput, Paginated, SendClientEmailInput } from "../api/clients.types";
 
 export function useClients(params: { page?: number; search?: string; status?: string }) {
   const query = buildQuery({ page: params.page, limit: 8, search: params.search, status: params.status });
@@ -21,4 +21,8 @@ export function updateClient(id: string, input: Partial<CreateClientInput>) {
 
 export function deleteClient(id: string) {
   return apiDelete(`/api/clients/${id}`);
+}
+
+export function sendClientEmail(id: string, input: SendClientEmailInput) {
+  return apiPost<{ id: string }>(`/api/clients/${id}/send-email`, input);
 }

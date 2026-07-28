@@ -7,12 +7,14 @@ import ClientsStats from "../components/ClientsStats";
 import ClientsTable from "../components/ClientsTable";
 import ClientDetailPanel from "../components/ClientDetailPanel";
 import ClientCreateForm from "../components/ClientCreateForm";
+import ClientEmailForm from "../components/ClientEmailForm";
 import { useClients, deleteClient } from "../hooks/useClients";
 import { ApiError } from "../../lib/api";
 
 export default function Clients() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
+  const [emailing, setEmailing] = useState(false);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
@@ -65,6 +67,7 @@ export default function Clients() {
               selectedId={selectedId}
               onSelect={(id) => {
                 setCreating(false);
+                setEmailing(false);
                 setSelectedId(id);
               }}
               onDelete={handleDelete}
@@ -85,7 +88,12 @@ export default function Clients() {
             />
           </div>
           {creating && <ClientCreateForm onCreated={() => { setCreating(false); refetch(); }} onClose={() => setCreating(false)} />}
-          {!creating && selectedClient && <ClientDetailPanel client={selectedClient} />}
+          {!creating && emailing && selectedClient && (
+            <ClientEmailForm client={selectedClient} onClose={() => setEmailing(false)} />
+          )}
+          {!creating && !emailing && selectedClient && (
+            <ClientDetailPanel client={selectedClient} onEmail={() => setEmailing(true)} />
+          )}
         </div>
       </div>
     </div>

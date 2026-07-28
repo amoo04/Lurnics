@@ -41,6 +41,12 @@
     },
   ],
 
+  // Runs the `scheduled` handler in src/worker.ts once a day (07:00 UTC),
+  // which sends maintenance-plan renewal reminders on a weekly cadence.
+  "triggers": {
+    "crons": ["0 7 * * *"],
+  },
+
   // File uploads (src/lib/r2.ts, POST /api/uploads/image) go straight
   // through this native binding (bucket.put/get) - no API keys needed.
   // `remote: true` makes `wrangler dev` read/write the real bucket instead
@@ -89,6 +95,9 @@
           "remote": true,
         },
       ],
+      "triggers": {
+        "crons": ["0 7 * * *"],
+      },
       "observability": {
         "enabled": true,
       },
@@ -120,6 +129,9 @@
           "remote": true,
         },
       ],
+      "triggers": {
+        "crons": ["0 7 * * *"],
+      },
       "observability": {
         "enabled": true,
       },
