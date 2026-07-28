@@ -1,5 +1,6 @@
-import { ArrowRight, Play, Box, Users, Globe, Code2, Cloud, Cog, TrendingUp, Building2 } from "lucide-react";
+import { ArrowRight, Play, Box, Users, Globe, Code2, Cloud, Cog, TrendingUp, Building2, Sparkles } from "lucide-react";
 import OrbitVisual from "../../components/shared/OrbitVisual";
+import HeroBackground from "../../components/shared/HeroBackground";
 
 const nodes = [
   { icon: Code2, title: "Software Engineering", subtitle: "Custom builds" },
@@ -19,40 +20,44 @@ const stats = [
 export default function AboutHero() {
   return (
     <>
-      <section className="grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
-            About Lurnics
-          </p>
-          <h1 className="mt-3 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl md:text-6xl">
-            We partner with businesses to design, build, and maintain{" "}
-            <span className="text-orange-500">
-              software that grows with them.
-            </span>
-          </h1>
-          <p className="mt-6 max-w-md text-gray-600">
-            We design, build, and maintain software that solves operational challenges and supports long-term growth.
-          </p>
-          <div className="mt-8 flex items-center gap-4">
-            <a
-              href="#story"
-              className="flex items-center gap-2 rounded-md bg-gray-900 px-6 py-3 text-sm font-medium text-white hover:bg-black"
-            >
-              Our Story
-              <ArrowRight size={16} />
-            </a>
-            <a
-              href="#mission"
-              className="flex items-center gap-2 rounded-md border border-gray-300 px-6 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50"
-            >
-              Our Mission
-              <Play size={14} />
-            </a>
+      <section className="relative overflow-hidden">
+        <HeroBackground />
+        <div className="relative grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-xs font-medium text-orange-600">
+              <Sparkles size={13} />
+              About Lurnics
+            </div>
+            <h1 className="mt-5 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl md:text-6xl">
+              We partner with businesses to design, build, and maintain{" "}
+              <span className="text-orange-500">
+                software that grows with them.
+              </span>
+            </h1>
+            <p className="mt-6 max-w-md text-gray-600">
+              We design, build, and maintain software that solves operational challenges and supports long-term growth.
+            </p>
+            <div className="mt-8 flex items-center gap-4">
+              <a
+                href="#story"
+                className="flex items-center gap-2 rounded-md bg-gray-900 px-6 py-3 text-sm font-medium text-white shadow-lg shadow-gray-900/10 transition hover:-translate-y-0.5 hover:bg-black hover:shadow-xl"
+              >
+                Our Story
+                <ArrowRight size={16} />
+              </a>
+              <a
+                href="#mission"
+                className="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-gray-900 transition hover:-translate-y-0.5 hover:bg-gray-50"
+              >
+                Our Mission
+                <Play size={14} />
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div className="mx-auto">
-          <OrbitVisual centerIcon={Building2} nodes={nodes} size={380} />
+          <div className="mx-auto">
+            <OrbitVisual centerIcon={Building2} nodes={nodes} size={380} />
+          </div>
         </div>
       </section>
 

@@ -1,6 +1,7 @@
-import { Box, Code2, Globe, ArrowRight, ShoppingCart, HeartPulse, Gem } from "lucide-react";
+import { Box, Code2, Globe, ArrowRight, ShoppingCart, HeartPulse, Gem, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import OrbitVisual from "../../components/shared/OrbitVisual";
+import HeroBackground from "../../components/shared/HeroBackground";
 
 const stats = [
   { icon: Box, value: "3", label: "Platforms Shipped", description: "Live systems handling real customers and revenue" },
@@ -17,32 +18,36 @@ const nodes = [
 export default function IndustriesHero() {
   return (
     <>
-      <section className="grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
-            Industries
-          </p>
-          <h1 className="mt-3 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl md:text-6xl">
-            Software designed for the way your industry works.
-          </h1>
-          <p className="mt-6 max-w-md text-gray-600">
-            Every industry has different workflows. We build software around yours.
-          </p>
-          <Link
-            to="/contact"
-            className="mt-8 flex items-center gap-2 text-sm font-medium text-orange-500 hover:text-orange-600"
-          >
-            <span className="border-b border-orange-400 pb-0.5">
-              Book a Strategy Session
-            </span>
-            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-orange-300">
-              <ArrowRight size={14} />
-            </span>
-          </Link>
-        </div>
+      <section className="relative overflow-hidden">
+        <HeroBackground />
+        <div className="relative grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-xs font-medium text-orange-600">
+              <Sparkles size={13} />
+              Industries
+            </div>
+            <h1 className="mt-5 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl md:text-6xl">
+              Software designed for the way your industry works.
+            </h1>
+            <p className="mt-6 max-w-md text-gray-600">
+              Every industry has different workflows. We build software around yours.
+            </p>
+            <Link
+              to="/contact"
+              className="mt-8 flex items-center gap-2 text-sm font-medium text-orange-500 hover:text-orange-600"
+            >
+              <span className="border-b border-orange-400 pb-0.5">
+                Book a Strategy Session
+              </span>
+              <span className="flex h-7 w-7 items-center justify-center rounded-full border border-orange-300">
+                <ArrowRight size={14} />
+              </span>
+            </Link>
+          </div>
 
-        <div className="mx-auto">
-          <OrbitVisual centerIcon={Globe} nodes={nodes} size={380} />
+          <div className="mx-auto">
+            <OrbitVisual centerIcon={Globe} nodes={nodes} size={380} />
+          </div>
         </div>
       </section>
 
