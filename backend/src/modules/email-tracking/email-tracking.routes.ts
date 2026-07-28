@@ -1,6 +1,12 @@
 import { Hono } from "hono";
 import type { AppEnv } from "../../lib/hono-env.js";
-import { findSendByToken, markClicked, markOpened, optOutCustomer } from "./email-tracking.repository.js";
+import {
+  findSendByToken,
+  findSendWithCampaignByToken,
+  markClicked,
+  markOpened,
+  optOutCustomer,
+} from "./email-tracking.repository.js";
 
 export const emailTrackingRoutes = new Hono<AppEnv>();
 
@@ -16,8 +22,12 @@ emailTrackingRoutes.get("/open/:token", async (c) => {
 });
 
 emailTrackingRoutes.get("/click/:token", async (c) => {
-  const send = await findSendByToken(c.req.param("token"));
-  const target = c.req.query("url");
+  // The redirect target always comes from the campaign's own stored ctaUrl,
+  // never from the request - a client-supplied `url` query param would let
+  // anyone holding a valid token (i.e. anyone who received one legitimate
+  // email) redirect through our domain to an arbitrary destination.
+  const send = await findSendWithCampaignByToken(c.req.param("token"));
+  const target = send?.campaign?.ctaUrl;
 
   await markClicked(c.req.param("token"));
 

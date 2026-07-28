@@ -1,5 +1,6 @@
 import { NotFoundError } from "../../middleware/error.js";
 import { parsePagination, paginatedResult } from "../../lib/pagination.js";
+import { sanitizeHtml } from "../../lib/sanitize.js";
 import {
   createPage,
   deletePage,
@@ -40,7 +41,7 @@ export async function addPage(businessId: string, input: CreatePageInput) {
     title: input.title,
     slug,
     type: input.type ?? "page",
-    content: input.content ?? "",
+    content: sanitizeHtml(input.content ?? ""),
     metaTitle: input.metaTitle,
     metaDescription: input.metaDescription,
     status: input.status ?? "draft",
@@ -70,6 +71,7 @@ export async function editPage(businessId: string, id: string, input: UpdatePage
   // the SQLite-format-vs-ISO-string mismatch that bit carts.lastActivityAt.
   const patch: Record<string, unknown> = { ...input };
   if (input.slug) patch.slug = slugify(input.slug);
+  if (input.content !== undefined) patch.content = sanitizeHtml(input.content);
 
   return updatePage(businessId, id, patch);
 }

@@ -101,9 +101,10 @@ export async function sendCampaign(businessId: string, id: string) {
     const token = randomToken();
     const pixelUrl = `${apiUrl}/api/track/open/${token}`;
     const unsubscribeUrl = `${apiUrl}/api/track/unsubscribe/${token}`;
-    const ctaLink = campaign.ctaUrl
-      ? `${apiUrl}/api/track/click/${token}?url=${encodeURIComponent(campaign.ctaUrl)}`
-      : "#";
+    // The click-tracking route resolves its own redirect target from the
+    // campaign's stored ctaUrl (see email-tracking.routes.ts), so no `url`
+    // query param is needed - or trusted - here.
+    const ctaLink = campaign.ctaUrl ? `${apiUrl}/api/track/click/${token}` : "#";
 
     const html =
       campaign.html.replaceAll("{{CTA_LINK}}", ctaLink).replaceAll("{{UNSUBSCRIBE_LINK}}", unsubscribeUrl) +

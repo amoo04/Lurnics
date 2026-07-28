@@ -1,5 +1,6 @@
 import { NotFoundError } from "../../middleware/error.js";
 import { parsePagination, paginatedResult } from "../../lib/pagination.js";
+import { sanitizeHtml } from "../../lib/sanitize.js";
 import {
   createBlogPost,
   deleteBlogPost,
@@ -41,7 +42,7 @@ export async function addBlogPost(businessId: string, input: CreateBlogPostInput
     title: input.title,
     slug,
     excerpt: input.excerpt,
-    content: input.content ?? "",
+    content: sanitizeHtml(input.content ?? ""),
     coverImageUrl: input.coverImageUrl,
     status,
     publishedAt: status === "published" ? new Date().toISOString() : null,
@@ -68,6 +69,7 @@ export async function editBlogPost(businessId: string, id: string, input: Update
 
   const patch: Record<string, unknown> = { ...input };
   if (input.slug) patch.slug = slugify(input.slug);
+  if (input.content !== undefined) patch.content = sanitizeHtml(input.content);
   if (input.status === "published" && existing.status !== "published") {
     patch.publishedAt = new Date().toISOString();
   }
