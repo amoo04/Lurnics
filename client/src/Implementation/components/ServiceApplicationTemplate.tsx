@@ -6,10 +6,10 @@ import { submitLead } from "../../Contact/hooks/useLeads";
 import { ApiError } from "../../lib/api";
 
 const BUDGET_RANGES = [
-  "Under $1,000",
-  "$1,000 – $5,000",
-  "$5,000 – $15,000",
-  "$15,000+",
+  "Under ₦1,400,000",
+  "₦1,400,000 – ₦7,000,000",
+  "₦7,000,000 – ₦21,000,000",
+  "₦21,000,000+",
 ];
 
 interface ServiceApplicationTemplateProps {
@@ -49,7 +49,7 @@ export default function ServiceApplicationTemplate({
         companyName,
         contactPerson,
         email,
-        phone: phone || undefined,
+        phone,
         budgetRange,
         service: serviceLabel,
         source: sourceSlug,
@@ -107,7 +107,7 @@ export default function ServiceApplicationTemplate({
                 Application received.
               </h2>
               <p className="mt-2 max-w-sm text-sm text-gray-600">
-                Thanks — our team will review your details and get back to you
+                Thanks, our team will review your details and get back to you
                 at <span className="font-medium text-gray-900">{email}</span>{" "}
                 within 1–2 business days.
               </p>
@@ -165,13 +165,14 @@ export default function ServiceApplicationTemplate({
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label className="mb-1.5 block text-sm text-gray-600">
-                      Phone (Optional)
+                      Phone
                     </label>
                     <input
                       type="tel"
+                      required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="+1 (555) 000-0000"
+                      placeholder="+234 800 000 0000"
                       className="w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
                     />
                   </div>

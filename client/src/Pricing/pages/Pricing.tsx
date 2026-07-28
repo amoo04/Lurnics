@@ -6,7 +6,6 @@ import Footer from "../../components/layout/Footer";
 interface Plan {
   name: string;
   audience: string;
-  monthlyUsd: number;
   monthlyNgn: number;
   features: string[];
   highlight?: boolean;
@@ -16,7 +15,6 @@ const PLANS: Plan[] = [
   {
     name: "Starter",
     audience: "Solopreneurs & small businesses",
-    monthlyUsd: 29,
     monthlyNgn: 40_600,
     features: [
       "1 store / landing page",
@@ -29,7 +27,6 @@ const PLANS: Plan[] = [
   {
     name: "Growth",
     audience: "Growing businesses",
-    monthlyUsd: 79,
     monthlyNgn: 110_600,
     highlight: true,
     features: [
@@ -43,7 +40,6 @@ const PLANS: Plan[] = [
   {
     name: "Scale",
     audience: "Agencies & multi-brand teams",
-    monthlyUsd: 199,
     monthlyNgn: 278_600,
     features: [
       "Everything in Growth, plus:",
@@ -89,10 +85,9 @@ export default function Pricing() {
               <p className="mt-1 text-xs text-gray-500">{plan.audience}</p>
 
               <p className="mt-5 text-3xl font-bold text-gray-900">
-                ${plan.monthlyUsd}
+                ₦{plan.monthlyNgn.toLocaleString()}
                 <span className="text-sm font-medium text-gray-500">/mo</span>
               </p>
-              <p className="text-sm text-gray-500">₦{plan.monthlyNgn.toLocaleString()}/mo</p>
 
               <ul className="mt-6 flex-1 space-y-3">
                 {plan.features.map((feature) => (
@@ -120,8 +115,8 @@ export default function Pricing() {
         <div className="mx-auto mt-14 max-w-2xl rounded-xl border border-gray-200 bg-white p-6 text-center">
           <p className="text-sm font-semibold text-gray-900">Just need a single landing page?</p>
           <p className="mt-1.5 text-sm text-gray-600">
-            Skip the store builder — get one professionally built landing page on a simple
-            subscription, starting at $20/mo.
+            Skip the store builder, get one professionally built landing page for a one-time fee,
+            starting at ₦28,000.
           </p>
           <Link
             to="/landing-pages"

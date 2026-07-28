@@ -31,7 +31,12 @@ const FEATURES = [
 
 const TIMELINES = ["ASAP / Rush", "1–3 months", "3–6 months", "Flexible"];
 
-const BUDGET_RANGES = ["Under $1,000", "$1,000 – $5,000", "$5,000 – $15,000", "$15,000+"];
+const BUDGET_RANGES = [
+  "Under ₦1,400,000",
+  "₦1,400,000 – ₦7,000,000",
+  "₦7,000,000 – ₦21,000,000",
+  "₦21,000,000+",
+];
 
 const inputClass =
   "w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900";
@@ -90,7 +95,7 @@ export default function SoftwareCostEstimator() {
               What would your project actually cost?
             </h1>
             <p className="mt-4 text-gray-600">
-              Tell us what you're building and we'll send you a real, detailed cost estimate —
+              Tell us what you're building and we'll send you a real, detailed cost estimate,
               not a generic guess.
             </p>
           </div>
@@ -100,7 +105,7 @@ export default function SoftwareCostEstimator() {
           {status === "success" ? (
             <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-10 text-center shadow-sm">
               <CheckCircle2 size={40} className="text-orange-500" />
-              <h2 className="mt-4 text-xl font-semibold text-gray-900">Got it — estimate on its way.</h2>
+              <h2 className="mt-4 text-xl font-semibold text-gray-900">Got it, estimate on its way.</h2>
               <p className="mt-2 max-w-md text-sm text-gray-600">
                 We've received your project details. Our team is putting together a detailed cost
                 estimate and will send it to <span className="font-medium text-gray-900">{email}</span>{" "}

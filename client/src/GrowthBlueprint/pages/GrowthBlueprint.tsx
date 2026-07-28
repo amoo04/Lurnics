@@ -156,7 +156,7 @@ export default function GrowthBlueprint() {
             </h1>
             <p className="mt-4 text-gray-600">
               Answer a few questions about your business and our team will put together a
-              personalized growth plan — channels, messaging, and what to build first.
+              personalized growth plan, channels, messaging, and what to build first.
             </p>
           </div>
         )}
@@ -166,7 +166,7 @@ export default function GrowthBlueprint() {
             <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-10 text-center shadow-sm">
               <CheckCircle2 size={40} className="text-orange-500" />
               <h2 className="mt-4 text-xl font-semibold text-gray-900">
-                Thanks — your blueprint is on its way.
+                Thanks, your blueprint is on its way.
               </h2>
               <p className="mt-2 max-w-md text-sm text-gray-600">
                 We've received your answers and our team is putting together your growth
@@ -188,7 +188,7 @@ export default function GrowthBlueprint() {
                 ))}
               </div>
               <p className="mb-6 text-xs font-semibold uppercase tracking-wider text-orange-500">
-                Step {step + 1} of {STEP_LABELS.length} — {STEP_LABELS[step]}
+                Step {step + 1} of {STEP_LABELS.length}, {STEP_LABELS[step]}
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -276,7 +276,7 @@ export default function GrowthBlueprint() {
                         <input
                           value={form.revenueRange}
                           onChange={(e) => update("revenueRange", e.target.value)}
-                          placeholder="e.g. $10k-$50k/mo"
+                          placeholder="e.g. ₦14M-₦70M/mo"
                           className={inputClass}
                         />
                       </div>
@@ -338,7 +338,7 @@ export default function GrowthBlueprint() {
                       <input
                         value={form.monthlyBudget}
                         onChange={(e) => update("monthlyBudget", e.target.value)}
-                        placeholder="e.g. Under $500, $500-$2,000"
+                        placeholder="e.g. Under ₦700,000, ₦700,000-₦2,800,000"
                         className={inputClass}
                       />
                     </div>

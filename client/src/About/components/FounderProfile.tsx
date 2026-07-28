@@ -1,4 +1,6 @@
-import { Link2, AtSign, Code2, Cloud, Cog, TrendingUp, Layers, Smartphone } from "lucide-react";
+import { Code2, Cloud, Cog, TrendingUp, Layers, Smartphone } from "lucide-react";
+// import { Link2, AtSign } from "lucide-react"; // used by the founder social-links row, hidden for now
+import founderPhoto from "../../assets/founder/amoo.png";
 
 const expertise = [
   { icon: Code2, label: "Software Engineering" },
@@ -13,8 +15,8 @@ export default function FounderProfile() {
   return (
     <section id="story" className="px-4 sm:px-8 md:px-20 py-10">
       <div className="grid gap-8 rounded-xl border border-gray-200 bg-white p-8 shadow-sm md:grid-cols-[200px_1fr_240px]">
-        <div className="flex h-56 items-center justify-center rounded-lg border border-gray-200 bg-gray-50 text-xs text-gray-500">
-          Photo placeholder
+        <div className="h-56 overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
+          <img src={founderPhoto} alt="Amoo Oluwasegun, Founder & Lead Engineer" className="h-full w-full object-cover" />
         </div>
 
         <div>
@@ -26,7 +28,7 @@ export default function FounderProfile() {
 
           <div className="mt-4 space-y-3 text-sm text-gray-600">
             <p>
-              I started Lurnics with a simple belief — businesses don't just
+              I started Lurnics with a simple belief, businesses don't just
               need websites; they need systems that work, scale, and create
               real value.
             </p>
@@ -42,6 +44,7 @@ export default function FounderProfile() {
             </p>
           </div>
 
+          {/* Social links, hidden for now
           <div className="mt-5 flex items-center gap-3">
             {[Link2, Code2, AtSign].map((Icon, i) => (
               <div
@@ -52,6 +55,7 @@ export default function FounderProfile() {
               </div>
             ))}
           </div>
+          */}
         </div>
 
         <div>

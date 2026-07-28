@@ -16,7 +16,7 @@ export default function TransformationBar() {
             Not just solutions. Business transformation.
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            We don't just deliver technology — we deliver outcomes that
+            We don't just deliver technology, we deliver outcomes that
             transform how your business operates and grows.
           </p>
         </div>

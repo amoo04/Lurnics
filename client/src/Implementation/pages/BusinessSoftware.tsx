@@ -5,7 +5,7 @@ export default function BusinessSoftware() {
     <ServiceApplicationTemplate
       eyebrow="Business Software"
       headline="Custom software built around how your business actually runs."
-      subtext="Internal tools, dashboards, and applications designed for your specific workflows — not a generic off-the-shelf tool you have to work around."
+      subtext="Internal tools, dashboards, and applications designed for your specific workflows, not a generic off-the-shelf tool you have to work around."
       whatsIncluded={[
         "Built around your actual processes",
         "Secure user accounts & permissions",

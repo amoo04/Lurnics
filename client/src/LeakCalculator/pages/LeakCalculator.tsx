@@ -14,35 +14,34 @@ const MODES: { value: CalculatorMode; label: string }[] = [
 
 const MODE_COPY: Record<CalculatorMode, { hours: string; inquiries: string; cold: string; order: string }> = {
   products: {
-    hours: "Hours/week on manual admin — invoicing, chasing payments, follow-ups",
+    hours: "Hours/week on manual admin, invoicing, chasing payments, follow-ups",
     inquiries: "New inquiries per week",
     cold: "% that go cold before you respond",
     order: "Average order value",
   },
   bookings: {
-    hours: "Hours/week on manual admin — scheduling, reminders, chasing no-shows",
+    hours: "Hours/week on manual admin, scheduling, reminders, chasing no-shows",
     inquiries: "New booking requests per week",
     cold: "% that never get booked in time",
     order: "Average booking value",
   },
   services: {
-    hours: "Hours/week on manual admin — proposals, invoicing, client follow-ups",
+    hours: "Hours/week on manual admin, proposals, invoicing, client follow-ups",
     inquiries: "New inquiries per week",
     cold: "% that go cold before you respond",
     order: "Average project/client value",
   },
 };
 
-const CURRENCY_DEFAULTS: Record<Currency, { orderValue: number; hourlyValue: number }> = {
+const CURRENCY_DEFAULTS = {
   NGN: { orderValue: 15000, hourlyValue: 3000 },
-  USD: { orderValue: 50, hourlyValue: 20 },
-};
+} as const;
 
 const WEEKS_PER_MONTH = 4.33;
 const COLD_LEAD_CLOSE_RATE = 0.25;
 
 function formatCurrency(amount: number, currency: Currency): string {
-  return new Intl.NumberFormat(currency === "NGN" ? "en-NG" : "en-US", {
+  return new Intl.NumberFormat("en-NG", {
     style: "currency",
     currency,
     maximumFractionDigits: 0,
@@ -51,7 +50,7 @@ function formatCurrency(amount: number, currency: Currency): string {
 
 export default function LeakCalculator() {
   const [mode, setMode] = useState<CalculatorMode>("products");
-  const [currency, setCurrency] = useState<Currency>("NGN");
+  const currency: Currency = "NGN";
   const [hoursPerWeek, setHoursPerWeek] = useState(10);
   const [inquiriesPerWeek, setInquiriesPerWeek] = useState(20);
   const [coldPercent, setColdPercent] = useState(30);
@@ -63,12 +62,6 @@ export default function LeakCalculator() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const copy = MODE_COPY[mode];
-
-  function handleCurrencyChange(next: Currency) {
-    setCurrency(next);
-    setOrderValue(CURRENCY_DEFAULTS[next].orderValue);
-    setHourlyValue(CURRENCY_DEFAULTS[next].hourlyValue);
-  }
 
   const { monthlyHours, monthlyTimeCost, coldPerMonth, monthlyRevenueLost, total } = useMemo(() => {
     const monthlyHoursCalc = hoursPerWeek * WEEKS_PER_MONTH;
@@ -127,38 +120,21 @@ export default function LeakCalculator() {
         </div>
 
         <div className="mx-auto max-w-2xl rounded-xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap gap-2">
-              {MODES.map(({ value, label }) => (
-                <button
-                  key={value}
-                  type="button"
-                  onClick={() => setMode(value)}
-                  className={`rounded-md border px-3.5 py-2 text-sm font-medium transition ${
-                    mode === value
-                      ? "border-gray-900 bg-gray-900 text-white"
-                      : "border-gray-300 bg-white text-gray-600 hover:border-gray-400"
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            <div className="flex gap-1 rounded-md border border-gray-200 p-1">
-              {(["NGN", "USD"] as Currency[]).map((c) => (
-                <button
-                  key={c}
-                  type="button"
-                  onClick={() => handleCurrencyChange(c)}
-                  className={`rounded px-3 py-1.5 text-xs font-medium transition ${
-                    currency === c ? "bg-orange-500 text-white" : "text-gray-500 hover:text-gray-900"
-                  }`}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
+          <div className="mb-6 flex flex-wrap gap-2">
+            {MODES.map(({ value, label }) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setMode(value)}
+                className={`rounded-md border px-3.5 py-2 text-sm font-medium transition ${
+                  mode === value
+                    ? "border-gray-900 bg-gray-900 text-white"
+                    : "border-gray-300 bg-white text-gray-600 hover:border-gray-400"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
           </div>
 
           <div className="space-y-6">
@@ -287,7 +263,7 @@ export default function LeakCalculator() {
                 </div>
                 {status === "error" && errorMessage && <p className="mt-2 text-sm text-red-500">{errorMessage}</p>}
                 <p className="mt-3 text-xs text-gray-400">
-                  Revenue-loss estimate assumes only 25% of cold leads would have converted — a
+                  Revenue-loss estimate assumes only 25% of cold leads would have converted, a
                   deliberately conservative number, not a worst case.
                 </p>
               </form>

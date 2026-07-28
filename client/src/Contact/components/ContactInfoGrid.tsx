@@ -10,7 +10,7 @@ const reasons = [
   { icon: LayoutGrid, title: "Business-Focused Approach", description: "We align technology with your business goals to deliver measurable results." },
   { icon: Shield, title: "Scalable & Secure Solutions", description: "We build robust, secure, and future-ready systems that grow with your business." },
   { icon: MessageSquare, title: "Clear Communication", description: "We keep you informed at every step with transparency and clarity." },
-  { icon: HeartHandshake, title: "Long-term Partnership", description: "We're not just a vendor—we're your technology partner for the long run." },
+  { icon: HeartHandshake, title: "Long-term Partnership", description: "We're not just a vendor, we're your technology partner for the long run." },
 ];
 
 export default function ContactInfoGrid() {
