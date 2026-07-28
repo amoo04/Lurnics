@@ -71,6 +71,7 @@
     "staging": {
       "name": "lurnics-backend-staging",
       "vars": {
+        "NODE_ENV": "production",
         "EMAIL_FROM": "info@lurnics.com",
         "LEADS_EMAIL_FROM": "info@lurnics.com",
       },
@@ -105,6 +106,7 @@
     "production": {
       "name": "lurnics-backend-production",
       "vars": {
+        "NODE_ENV": "production",
         "EMAIL_FROM": "info@lurnics.com",
         "LEADS_EMAIL_FROM": "info@lurnics.com",
       },
