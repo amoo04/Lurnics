@@ -1,6 +1,7 @@
 import { Monitor, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSolutions } from "../hooks/useSolutions";
+import { SOLUTION_CONTENT } from "../data/solutionContent";
 
 export default function SolutionsCatalog() {
   const { data, loading, error } = useSolutions();
@@ -25,22 +26,35 @@ export default function SolutionsCatalog() {
       {error && <p className="text-center text-sm text-red-500">{error}</p>}
 
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-        {solutions.map(({ id, slug, name, description }) => (
-          <div key={id} className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-            <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-orange-50 text-orange-500">
-              <Monitor size={20} />
+        {solutions.map(({ id, slug, name, description }) => {
+          const Icon = SOLUTION_CONTENT[slug]?.icon ?? Monitor;
+          const features = SOLUTION_CONTENT[slug]?.features.slice(0, 3) ?? [];
+          return (
+            <div key={id} className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-orange-50 text-orange-500">
+                <Icon size={20} />
+              </div>
+              <h3 className="font-semibold text-gray-900">{name}</h3>
+              {description && <p className="mt-2 text-sm text-gray-600">{description}</p>}
+              {features.length > 0 && (
+                <ul className="mt-4 space-y-1.5">
+                  {features.map((feature) => (
+                    <li key={feature} className="text-xs text-gray-500">
+                      • {feature}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <Link
+                to={`/solutions/${slug}`}
+                className="mt-4 flex items-center gap-1 text-sm font-medium text-orange-500 hover:text-orange-600"
+              >
+                Learn more
+                <ArrowRight size={14} />
+              </Link>
             </div>
-            <h3 className="font-semibold text-gray-900">{name}</h3>
-            {description && <p className="mt-2 text-sm text-gray-600">{description}</p>}
-            <Link
-              to={`/solutions/${slug}`}
-              className="mt-4 flex items-center gap-1 text-sm font-medium text-orange-500 hover:text-orange-600"
-            >
-              Learn more
-              <ArrowRight size={14} />
-            </Link>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
