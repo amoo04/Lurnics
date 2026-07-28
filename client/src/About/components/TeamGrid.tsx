@@ -19,7 +19,7 @@ export default function TeamGrid() {
         </h2>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {team.map(({ name, role, filled }, i) => (
           <div
             key={i}

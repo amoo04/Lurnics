@@ -28,7 +28,7 @@ const stats = [
 export default function Stats() {
   return (
     <section className="px-4 sm:px-8 md:px-20 py-10">
-      <div className="grid gap-8 rounded-xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10 md:grid-cols-[1fr_2fr]">
+      <div className="grid gap-8 rounded-xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10 lg:grid-cols-[1fr_2fr]">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
             Built for Businesses

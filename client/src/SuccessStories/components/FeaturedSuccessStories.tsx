@@ -16,7 +16,7 @@ export default function CaseStudies() {
       {error && <p className="text-center text-sm text-red-400">{error}</p>}
 
       {!loading && !error && caseStudies.length > 0 && (
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {caseStudies.map(({ id, slug, title, summary, featuredImage }) => (
             <div key={id} className="rounded-xl border border-gray-200 bg-white shadow-sm">
               {featuredImage ? (

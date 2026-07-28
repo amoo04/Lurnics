@@ -81,7 +81,7 @@ export default function Process({
         <h2 className="mt-2 text-3xl font-semibold text-gray-900">{heading}</h2>
       </div>
 
-      <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-4 md:grid-cols-7 md:gap-x-4">
+      <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-4 lg:grid-cols-7 lg:gap-x-4">
         {steps.map(({ icon: Icon, number, title, description }) => (
           <div key={number} className="text-center">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-orange-200 bg-orange-50">

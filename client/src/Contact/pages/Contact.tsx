@@ -10,7 +10,7 @@ export default function Contact() {
     <>
       <Navbar />
       <ContactHero />
-      <section className="grid gap-6 px-4 sm:px-8 md:px-20 pb-10 md:grid-cols-2">
+      <section className="grid gap-6 px-4 sm:px-8 md:px-20 pb-10 lg:grid-cols-2">
         <ContactMethods />
         <ContactForm />
       </section>

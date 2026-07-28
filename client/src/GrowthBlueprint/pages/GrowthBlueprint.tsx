@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle2, ChevronDown } from "lucide-react";
 import Navbar from "../../components/layout/Navbar";
 import Footer from "../../components/layout/Footer";
+import HeroBackground from "../../components/shared/HeroBackground";
 import CheckboxGrid from "../components/CheckboxGrid";
 import { submitGrowthBlueprint } from "../hooks/useGrowthBlueprint";
 import { ApiError } from "../../lib/api";
@@ -145,12 +146,14 @@ export default function GrowthBlueprint() {
   return (
     <>
       <Navbar />
-      <section className="px-4 py-12 sm:px-8 md:px-20 md:py-16">
+      <section className="relative overflow-hidden px-4 py-12 sm:px-8 md:px-20 md:py-16">
+        <HeroBackground />
+        <div className="relative">
         {status !== "success" && (
           <div className="mx-auto mb-10 max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
+            <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-xs font-medium text-orange-600">
               Growth Blueprint
-            </p>
+            </div>
             <h1 className="mt-3 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
               Get your free growth blueprint.
             </h1>
@@ -426,6 +429,7 @@ export default function GrowthBlueprint() {
               </form>
             </div>
           )}
+        </div>
         </div>
       </section>
       <Footer />

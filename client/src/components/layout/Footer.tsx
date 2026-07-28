@@ -62,7 +62,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-gray-200 bg-white px-4 py-12 text-sm text-gray-500 sm:px-8 lg:px-20">
-      <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">
+      <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">
         <div>
           <div className="flex flex-col">
             <span className="text-lg font-bold uppercase tracking-wide text-gray-900">Lurnics</span>

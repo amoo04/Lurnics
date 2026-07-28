@@ -27,7 +27,7 @@ export default function OrbitVisual({ centerIcon: CenterIcon, nodes, size = 440 
   const step = 360 / nodes.length;
 
   return (
-    <div className="relative hidden shrink-0 md:block" style={{ height: size, width: size }}>
+    <div className="relative hidden shrink-0 lg:block" style={{ height: size, width: size }}>
       <div className="absolute inset-0 rounded-[3rem] bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.12),_transparent_65%)] blur-2xl" />
 
       <div

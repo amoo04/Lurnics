@@ -67,7 +67,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
+        <div className="mx-auto mt-12 grid max-w-5xl gap-6 lg:grid-cols-3">
           {PLANS.map((plan) => (
             <div
               key={plan.name}

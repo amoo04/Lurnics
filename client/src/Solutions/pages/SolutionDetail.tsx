@@ -78,7 +78,7 @@ export default function SolutionDetail() {
             <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-900">
               How it works
             </h2>
-            <div className="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-4">
+            <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {content.process.map((step, i) => (
                 <div key={step.title} className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
                   <p className="text-xs font-semibold text-orange-500">Step {i + 1}</p>

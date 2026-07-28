@@ -13,7 +13,7 @@ export default function CaseStudiesHero() {
   return (
     <section className="relative overflow-hidden">
       <HeroBackground />
-      <div className="relative grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
+      <div className="relative grid items-center gap-12 px-4 sm:px-8 md:px-20 py-16 lg:grid-cols-2">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-xs font-medium text-orange-600">
             <Sparkles size={13} />

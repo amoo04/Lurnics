@@ -131,7 +131,7 @@ export default function Navbar() {
         <span className="h-0.5 w-6 bg-orange-500" />
       </Link>
 
-      <ul className="hidden items-center gap-8 text-sm text-gray-600 md:flex">
+      <ul className="hidden items-center gap-8 text-sm text-gray-600 lg:flex">
         <li>
           <Link
             to="/"
@@ -231,7 +231,7 @@ export default function Navbar() {
 
       <Link
         to="/contact"
-        className="hidden rounded-md bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-black md:block"
+        className="hidden rounded-md bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-black lg:block"
       >
         Book a Strategy Session
       </Link>
@@ -239,14 +239,14 @@ export default function Navbar() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="text-gray-600 hover:text-gray-900 md:hidden"
+        className="text-gray-600 hover:text-gray-900 lg:hidden"
         aria-label="Toggle menu"
       >
         {open ? <X size={24} /> : <Menu size={24} />}
       </button>
 
       {open && (
-        <div className="absolute inset-x-0 top-full z-50 max-h-[calc(100vh-80px)] overflow-y-auto border-t border-gray-200 bg-white px-4 py-4 md:hidden">
+        <div className="absolute inset-x-0 top-full z-50 max-h-[calc(100vh-80px)] overflow-y-auto border-t border-gray-200 bg-white px-4 py-4 lg:hidden">
           <ul className="space-y-1 text-sm text-gray-600">
             <li>
               <Link

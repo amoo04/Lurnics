@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { CheckCircle2, Send, Lock, ChevronDown } from "lucide-react";
 import Navbar from "../../components/layout/Navbar";
 import Footer from "../../components/layout/Footer";
+import HeroBackground from "../../components/shared/HeroBackground";
 import { submitLead } from "../../Contact/hooks/useLeads";
 import { ApiError } from "../../lib/api";
 
@@ -68,11 +69,12 @@ export default function ServiceApplicationTemplate({
   return (
     <>
       <Navbar />
-      <section className="grid items-start gap-12 px-4 py-12 sm:px-8 md:grid-cols-2 md:px-20 md:py-16">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
+      <section className="relative grid items-start gap-12 overflow-hidden px-4 py-12 sm:px-8 lg:grid-cols-2 md:px-20 md:py-16">
+        <HeroBackground />
+        <div className="relative">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-xs font-medium text-orange-600">
             {eyebrow}
-          </p>
+          </div>
           <h1 className="mt-3 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
             {headline}
           </h1>
@@ -99,7 +101,7 @@ export default function ServiceApplicationTemplate({
           </div>
         </div>
 
-        <div>
+        <div className="relative">
           {status === "success" ? (
             <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-10 text-center shadow-sm">
               <CheckCircle2 size={40} className="text-orange-500" />

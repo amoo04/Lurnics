@@ -30,7 +30,7 @@ export default function NewsletterBanner() {
 
   return (
     <section className="px-4 sm:px-8 md:px-20 pb-16">
-      <div className="flex flex-col items-center justify-between gap-6 rounded-xl border border-gray-200 bg-gray-50 p-8 md:flex-row">
+      <div className="flex flex-col items-center justify-between gap-6 rounded-xl border border-gray-200 bg-gray-50 p-8 lg:flex-row">
         <div className="flex items-center gap-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-900 text-white">
             <Mail size={20} />

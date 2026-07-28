@@ -25,7 +25,7 @@ export default function SolutionsCatalog() {
       {loading && <p className="text-center text-sm text-gray-500">Loading solutions…</p>}
       {error && <p className="text-center text-sm text-red-500">{error}</p>}
 
-      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {solutions.map(({ id, slug, name, description }) => {
           const Icon = SOLUTION_CONTENT[slug]?.icon ?? Monitor;
           const features = SOLUTION_CONTENT[slug]?.features.slice(0, 3) ?? [];

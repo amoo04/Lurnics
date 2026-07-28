@@ -15,7 +15,7 @@ const reasons = [
 
 export default function ContactInfoGrid() {
   return (
-    <section className="grid gap-6 px-4 sm:px-8 md:px-20 py-16 md:grid-cols-2">
+    <section className="grid gap-6 px-4 sm:px-8 md:px-20 py-16 lg:grid-cols-2">
       <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
         <p className="mb-6 text-xs font-semibold uppercase tracking-wider text-orange-500">
           What Happens Next?

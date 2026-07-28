@@ -19,7 +19,7 @@ export default function CtaBanner({
   return (
     <section className="px-4 sm:px-8 md:px-20 py-10">
       <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-50 p-6 sm:p-10">
-        <div className="relative flex flex-col items-center justify-between gap-6 md:flex-row">
+        <div className="relative flex flex-col items-center justify-between gap-6 lg:flex-row">
           <div>
             <h2 className="text-2xl font-semibold text-gray-900">{heading}</h2>
             <p className="mt-2 text-sm text-gray-600">{subtext}</p>

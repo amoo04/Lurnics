@@ -14,7 +14,7 @@ const expertise = [
 export default function FounderProfile() {
   return (
     <section id="story" className="px-4 sm:px-8 md:px-20 py-10">
-      <div className="grid gap-8 rounded-xl border border-gray-200 bg-white p-8 shadow-sm md:grid-cols-[200px_1fr_240px]">
+      <div className="grid gap-8 rounded-xl border border-gray-200 bg-white p-8 shadow-sm lg:grid-cols-[200px_1fr_240px]">
         <div className="h-56 overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
           <img src={founderPhoto} alt="Amoo Oluwasegun, Founder & Lead Engineer" className="h-full w-full object-cover" />
         </div>
