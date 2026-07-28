@@ -10,6 +10,15 @@ interface ClientOption {
   companyName: string;
 }
 
+// Contracts run on a 3-month cycle (matches the maintenance reminder cron),
+// so the expiry date defaults to 3 months from the start date - admins can
+// still override it for an edge case.
+function addThreeMonths(dateStr: string): string {
+  const date = new Date(dateStr);
+  date.setMonth(date.getMonth() + 3);
+  return date.toISOString().slice(0, 10);
+}
+
 export default function MaintenanceCreateForm({
   initialPlan,
   onCreated,
@@ -26,7 +35,7 @@ export default function MaintenanceCreateForm({
     String(MAINTENANCE_PLANS.find((p) => p.name === (initialPlan ?? MAINTENANCE_PLANS[0].name))?.price ?? 0),
   );
   const [startDate, setStartDate] = useState(new Date().toISOString().slice(0, 10));
-  const [expiryDate, setExpiryDate] = useState("");
+  const [expiryDate, setExpiryDate] = useState(addThreeMonths(new Date().toISOString().slice(0, 10)));
   const [status, setStatus] = useState<MaintenanceStatus>("active");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -95,7 +104,7 @@ export default function MaintenanceCreateForm({
           <input
             required
             type="number"
-            placeholder="Amount / year"
+            placeholder="Amount / 3 months"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-gray-900"
@@ -104,7 +113,10 @@ export default function MaintenanceCreateForm({
             required
             type="date"
             value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            onChange={(e) => {
+              setStartDate(e.target.value);
+              setExpiryDate(addThreeMonths(e.target.value));
+            }}
             className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
           />
           <input

@@ -3,12 +3,8 @@ import { Save } from "lucide-react";
 import Sidebar from "../../components/layout/Sidebar";
 import Topbar from "../../components/layout/Topbar";
 import PageHeader from "../../components/layout/PageHeader";
-import SettingsNav from "../components/SettingsNav";
 import SiteInformationForm from "../components/SiteInformationForm";
-import ApplicationSettingsPanel from "../components/ApplicationSettingsPanel";
-import SystemPreferencesPanel from "../components/SystemPreferencesPanel";
-import StorageSettingsPanel from "../components/StorageSettingsPanel";
-import OtherSettingsPanel from "../components/OtherSettingsPanel";
+import BankTransferForm from "../components/BankTransferForm";
 import { useSettings, saveSettings } from "../hooks/useSettings";
 import { DEFAULT_SETTINGS, type Settings } from "../api/settings.types";
 import { ApiError } from "../../lib/api";
@@ -70,32 +66,16 @@ export default function Settings() {
           }
         />
 
-        <div className="flex flex-col gap-6 px-4 pb-8 sm:px-8 lg:flex-row">
-          <SettingsNav />
+        <div className="px-4 pb-8 sm:px-8">
+          {loading && <p className="text-sm text-gray-500">Loading settings…</p>}
+          {error && <p className="text-sm text-red-500">{error}</p>}
 
-          <div className="min-w-0 flex-1">
-            <p className="mb-1 text-lg font-semibold text-gray-900">General Settings</p>
-            <p className="mb-5 text-sm text-gray-500">
-              Manage your application preferences and configuration
-            </p>
-
-            {loading && <p className="text-sm text-gray-500">Loading settings…</p>}
-            {error && <p className="text-sm text-red-500">{error}</p>}
-
-            {!loading && (
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-6">
-                  <SiteInformationForm values={draft} onChange={updateField} />
-                  <SystemPreferencesPanel values={draft} onChange={updateField} />
-                </div>
-                <div className="space-y-6">
-                  <ApplicationSettingsPanel values={draft} onChange={updateField} />
-                  <StorageSettingsPanel values={draft} onChange={updateField} />
-                  <OtherSettingsPanel values={draft} onChange={updateField} />
-                </div>
-              </div>
-            )}
-          </div>
+          {!loading && (
+            <div className="grid max-w-4xl gap-6 lg:grid-cols-2">
+              <SiteInformationForm values={draft} onChange={updateField} />
+              <BankTransferForm values={draft} onChange={updateField} />
+            </div>
+          )}
         </div>
       </div>
     </div>

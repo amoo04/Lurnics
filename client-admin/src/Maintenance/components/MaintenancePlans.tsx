@@ -8,7 +8,7 @@ export default function MaintenancePlans({ onSelectPlan }: { onSelectPlan: (plan
       <h3 className="mb-4 font-semibold text-gray-900">Maintenance Plans</h3>
 
       <div className="space-y-4">
-        {MAINTENANCE_PLANS.map(({ name, price, features, highlight }) => (
+        {MAINTENANCE_PLANS.map(({ name, price, annualPrice, features, highlight }) => (
           <div
             key={name}
             className={`rounded-lg border p-4 ${
@@ -17,8 +17,9 @@ export default function MaintenancePlans({ onSelectPlan }: { onSelectPlan: (plan
           >
             <p className="font-semibold text-gray-900">{name}</p>
             <p className="text-lg font-bold text-gray-900">
-              {formatCurrency(price)} <span className="text-xs font-normal text-gray-500">/ year</span>
+              {formatCurrency(price)} <span className="text-xs font-normal text-gray-500">/ 3 months</span>
             </p>
+            <p className="text-xs text-gray-500">{formatCurrency(annualPrice)} / year</p>
             <ul className="mt-2 space-y-1.5 text-xs text-gray-600">
               {features.map((f) => (
                 <li key={f} className="flex items-center gap-1.5">
