@@ -40,7 +40,8 @@ export async function addUser(input: CreateUserInput) {
     await setUserRoles(user.id, input.roleIds);
   }
 
-  return user;
+  const { passwordHash: _hash, ...safeUser } = user;
+  return safeUser;
 }
 
 export async function editUser(id: string, input: UpdateUserInput) {
@@ -52,7 +53,8 @@ export async function editUser(id: string, input: UpdateUserInput) {
     await setUserRoles(id, roleIds);
   }
 
-  return user;
+  const { passwordHash: _hash, ...safeUser } = user;
+  return safeUser;
 }
 
 export async function removeUser(id: string) {

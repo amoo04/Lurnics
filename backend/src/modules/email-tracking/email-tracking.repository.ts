@@ -6,6 +6,13 @@ export async function findSendByToken(token: string) {
   return db.query.emailSends.findFirst({ where: eq(emailSends.trackingToken, token) });
 }
 
+export async function findSendWithCampaignByToken(token: string) {
+  return db.query.emailSends.findFirst({
+    where: eq(emailSends.trackingToken, token),
+    with: { campaign: { columns: { ctaUrl: true } } },
+  });
+}
+
 export async function markOpened(token: string) {
   await db
     .update(emailSends)

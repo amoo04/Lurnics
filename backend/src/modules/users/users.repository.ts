@@ -13,6 +13,7 @@ export async function findUsers(search: string | undefined, limit: number, offse
       limit,
       offset,
       orderBy: (t, { desc }) => desc(t.createdAt),
+      columns: { passwordHash: false },
       with: { userRoles: { with: { role: true } } },
     }),
     db.$count(users, where),
@@ -32,6 +33,7 @@ export async function findActiveUserIds(): Promise<string[]> {
 export async function findUserById(id: string) {
   return db.query.users.findFirst({
     where: and(eq(users.id, id), isNull(users.deletedAt)),
+    columns: { passwordHash: false },
     with: { userRoles: { with: { role: true } } },
   });
 }
