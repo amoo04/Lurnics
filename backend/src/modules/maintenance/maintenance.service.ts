@@ -2,7 +2,7 @@ import { NotFoundError } from "../../middleware/error.js";
 import { parsePagination, paginatedResult } from "../../lib/pagination.js";
 import { logActivity } from "../activity-logs/activity-logs.service.js";
 import { sendEmail, emailFrom } from "../../lib/email.js";
-import { maintenanceReminderEmail } from "../../lib/email-templates.js";
+import { maintenanceReminderDigestEmail } from "../../lib/email-templates.js";
 import {
   createMaintenance,
   deleteMaintenance,
@@ -76,38 +76,41 @@ export async function removeMaintenance(userId: string, id: string) {
   await logActivity(userId, "delete", "maintenance", id);
 }
 
+// Cloudflare's Send Email binding can only deliver to info@lurnics.com (see
+// lib/email.ts), so this can't email clients directly. Instead it sends one
+// internal digest to Lurnics listing everything due today, for the admin to
+// follow up on manually (e.g. via the client-admin "Send Email" action).
 export async function runMaintenanceReminders() {
   const contracts = await findContractsForReminderCheck();
   const today = todayDateString();
-  let sent = 0;
+  const due: { contractId: string; companyName: string; planType: string; amount: number; expiryDate: string; daysUntil: number }[] = [];
 
   for (const contract of contracts) {
-    if (!contract.client?.email) continue;
-
     const remaining = daysUntil(contract.expiryDate);
     if (!REMINDER_DAYS.includes(remaining)) continue;
     if (contract.lastReminderSentAt === today) continue;
 
-    const message = maintenanceReminderEmail({
-      contactPerson: contract.client.contactPerson,
+    due.push({
+      contractId: contract.id,
       companyName: contract.client.companyName,
       planType: contract.planType,
       amount: contract.amount,
       expiryDate: contract.expiryDate,
       daysUntil: remaining,
     });
+  }
 
+  if (due.length > 0) {
+    const message = maintenanceReminderDigestEmail(due);
     await sendEmail({
       from: emailFrom(),
-      to: contract.client.email,
+      to: emailFrom(),
       subject: message.subject,
       text: message.text,
       html: message.html,
     });
-
-    await updateMaintenance(contract.id, { lastReminderSentAt: today });
-    sent += 1;
+    await Promise.all(due.map((item) => updateMaintenance(item.contractId, { lastReminderSentAt: today })));
   }
 
-  return { checked: contracts.length, sent };
+  return { checked: contracts.length, sent: due.length };
 }
