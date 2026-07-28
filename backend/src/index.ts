@@ -57,6 +57,8 @@ const ALLOWED_ORIGINS = new Set([
   "https://lurnics-production-client.isegunamoo.workers.dev",
   "https://lurnics-admin-staging.isegunamoo.workers.dev",
   "https://lurnics-production-admin.isegunamoo.workers.dev",
+  "https://lurnics.com",
+  "https://www.lurnics.com",
 ]);
 
 app.use(
