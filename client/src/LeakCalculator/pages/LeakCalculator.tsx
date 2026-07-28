@@ -55,8 +55,8 @@ export default function LeakCalculator() {
   const [hoursPerWeek, setHoursPerWeek] = useState(10);
   const [inquiriesPerWeek, setInquiriesPerWeek] = useState(20);
   const [coldPercent, setColdPercent] = useState(30);
-  const [orderValue, setOrderValue] = useState(CURRENCY_DEFAULTS.NGN.orderValue);
-  const [hourlyValue, setHourlyValue] = useState(CURRENCY_DEFAULTS.NGN.hourlyValue);
+  const [orderValue, setOrderValue] = useState<number>(CURRENCY_DEFAULTS.NGN.orderValue);
+  const [hourlyValue, setHourlyValue] = useState<number>(CURRENCY_DEFAULTS.NGN.hourlyValue);
   const [email, setEmail] = useState("");
   const [unlocked, setUnlocked] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
