@@ -51,7 +51,15 @@ export async function sendEmail({ from, to, subject, text, html }: SendEmailInpu
   try {
     await SEB.send(message);
   } catch (err) {
-    throw new AppError(err instanceof Error ? err.message : "Failed to send email", 502, "EMAIL_SEND_FAILED");
+    const raw = err instanceof Error ? err.message : "Failed to send email";
+    // Cloudflare's Send Email binding can only deliver to addresses verified
+    // as a "Destination Address" in Email Routing for the zone - it rejects
+    // any other recipient with a message like "email to X not allowed".
+    // Surface that as an actionable explanation instead of the raw text.
+    const message = /not allowed/i.test(raw)
+      ? `Cloudflare can only deliver email to verified destination addresses (currently ${emailFrom()}). To send to other recipients, connect a transactional email provider.`
+      : raw;
+    throw new AppError(message, 502, "EMAIL_SEND_FAILED");
   }
 
   return { id: crypto.randomUUID() };

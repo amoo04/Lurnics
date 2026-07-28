@@ -242,3 +242,54 @@ export function maintenanceReminderEmail({
 
   return { subject, text, html };
 }
+
+export interface MaintenanceReminderDigestItem {
+  companyName: string;
+  planType: string;
+  amount: number;
+  currencySymbol?: string;
+  expiryDate: string;
+  daysUntil: number;
+}
+
+// Internal digest sent to Lurnics itself (info@lurnics.com), since
+// Cloudflare's Send Email binding can't reach clients' own addresses -
+// this is the admin's cue to follow up with each client manually.
+export function maintenanceReminderDigestEmail(items: MaintenanceReminderDigestItem[]) {
+  const subject =
+    items.length === 1
+      ? `Maintenance renewal due: ${items[0].companyName}`
+      : `${items.length} maintenance renewals coming up`;
+
+  const rows = items
+    .map(({ companyName, planType, amount, currencySymbol = "₦", expiryDate, daysUntil }) => {
+      const formattedAmount = `${currencySymbol}${amount.toLocaleString()}`;
+      const formattedDate = new Date(expiryDate).toLocaleDateString("en-NG", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      const timing = daysUntil <= 0 ? "due today" : daysUntil === 1 ? "due tomorrow" : `due in ${daysUntil} days`;
+      return `<li style="margin:0 0 10px 0;"><strong>${companyName}</strong>, ${planType}, ${formattedAmount}, ${timing} (${formattedDate})</li>`;
+    })
+    .join("");
+
+  const text = items
+    .map(
+      ({ companyName, planType, amount, currencySymbol = "₦", expiryDate, daysUntil }) =>
+        `${companyName}, ${planType}, ${currencySymbol}${amount.toLocaleString()}, due ${expiryDate} (${daysUntil} days)`,
+    )
+    .join("\n");
+
+  const html = renderEmailLayout({
+    eyebrow: "Maintenance Reminder",
+    heading: subject,
+    bodyHtml: `
+      <p style="margin:0 0 12px 0;">The following maintenance plans need a renewal follow-up:</p>
+      <ul style="margin:0;padding-left:18px;">${rows}</ul>
+    `,
+    footerNote: "Reach out to each client directly, this is an internal reminder only.",
+  });
+
+  return { subject, text, html };
+}
