@@ -15,6 +15,11 @@ export interface AppBindings {
   EMAIL_FROM: string;
   LEADS_EMAIL_FROM: string;
   NODE_ENV?: string;
+  // Resend API key (secret). When present, sendEmail() uses Resend's HTTP
+  // API instead of Cloudflare's Send Email binding - Resend can deliver to
+  // any recipient once the sending domain is verified, unlike SEB which
+  // only delivers to addresses verified as a Destination Address.
+  RESEND_API_KEY?: string;
   // This worker's own public base URL, used to build tracking-pixel /
   // click-redirect / unsubscribe links embedded in sent campaign emails.
   // Falls back to the local wrangler dev URL when unset.

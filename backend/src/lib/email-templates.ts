@@ -115,13 +115,21 @@ export function leadConfirmationEmail({ contactPerson, companyName, service }: L
   const subject = "We've received your inquiry, Lurnics";
   const text = `Hi ${firstName},\n\nThanks for reaching out to Lurnics${service ? ` about ${service}` : ""}. We've received your inquiry for ${companyName} and our team will get back to you within 1-2 business days.\n\nIn the meantime, feel free to reply to this email if you have anything to add.\n\nLurnics\nCustom Software & Automation Studio`;
 
+  // contactPerson/companyName/service come straight from the public lead
+  // form - fully untrusted input, so every value here must be escaped
+  // before it's interpolated into the HTML (unlike the internal-only
+  // templates below).
+  const safeFirstName = escapeHtml(firstName);
+  const safeCompanyName = escapeHtml(companyName);
+  const safeService = service ? escapeHtml(service) : null;
+
   const html = renderEmailLayout({
     preheader: "Thanks for reaching out, we'll be in touch shortly.",
-    heading: `Thanks for reaching out, ${firstName}.`,
+    heading: `Thanks for reaching out, ${safeFirstName}.`,
     bodyHtml: `
       <p style="margin:0 0 12px 0;">
-        We've received your inquiry${service ? ` about <strong>${service}</strong>` : ""} for
-        <strong>${companyName}</strong>. Our team is reviewing the details and will get back to you
+        We've received your inquiry${safeService ? ` about <strong>${safeService}</strong>` : ""} for
+        <strong>${safeCompanyName}</strong>. Our team is reviewing the details and will get back to you
         within 1-2 business days.
       </p>
       <p style="margin:0;">

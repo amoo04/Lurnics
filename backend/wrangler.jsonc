@@ -5,10 +5,13 @@
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],
 
-  // JWT_SECRET is a secret, not a var. Wrangler environments don't inherit
-  // secrets, so each of (default/no --env), staging, and production needs
-  // its own copy:
+  // JWT_SECRET and RESEND_API_KEY are secrets, not vars. Wrangler
+  // environments don't inherit secrets, so each of (default/no --env),
+  // staging, and production needs its own copy:
   //   npx wrangler secret put JWT_SECRET [--env staging|production]
+  //   npx wrangler secret put RESEND_API_KEY [--env staging|production]
+  // Without RESEND_API_KEY set, sendEmail() falls back to Cloudflare's Send
+  // Email binding (only delivers to a pre-verified destination address).
   "vars": {
     "EMAIL_FROM": "info@lurnics.com",
     "LEADS_EMAIL_FROM": "info@lurnics.com",
