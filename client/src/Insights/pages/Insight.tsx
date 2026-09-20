@@ -1,0 +1,66 @@
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import Navbar from "../../components/layout/Navbar";
+import NewsletterBanner from "../components/NewsletterBanner";
+import Footer from "../../components/layout/Footer";
+import { useArticleBySlug } from "../hooks/useInsights";
+
+function formatDate(value: string | null) {
+  if (!value) return "";
+  return new Date(value).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+export default function Insight() {
+  const { slug } = useParams<{ slug: string }>();
+  const { data: article, loading, error } = useArticleBySlug(slug);
+
+  return (
+    <>
+      <Navbar />
+      <section className="px-4 sm:px-8 md:px-20 py-16">
+        <Link to="/insights" className="flex items-center gap-1 text-sm text-orange-500 hover:text-orange-600">
+          <ArrowLeft size={14} />
+          Back to insights
+        </Link>
+
+        {loading && <p className="mt-8 text-sm text-gray-500">Loading article…</p>}
+        {error && <p className="mt-8 text-sm text-red-500">{error}</p>}
+
+        {article && (
+          <div className="mt-8 max-w-3xl">
+            {article.featuredImage && (
+              <img
+                src={article.featuredImage}
+                alt={article.title}
+                className="mb-8 h-72 w-full rounded-xl border border-gray-200 object-cover"
+              />
+            )}
+            <h1 className="mt-3 text-4xl font-bold leading-tight text-gray-900">{article.title}</h1>
+            <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-900 text-[10px] font-bold text-white">
+                L
+              </span>
+              <span className="text-gray-600">Lurnics Team</span>
+              {article.publishedAt && (
+                <>
+                  <span>·</span>
+                  <span>{formatDate(article.publishedAt)}</span>
+                </>
+              )}
+            </div>
+
+            <div className="mt-8 space-y-4 whitespace-pre-line text-sm leading-relaxed text-gray-600">
+              {article.content}
+            </div>
+          </div>
+        )}
+      </section>
+      <NewsletterBanner />
+      <Footer />
+    </>
+  );
+}

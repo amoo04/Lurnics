@@ -1,0 +1,145 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lurnics-backend",
+  "main": "src/worker.ts",
+  "compatibility_date": "2025-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // JWT_SECRET and RESEND_API_KEY are secrets, not vars. Wrangler
+  // environments don't inherit secrets, so each of (default/no --env),
+  // staging, and production needs its own copy:
+  //   npx wrangler secret put JWT_SECRET [--env staging|production]
+  //   npx wrangler secret put RESEND_API_KEY [--env staging|production]
+  // Without RESEND_API_KEY set, sendEmail() falls back to Cloudflare's Send
+  // Email binding (only delivers to a pre-verified destination address).
+  "vars": {
+    "EMAIL_FROM": "info@lurnics.com",
+    "LEADS_EMAIL_FROM": "info@lurnics.com",
+  },
+
+  // The database layer (src/db/index.ts) uses this D1 binding whenever it's
+  // present (deployed Workers, or `wrangler dev` via Miniflare's local D1
+  // emulation) and only falls back to a local SQLite file (DATABASE_URL,
+  // via @libsql/client) for plain `pnpm dev` (Node), which has no D1 access
+  // at all. This default/no-env target points at the staging database so
+  // `wrangler dev` never touches production data.
+  //
+  // Schema changes: `npx drizzle-kit generate --config drizzle.d1.config.ts`
+  // writes a new file into migrations_dir, then apply it with
+  // `npx wrangler d1 migrations apply <database_name> --remote`.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lurnics-staging",
+      "database_id": "f27e02da-c284-43ad-9089-21eb4ca02511",
+      "migrations_dir": "drizzle",
+    },
+  ],
+
+  "send_email": [
+    {
+      "name": "SEB",
+      // The address you verified as a destination in Cloudflare Email Routing.
+      "destination_address": "info@lurnics.com",
+    },
+  ],
+
+  // Runs the `scheduled` handler in src/worker.ts once a day (07:00 UTC),
+  // which sends maintenance-plan renewal reminders on a weekly cadence.
+  "triggers": {
+    "crons": ["0 7 * * *"],
+  },
+
+  // File uploads (src/lib/r2.ts, POST /api/uploads/image) go straight
+  // through this native binding (bucket.put/get) - no API keys needed.
+  // `remote: true` makes `wrangler dev` read/write the real bucket instead
+  // of an empty local emulation.
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "lurnics-staging",
+      "remote": true,
+    },
+  ],
+
+  "observability": {
+    "enabled": true,
+  },
+
+  // `wrangler dev` / `wrangler deploy` with no --env flag use the top-level
+  // config above. `--env staging` / `--env production` deploy to their own
+  // named Workers below, each with their own bindings, vars, and secrets -
+  // nothing here is inherited from the top level.
+  "env": {
+    "staging": {
+      "name": "lurnics-backend-staging",
+      "vars": {
+        "NODE_ENV": "production",
+        "EMAIL_FROM": "info@lurnics.com",
+        "LEADS_EMAIL_FROM": "info@lurnics.com",
+      },
+      "send_email": [
+        {
+          "name": "SEB",
+          "destination_address": "info@lurnics.com",
+        },
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "lurnics-staging",
+          "database_id": "f27e02da-c284-43ad-9089-21eb4ca02511",
+          "migrations_dir": "drizzle",
+        },
+      ],
+      "r2_buckets": [
+        {
+          "binding": "BUCKET",
+          "bucket_name": "lurnics-staging",
+          "remote": true,
+        },
+      ],
+      "triggers": {
+        "crons": ["0 7 * * *"],
+      },
+      "observability": {
+        "enabled": true,
+      },
+    },
+    "production": {
+      "name": "lurnics-backend-production",
+      "vars": {
+        "NODE_ENV": "production",
+        "EMAIL_FROM": "info@lurnics.com",
+        "LEADS_EMAIL_FROM": "info@lurnics.com",
+      },
+      "send_email": [
+        {
+          "name": "SEB",
+          "destination_address": "info@lurnics.com",
+        },
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "lurnics-db",
+          "database_id": "bab4cebc-3897-430f-9c95-48e502c1f82e",
+          "migrations_dir": "drizzle",
+        },
+      ],
+      "r2_buckets": [
+        {
+          "binding": "BUCKET",
+          "bucket_name": "lurnics-production",
+          "remote": true,
+        },
+      ],
+      "triggers": {
+        "crons": ["0 7 * * *"],
+      },
+      "observability": {
+        "enabled": true,
+      },
+    },
+  },
+}

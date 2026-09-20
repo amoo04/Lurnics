@@ -1,0 +1,10 @@
+packages:
+  - "backend"
+  - "client"
+  - "client-admin"
+allowBuilds:
+  better-sqlite3: true
+  core-js-pure: true
+  esbuild: true
+  sharp: true
+  workerd: true
