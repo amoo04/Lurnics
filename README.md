@@ -1,6 +1,6 @@
 Lurnics
 
-Beyond websites — we build digital infrastructure. Lurnics is a Lagos-based custom software and digital agency that designs, builds, and deploys software systems to automate operations, streamline workflows, and help businesses scale.
+Beyond websites — we build digital infrastructure. Lurnics is a Nigeria-based custom software and digital agency that designs, builds, and deploys software systems to automate operations, streamline workflows, and help businesses scale.
 
 What we do
 
