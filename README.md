@@ -13,7 +13,6 @@ Tech stack
 TypeScript, React, React Native
 Node.js, Hono
 PostgreSQL, Drizzle ORM
-Cloudflare Workers
 Paystack
 
 Status
